@@ -1,4 +1,5 @@
 public class User {
-    int a;
+    int a;  
+    int c;  
     int b;
 }
