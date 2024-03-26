@@ -25,7 +25,7 @@ alter table `order` auto_increment = 1;
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
 sumOrder) values ('1', '3', 'С днем рождения', true, 'Солнечная 35, 45', '2024-04-01 15:00:00', '2000');
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('2', '1', 'Люблю', false, 'Красная глинка', '2024-04-02 17:00:00', '3500', '2024-03-30 17:00:00');
+sumOrder) values ('2', '1', 'Люблю', false, 'Красная глинка', '2024-04-02 17:00:00', '3500',);
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
 sumOrder) values ('1', null, null, true, 'Полевая 43, 85', '2024-04-03 10:00:00', '1200');
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
