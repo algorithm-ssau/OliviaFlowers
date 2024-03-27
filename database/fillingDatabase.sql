@@ -23,15 +23,15 @@ select * from bouquet;
 -- order надо писать с обратными кавычками, так как order является зарезервированным словом
 alter table `order` auto_increment = 1;
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('1', '3', 'С днем рождения', true, 'Солнечная 35, 45', '2024-04-01 15:00:00', '2000');
+sumOrder, datePayment) values ('1', '3', 'С днем рождения', true, 'Солнечная 35, 45', '2024-04-01 15:00:00', '2000', null);
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('2', '1', 'Люблю', false, 'Красная глинка', '2024-04-02 17:00:00', '3500',);
+sumOrder, datePayment) values ('2', '1', 'Люблю', false, 'Красная глинка', '2024-04-02 17:00:00', '3500', '2024-03-30 17:00:00');
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('1', null, null, true, 'Полевая 43, 85', '2024-04-03 10:00:00', '1200');
+sumOrder, datePayment) values ('1', null, null, true, 'Полевая 43, 85', '2024-04-03 10:00:00', '1200', null);
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('3', '2', 'С днем рождения', true, 'Куйбышева 15, 89', '2024-04-01 12:00:00', '2000');
+sumOrder, datePayment) values ('3', '2', 'С днем рождения', true, 'Куйбышева 15, 89', '2024-04-01 12:00:00', '2000', null);
 insert into `order` (idUser, typePostcard, textPostcard, delivery, addressDelivery, dateTimeDelivery, 
-sumOrder) values ('4', '3', 'Поздравляю', false, 'Красная глинка', '2024-04-05 20:00:00', '4000');
+sumOrder, datePayment) values ('4', '3', 'Поздравляю', false, 'Красная глинка', '2024-04-05 20:00:00', '4000', null);
 select * from `order`;
 
 alter table order_has_bouquet auto_increment = 1;
