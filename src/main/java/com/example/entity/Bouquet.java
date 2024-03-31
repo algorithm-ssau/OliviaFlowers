@@ -18,5 +18,9 @@ public class Bouquet {
     @Column
     private String name; //название
 
+    @Column
+    private String foto; //фотография
+
+
 
 }
