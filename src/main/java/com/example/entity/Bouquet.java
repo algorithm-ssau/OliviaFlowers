@@ -15,6 +15,8 @@ public class Bouquet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id цветка
 
+    @Column
+    private String name; //название
 
 
 }
