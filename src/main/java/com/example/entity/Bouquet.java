@@ -24,6 +24,7 @@ public class Bouquet {
     @Column
     private Long price; //цена
 
-
+    @Column
+    private List composition; //состав
 
 }
