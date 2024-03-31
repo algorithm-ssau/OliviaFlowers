@@ -21,6 +21,9 @@ public class Bouquet {
     @Column
     private String foto; //фотография
 
+    @Column
+    private Long price; //цена
+
 
 
 }
