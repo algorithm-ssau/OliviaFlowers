@@ -1,0 +1,21 @@
+<div class="wrap-logo">
+</div>
+<!-- Добавлен дополнительный контейнер для центрирования заголовка -->
+<div class="container-fluid text-center">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="collapse navbar-collapse">
+    <h2 class="navbar-brand">Olivia Flowers</h2>
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/catalog">Каталог</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/order">Корзина</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/user">Войти</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</div>
