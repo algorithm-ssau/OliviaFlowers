@@ -11,18 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Bouquet {
+public class Order_has_bouquet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //id цветка
-
+    private Long idOrder; //id заказа
+    @Id
+    private Long idBouquet; //id букета
     @Column
-    private String name; //название
-
-    @Column
-    private String photo; //фотография
-
-    @Column
-    private Long price; //цена
-
+    private Long count; //Количество букетов
 }
