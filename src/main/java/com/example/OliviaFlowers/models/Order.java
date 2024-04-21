@@ -17,8 +17,9 @@ public class Order {
     private Long id;  //id заказа
 
 
-    @Column
-    private Long userId; //id пользователя
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user; //id пользователя
 
     @Column
     private Long typePostcard; //тип открытки
