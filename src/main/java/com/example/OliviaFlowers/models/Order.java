@@ -18,7 +18,6 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "userId")
     private User user; //id пользователя
 
     @Column

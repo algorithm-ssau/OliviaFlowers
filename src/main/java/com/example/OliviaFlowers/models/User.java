@@ -32,4 +32,7 @@ public class User {
     private Date dateOfBirthday;
     @Column
     private Boolean isAdministrator;
+
+    @OneToMany(mappedBy="user")
+    private List<Order> orders = new ArrayList<>();
 }
