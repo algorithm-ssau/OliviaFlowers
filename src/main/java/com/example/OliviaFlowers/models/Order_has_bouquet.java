@@ -13,9 +13,9 @@ import java.util.List;
 @Entity
 public class Order_has_bouquet {
     @Id
-    private Long idOrder; //id Заказа
+    private Long idOrder; //id заказа
     @Id
-    private Long idBouquet; //id Букета
+    private Long idBouquet; //id букета
     @Column
-    private Long count; //Количество цветов
+    private Long count; //Количество букетов
 }
