@@ -1,4 +1,4 @@
-package com.example.OliviaFlowers.models;//package com.example.OliviaFlowers.models;
+//package com.example.OliviaFlowers.models;//package com.example.OliviaFlowers.models;
 //
 //import jakarta.persistence.*;
 //import lombok.AllArgsConstructor;
@@ -26,6 +26,6 @@ package com.example.OliviaFlowers.models;//package com.example.OliviaFlowers.mod
 //    private Long price; //цена
 //
 //    @Column
-//    private List composition; //состав
+//    private String composition; //состав
 //
 //}
