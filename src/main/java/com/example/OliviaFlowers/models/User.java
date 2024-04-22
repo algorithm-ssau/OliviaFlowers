@@ -53,6 +53,9 @@ public class User implements UserDetails {
         this.isAdministrator = isAdministrator;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     // Security
     @Override
