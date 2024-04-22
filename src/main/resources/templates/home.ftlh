@@ -10,6 +10,10 @@
          background-color: #f0eade;
      }
 
+     .image-container {
+         background-color: #f0eade; /* Цвет фона для изображения */
+     }
+
     /* Отступы карт */
      .mx-custom {
         margin-left: 10rem;
@@ -21,14 +25,28 @@
         border: 2px solid #f0eade; /* Цвет границы */
         border-radius: 10px; /* Скругление углов */
      }
+
+     h4 {
+        text-align: center;
+        margin-top: 1rem;
+     }
+
+
+
   </style>
 </head>
 <body>
 <#include "blocks/header.ftlh">
-<img src="../logo.png" class="img-fluid" alt="Logo">
-<div class="row row-cols-1 row-cols-md-3 g-4 my-3 mx-custom">
+
+<div class="image-container">
+  <center><img src="../logo_mini.png" style="height: 130px;" alt="Logo"></center>
+</div>
+
+<h4>Вам могут понравиться наши сезонные букеты:</h4>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mx-custom my-2">
   <div class="col">
-    <div class="card h-100 custom-card">
+    <div class="card h-100 custom-card ">
       <img src="../test1.jpg" class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
