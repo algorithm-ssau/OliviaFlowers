@@ -55,3 +55,6 @@
     </div>
   </div>
 </div>
+
+<#include "blocks/footer.ftlh">
+
