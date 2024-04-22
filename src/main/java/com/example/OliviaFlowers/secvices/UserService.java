@@ -23,6 +23,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setIsAdministrator(false);
         log.info("Saving new User with email: {}", email);
+        userRepository.save(user);
         return true;
     }
 }
