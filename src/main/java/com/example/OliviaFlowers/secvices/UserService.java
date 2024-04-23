@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
-    private  UserRepository userRepository;
+
+    private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
     public boolean createUser (User user){
@@ -22,7 +22,6 @@ public class UserService {
         if (userRepository.findByEmail(email) != null) return false;
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setIsAdministrator(false);
-        log.info("Saving new User with email: {}", email);
         userRepository.save(user);
         return true;
     }
