@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @Column (name = "surname")
     private String surname;
     @Column (name = "date_of_birthday")
-    private Date dateOfBirthday;
+    private String dateOfBirthday;
     @Column (name = "is_administrator")
     private Boolean isAdministrator;
 
@@ -51,6 +51,10 @@ public class User implements UserDetails {
     }
     public void setIsAdministrator(boolean isAdministrator) {
         this.isAdministrator = isAdministrator;
+    }
+
+    public String getDateOfBirthday() {
+        return dateOfBirthday;
     }
 
     public void setPassword(String password) {
