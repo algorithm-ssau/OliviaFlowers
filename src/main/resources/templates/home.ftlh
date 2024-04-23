@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
   <meta charset="UTF-8">
   <title>Olivia Flowers</title>
@@ -137,6 +136,4 @@
   </div>
 </div>
 
-
 <#include "blocks/footer.ftlh">
-
