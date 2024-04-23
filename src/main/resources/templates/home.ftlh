@@ -5,33 +5,37 @@
   <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
-     /* Стили для фона */
-     .container-fluid, .navbar-custom {
-         background-color: #f0eade;
-     }
+    /* Стили для фона */
+    .container-fluid, .navbar-custom {
+        background-color: #f0eade;
+    }
 
-     .image-container {
-         background-color: #f0eade; /* Цвет фона для изображения */
-     }
+    /* Стили для фона под логотипом */
+    .image-container {
+        background-color: #f0eade; /* Цвет фона для изображения */
+    }
+
+    /* Стили для заголодка для сезонных цветов */
+    .p-custom {
+       text-align: center;
+       margin-top: 3rem;
+       font-size: 21px;
+    }
 
     /* Отступы карт */
-     .mx-custom {
-        margin-left: 10rem;
-        margin-right: 10rem;
-     }
+    .row-custom {
+       margin-left: 14rem;
+       margin-right: 14rem;
+       margin-bottom: 2rem;
+    }
 
-     /* Стили для границы карты */
-     .custom-card {
-        border: 2px solid #f0eade; /* Цвет границы */
-        border-radius: 10px; /* Скругление углов */
-     }
-
-     h4 {
-        text-align: center;
-        margin-top: 1rem;
-     }
-
-
+    /* Стили для границы карты */
+    .custom-card {
+       border: 2px solid #f0eade; /* Цвет границы */
+       border-radius: 10px; /* Скругление углов */
+       max-width: 250px; /* Максимальная ширина карточки */
+       margin: auto; /* Центрирование карточки */
+    }
 
   </style>
 </head>
@@ -42,9 +46,9 @@
   <center><img src="../logo_mini.png" style="height: 130px;" alt="Logo"></center>
 </div>
 
-<h4>Вам могут понравиться наши сезонные букеты:</h4>
+<p class="p-custom">Вам могут понравиться наши сезонные букеты:</p>
 
-<div class="row row-cols-1 row-cols-md-3 g-4 mx-custom my-2">
+<div class="row row-cols-1 row-cols-md-3 g-1 row-custom">
   <div class="col">
     <div class="card h-100 custom-card ">
       <img src="../test1.jpg" class="card-img-top" alt="...">
