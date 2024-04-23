@@ -7,58 +7,58 @@
   <style>
     /* Стили для фона */
     .container-fluid, .navbar-custom {
-        background-color: #f0eade;
+      background-color: #f0eade;
     }
 
     /* Стили для фона под логотипом */
     .image-container {
-        background-color: #f0eade; /* Цвет фона для изображения */
+      background-color: #f0eade; /* Цвет фона для изображения */
     }
 
     /* Стили для заголодка для сезонных цветов */
     .p-custom {
-       text-align: center;
-       margin-top: 3rem;
-       font-size: 21px;
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 21px;
     }
 
     /* Отступы карт */
     .row-custom-flower {
-       margin-left: 14rem;
-       margin-right: 14rem;
-       margin-bottom: 2rem;
+      margin-left: 14rem;
+      margin-right: 14rem;
+      margin-bottom: 2rem;
     }
 
     /* Стили для границы карты */
     .custom-card-flower {
-       border: 2px solid #f0eade; /* Цвет границы */
-       border-radius: 10px; /* Скругление углов */
-       max-width: 250px; /* Максимальная ширина карточки */
-       margin: auto; /* Центрирование карточки */
+      border: 2px solid #f0eade; /* Цвет границы */
+      border-radius: 10px; /* Скругление углов */
+      max-width: 250px; /* Максимальная ширина карточки */
+      margin: auto; /* Центрирование карточки */
     }
 
     /* Отступы карт */
     .row-custom-delivery {
-       margin-left: 22rem;
-       margin-right: 22rem;
-       margin-bottom: 2rem;
+      margin-left: 22rem;
+      margin-right: 22rem;
+      margin-bottom: 2rem;
     }
 
     /* Стили для границы карты */
     .custom-card-delivery {
-       border: 2px solid #f0eade; /* Цвет границы */
-       border-radius: 10px; /* Скругление углов */
-       max-width: 500px; /* Максимальная ширина карточки */
-       margin: auto; /* Центрирование карточки */
+      border: 2px solid #f0eade; /* Цвет границы */
+      border-radius: 10px; /* Скругление углов */
+      max-width: 500px; /* Максимальная ширина карточки */
+      margin: auto; /* Центрирование карточки */
     }
 
     /* Стили для заголодка для сезонных цветов */
     .p-custom-text {
-       text-align: center;
-       font-size: 16px;
-       max-width: 800px;
-       margin: auto;
-       margin-bottom: 4rem;
+      text-align: center;
+      font-size: 16px;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 4rem;
     }
 
   </style>
