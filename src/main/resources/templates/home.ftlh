@@ -47,7 +47,7 @@
     .row-custom-delivery {
       margin-left: 22rem;
       margin-right: 22rem;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
     }
 
     /* Стили для границы карты */
