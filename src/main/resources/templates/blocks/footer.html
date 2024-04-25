@@ -3,7 +3,7 @@
         <span class="nav-text disabled">Самара</span>
     </li>
     <li class="nav-item my-3">
-        <span class="nav-text disabled">+7 999 999 99 99</span>
+        <span class="nav-text disabled">+7 927 019 22 16</span>
     </li>
     <a class="nav-link active my-2" aria-current="page" href="https://vk.com/olivia.flowers">
         <img src="../vk.png" alt="Vk" style="height: 22px;">
