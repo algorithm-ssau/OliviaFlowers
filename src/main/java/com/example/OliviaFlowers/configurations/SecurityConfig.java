@@ -25,7 +25,7 @@ public class SecurityConfig{
         http
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/catalog/**", "/registration", "logo.png",
-                                "test1.jpg", "test2.jpg", "test3.jpg", "inst.png", "logo_mini.png", "vk.png")
+                                "test1.jpg", "test2.jpg", "test3.jpg", "inst.png", "logo_mini.png", "vk.png", "/bouquet")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
