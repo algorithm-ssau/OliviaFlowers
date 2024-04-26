@@ -17,7 +17,6 @@
       margin-right: auto;
       margin-top: 4rem;
       margin-bottom: 4rem;
-      position: relative; /* Добавляем относительное позиционирование */
 
     }
 
@@ -32,16 +31,27 @@
     }
 
     .btn-custom {
-      width: 45%;
-      margin-bottom: 10px;
+      width: 93%;
+      margin-top: 10px;
       background-color: #f0eade; /* Основной цвет кнопки */
       border-color: #f0eade; /* Цвет границы кнопки */
       color: #333; /* Цвет текста кнопки */
-      position: absolute; /* Добавляем абсолютное позиционирование */
-      bottom: 10px; /* Отступ от нижней границы */
     }
 
     .btn-custom:hover {
+      background-color: #e0d8d0; /* Цвет кнопки при наведении */
+      border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+    }
+
+    .btn-custom2 {
+      width: 93%;
+      margin-top: 10px;
+      background-color: #ffffff; /* Основной цвет кнопки */
+      border-color: #e0d8d0; /* Цвет границы кнопки */
+      color: #333; /* Цвет текста кнопки */
+    }
+
+    .btn-custom2:hover {
       background-color: #e0d8d0; /* Цвет кнопки при наведении */
       border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
     }
@@ -61,6 +71,7 @@
         <p>Текст</p>
         <p class="text">*Цена*</p>
         <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
+        <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
       </div>
     </div>
   </div>
