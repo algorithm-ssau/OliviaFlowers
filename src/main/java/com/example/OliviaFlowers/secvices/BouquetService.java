@@ -15,8 +15,8 @@ import java.util.List;
 public class BouquetService {
     private final BouquetRepository bouquetRepository;
 
-    public List<Bouquet> listAllBouquets(){
-
+    public List<Bouquet> listAllBouquets(String name){
+        if (name != null) return bouquetRepository.findByName(name);
         return bouquetRepository.findAll();
     }
 

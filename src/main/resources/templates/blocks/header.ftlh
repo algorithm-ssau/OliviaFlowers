@@ -4,6 +4,10 @@
 
     <ul class="navbar-nav ms-auto">
       <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/admin">Страница Администратора(WIP)</a>
+      </li>
+
+      <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/catalog">Каталог</a>
       </li>
       <li class="nav-item">
@@ -18,6 +22,8 @@
           <input type="submit" value="Выйти"/>
         </form>
       </li>
+
+
     </ul>
   </nav>
 </div>
