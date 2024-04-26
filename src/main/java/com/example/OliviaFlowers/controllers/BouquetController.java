@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BouquetController {
     private final BouquetService bouquetService;
 
-    @GetMapping("/")
+    @GetMapping("/bouquet")
     public String bouquets(Model model){
         model.addAttribute("bouquets", bouquetService.listAllBouquets());
         return "bouquets";
     }
-    @GetMapping("/bouquet")
+    /*@GetMapping("/bouquet")
     public String bouquet(){
         return "bouquet";
-    }
+    }*/
 
     @PostMapping("/bouquet/create")
     public String createBouquet(Bouquet bouquet){
