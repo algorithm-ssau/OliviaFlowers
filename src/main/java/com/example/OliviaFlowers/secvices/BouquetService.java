@@ -1,18 +1,37 @@
 package com.example.OliviaFlowers.secvices;
 
 import com.example.OliviaFlowers.models.Bouquet;
+import com.example.OliviaFlowers.repositories.BouquetRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class BouquetService {
-    private List<Bouquet> bouquets = new ArrayList<>();
-    {
-        bouquets.add(new Bouquet(Long.valueOf(1),"Букет","",Long.valueOf(2000) ));
-        bouquets.add(new Bouquet(Long.valueOf(2),"Букет","",Long.valueOf(3000) ));
+    @Autowired
+    private final BouquetRepository bouquetRepository;
+
+    public BouquetService(BouquetRepository bouquetRepository) {
+        this.bouquetRepository = bouquetRepository;
     }
 
-    public List<Bouquet> listBouquets() {return bouquets;}
+    public List<Bouquet> listAllBouquets(String name){
+        if (name != null) return bouquetRepository.findByName(name);
+        return bouquetRepository.findAll();
+    }
+
+    public void saveBouquet(Bouquet bouquet){
+        bouquetRepository.save(bouquet);
+    }
+
+    public void deleteBouquet(Long id){
+        bouquetRepository.deleteById(id);
+    }
+
+    public Bouquet getBouquetByID(Long id){
+        return bouquetRepository.findById(id).orElse(null);
+    }
 }

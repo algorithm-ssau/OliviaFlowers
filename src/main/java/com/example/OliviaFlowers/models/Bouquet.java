@@ -11,18 +11,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "bouquet")
 public class Bouquet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //id цветка
 
-    @Column
+    @Column(name = "name")
     private String name; //название
 
-    @Column
+    @Column(name = "photo")
     private String photo; //фотография
 
-    @Column
+    @Column(name = "price")
     private Long price; //цена
 
 }
