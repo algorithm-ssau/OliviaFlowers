@@ -81,32 +81,38 @@
 
 <div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
   <div class="col">
-    <div class="card h-100 custom-card-flower">
-      <img src="../test1.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Белая шляпная коробка</h5>
-        <p class="card-text">Белая коробка с эустомой и розами - сочетание, которое никогда не останется
-          без внимания любителей классики.</p>
+    <a class="nav-link active h-100" aria-current="page" href="/bouquet">
+      <div class="card h-100 custom-card-flower">
+          <img src="../test1.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Белая шляпная коробка</h5>
+          <p class="card-text">Белая коробка с эустомой и розами - сочетание, которое никогда не останется
+            без внимания любителей классики.</p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
   <div class="col">
-    <div class="card h-100 custom-card-flower">
-      <img src="../test2.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Букет тюльпанов</h5>
-        <p class="card-text">Воплощение весны - это охапка ярких, ароматных, хрустящих тюльпанов в боксе.</p>
+    <a class="nav-link active h-100" aria-current="page" href="/bouquet">
+      <div class="card h-100 custom-card-flower">
+        <img src="../test2.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Букет тюльпанов</h5>
+          <p class="card-text">Воплощение весны - это охапка ярких, ароматных, хрустящих тюльпанов в боксе.</p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
   <div class="col">
-    <div class="card h-100 custom-card-flower">
-      <img src="../test3.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Корзина из роз</h5>
-        <p class="card-text">Корзинка с пиновидными розами малинового цвета и эвкалиптом остается бестселлером уже не первый год, очаровывая каждого.</p>
+    <a class="nav-link active h-100" aria-current="page" href="/bouquet">
+      <div class="card h-100 custom-card-flower">
+        <img src="../test3.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Корзина из роз</h5>
+          <p class="card-text">Корзинка с пиновидными розами малинового цвета и эвкалиптом остается бестселлером уже не первый год, очаровывая каждого.</p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
 </div>
 
