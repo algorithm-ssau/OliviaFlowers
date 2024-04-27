@@ -25,7 +25,7 @@ public class UserService {
         String email = user.getEmail();
         if (userRepository.findByEmail(email) != null) return false;
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setIsAdministrator(false);
+        user.setIsAdministrator(true);
         userRepository.save(user);
         System.out.println(user.getDateOfBirthday());
         return true;

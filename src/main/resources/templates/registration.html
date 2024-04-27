@@ -17,8 +17,8 @@
             max-width: 300px;
             margin: auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 2px solid #f0eade;
+            border-radius: 10px;
         }
 
         body {
