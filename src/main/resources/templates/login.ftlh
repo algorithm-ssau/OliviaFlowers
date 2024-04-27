@@ -16,19 +16,13 @@
             margin-right: 10rem;
         }
 
-        /* Стили для границы карты */
-        .custom-card {
-            border: 2px solid #f0eade; /* Цвет границы */
-            border-radius: 10px; /* Скругление углов */
-        }
-
         /* Дополнительные стили для формы */
         .form-container {
             max-width: 300px;
             margin: auto;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 2px solid #f0eade;
+            border-radius: 10px;
         }
 
         /* Стили для кнопки */
