@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>User</title>
+    <title>Olivia Flowers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
     </style>
@@ -9,6 +9,15 @@
 <body>
 <#include "blocks/header.ftlh">
 <body>
-User page
+<h4>Каталог букетов</h4>
+<div class="col">
+  <div class="card h-100 custom-card-flower">
+    <img src="../bouquet1.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Букет с гиацинтами</h5>
+      <p class="card-text">2000 Р</p>
+    </div>
+  </div>
+</div>
 </body>
 <#include "blocks/footer.ftlh">
