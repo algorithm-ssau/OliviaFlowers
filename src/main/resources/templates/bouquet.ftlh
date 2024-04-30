@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <title>Olivia Flowers</title>
@@ -39,6 +38,7 @@
     }
 
     .btn-custom:hover {
+      color: #333; /* Цвет текста кнопки */
       background-color: #e0d8d0; /* Цвет кнопки при наведении */
       border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
     }
@@ -52,6 +52,7 @@
     }
 
     .btn-custom2:hover {
+      color: #333; /* Цвет текста кнопки */
       background-color: #e0d8d0; /* Цвет кнопки при наведении */
       border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
     }
@@ -62,14 +63,41 @@
 <div class="border">
   <div class="row">
     <div class="col-md-6">
-      <img src="../test1.jpg" class="card-img-top image" alt="...">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <div class="card h-100 custom-card-flower">
+        <div id="carouselBouquet" class="carousel slide">
+            <div class="carousel-indicators">
+                <#list bouquet.images as image>
+                    <button type="button" data-bs-target="#carouselBouquet" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                </#list>
+            </div>
+            <div class="carousel-inner">
+                <#list bouquet.images as image>
+                    <div class="carousel-item<#if image_index == 0> active</#if>">
+                        <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+                    </div>
+                </#list>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+      </div>
     </div>
+
     <div class="col-md-6">
       <div class="content">
-        <h4 class="text">Заголовок</h4>
-        <p class="text">Состав:</p>
-        <p>Текст</p>
-        <p class="text">*Цена*</p>
+        <h4 class="text">${bouquet.name}</h4>
+        <p class="text">Состав:</p><br>
+        <#list (bouquet.composition)?split("\n") as line>
+          ${line}<br>
+        </#list>
+        <p class="text">${bouquet.price}</p>
         <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
         <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
       </div>
