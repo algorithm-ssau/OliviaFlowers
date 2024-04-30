@@ -16,12 +16,7 @@
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="/login">Войти</a>
       </li>
-      <li class="nav-item">
-        <form action="/logout" method="post">
-          <input type="hidden" name="_csrf" value="${_csrf.token}">
-          <input type="submit" value="Выйти"/>
-        </form>
-      </li>
+
 
 
     </ul>
