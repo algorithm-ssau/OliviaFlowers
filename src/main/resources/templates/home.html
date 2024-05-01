@@ -79,6 +79,12 @@
         text-decoration: none;
     }
 
+    .p-text-center {
+          text-align: center;
+          margin: auto;
+          margin-bottom: 4rem;
+        }
+
 
 
   </style>
@@ -91,6 +97,9 @@
 </div>
 
 <p class="p-custom">Вам могут понравиться наши сезонные букеты</p>
+
+<#if homePageBouquets?has_content>
+<!-- Если есть букеты, выводим данные о сезонных цветах -->
 
 <div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -206,6 +215,10 @@
 </div>
 </div>
 </div>
+<#else>
+<!-- Если нет букетов, выводим сообщение о их отсутствии -->
+<p class="p-text-center">На данный момент у нас нет сезонных букетов.</p>
+</#if>
 
 
 <div class="background_color_about_us text-center">
@@ -215,7 +228,6 @@
     Наша команда занимается разработкой авторских букетов и композиций, декором свадеб и других мероприятий.<br>
   </p>
 </div>
-
 
 <p class="p-custom">Доставка</p>
 
