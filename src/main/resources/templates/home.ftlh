@@ -79,6 +79,12 @@
         text-decoration: none;
     }
 
+    .p-text-center {
+          text-align: center;
+          margin: auto;
+          margin-bottom: 4rem;
+        }
+
 
 
   </style>
@@ -92,47 +98,50 @@
 
 <p class="p-custom">Вам могут понравиться наши сезонные букеты</p>
 
-<div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <div class="col">
-    <div class="card h-100 custom-card-flower">
-      <div id="carouselBouquet1" class="carousel slide">
-          <div class="carousel-indicators">
-              <#list bouquet1.images as image>
-                  <button type="button" data-bs-target="#carouselBouquet1" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-              </#list>
-          </div>
-          <div class="carousel-inner">
-              <#list bouquet1.images as image>
-                  <div class="carousel-item<#if image_index == 0> active</#if>">
-                      <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
-                  </div>
-              </#list>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-          </button>
-      </div>
+<#if homePageBouquets?has_content>
+  <!-- Если есть букеты, выводим данные о сезонных цветах -->
+
+  <div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div class="col">
+      <div class="card h-100 custom-card-flower">
+        <div id="carouselBouquet1" class="carousel slide">
+            <div class="carousel-indicators">
+                <#list bouquet1.images as image>
+                    <button type="button" data-bs-target="#carouselBouquet1" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                </#list>
+            </div>
+            <div class="carousel-inner">
+                <#list bouquet1.images as image>
+                    <div class="carousel-item<#if image_index == 0> active</#if>">
+                        <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+                    </div>
+                </#list>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
 
-      <div class="card-body">
-      <a href="/bouquet/${bouquet1.id}" class="card-link">${bouquet1.name}</a>
+        <div class="card-body">
+        <a href="/bouquet/${bouquet1.id}" class="card-link">${bouquet1.name}</a>
 
-      <p class="card-text">
-          <#list (homePageBouquets[0].description)?split("\n") as line>
-            ${line}<br>
-          </#list>
-        </p>
+        <p class="card-text">
+            <#list (homePageBouquets[0].description)?split("\n") as line>
+              ${line}<br>
+            </#list>
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="col">
+    <div class="col">
       <div class="card h-100 custom-card-flower">
         <div id="carouselBouquet2" class="carousel slide">
             <div class="carousel-indicators">
@@ -169,7 +178,7 @@
       </div>
     </div>
 
-  <div class="col">
+    <div class="col">
       <div class="card h-100 custom-card-flower">
         <div id="carouselBouquet3" class="carousel slide">
             <div class="carousel-indicators">
@@ -205,7 +214,11 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
+<#else>
+  <!-- Если нет букетов, выводим сообщение о их отсутствии -->
+  <p class="p-text-center">На данный момент у нас нет сезонных букетов.</p>
+</#if>
 
 
 <div class="background_color_about_us text-center">
@@ -215,7 +228,6 @@
     Наша команда занимается разработкой авторских букетов и композиций, декором свадеб и других мероприятий.<br>
   </p>
 </div>
-
 
 <p class="p-custom">Доставка</p>
 
