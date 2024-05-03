@@ -18,13 +18,13 @@
             background-color: #f0eade;
         }
         .border{
-          border: 2px solid #f0eade; /* Цвет границы */
-          border-radius: 10px; /* Скругление углов */
-          max-width: 500px; /* Максимальная ширина карточки */
-          margin-left: auto;
-          margin-right: auto;
-          margin-top: 4rem;
-          margin-bottom: 4rem;
+            border: 2px solid #f0eade; /* Цвет границы */
+            border-radius: 10px; /* Скругление углов */
+            max-width: 500px; /* Максимальная ширина карточки */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 4rem;
+            margin-bottom: 4rem;
         }
 
         .form-container {
@@ -43,41 +43,51 @@
 
 
         .image{
-          border-radius: 10px; /* Скругление углов */
-          margin: auto;
+            border-radius: 10px; /* Скругление углов */
+            margin: auto;
         }
 
         .text{
-           margin-top: 2rem;
+            margin-top: 2rem;
         }
 
         .btn-custom {
-          width: 30%;
-          margin-top: 10px;
-          background-color: #f0eade; /* Основной цвет кнопки */
-          border-color: #f0eade; /* Цвет границы кнопки */
-          color: #333; /* Цвет текста кнопки */
+            width: 30%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
         }
 
         .btn-custom:hover {
-          color: #333; /* Цвет текста кнопки */
-          background-color: #e0d8d0; /* Цвет кнопки при наведении */
-          border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
         }
 
         .btn-custom2 {
-              width: 94%;
-              margin-top: 10px;
-              background-color: #f0eade; /* Основной цвет кнопки */
-              border-color: #f0eade; /* Цвет границы кнопки */
-              color: #333; /* Цвет текста кнопки */
+            width: 94%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
             }
 
-            .btn-custom2:hover {
-              color: #333; /* Цвет текста кнопки */
-              background-color: #e0d8d0; /* Цвет кнопки при наведении */
-              border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
-            }
+        .btn-custom2:hover {
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+        }
+
+        .custom-link {
+            width: 87%;
+            margin-left: 5rem;
+            margin-bottom: .75rem; /* Отступ снизу */
+            font-size: 1.25rem; /* Размер шрифта */
+            font-weight: 500; /* Жирность шрифта */
+            color: #333;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -92,10 +102,19 @@
         </script>
     </#if>
 
+    <br> <br> <br>
+
+    <div class="list-group">
+    <a class="list-group-item list-group-item-action custom-link" href="#section1">Добавление букета</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section2">Выбор букетов для главного экрана</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section3">Поиск букета по названию</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section4">Вывод всех букетов</a>
+    </div>
+
 
 <!-- Добавление букета  -->
     <br> <br> <br>
-    <div class="container">
+    <div id="section1" class="container">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <h4>Добавление букета:</h4>
         <form action="/bouquet_create" method="post" enctype="multipart/form-data">
@@ -130,7 +149,7 @@
 
 <!-- Выбор букетов для главного экрана  -->
     <br> <br> <br>
-    <div class="container">
+    <div id="section2" class="container">
         <h4>Выбор букетов для главного экрана</h4>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <form action="/add_bouquets_to_homepage" method="post">
@@ -162,7 +181,7 @@
 
 <!-- Поиск букета по названию  -->
     <br> <br> <br>
-    <div class="container">
+    <div id="section3" class="container">
         <h4>Поиск и вывод букетов</h4>
         <form action = "/find_bouquet_by_name" method = "get">
             Поиск: <input type = "text" name = "name"><br>
@@ -170,48 +189,72 @@
         </form>
     </div>
 
-    <div>
+    <br> <br> <br>
         <#if foundBouquetsByName??>
-            <#list foundBouquetsByName as bouquet>
-                <div class="border">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <#if bouquet.images?has_content>
-                                <img src="/images/${bouquet.images[0].id}" class="card-img-top image" alt="...">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-                            </div>
-                        <div class="col-md-6">
-                            <div class="content">
-                                <p class="text"> ID: ${(bouquet.id)!"id"}<br>
-                                Название: ${(bouquet.name)!"букет"}<br>
-                                Состав: <br>
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Состав</th>
+                            <th>Цена</th>
+                            <th>Фото</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <#list foundBouquetsByName as bouquet>
+                        <tr>
+                            <td>${bouquet.id}</td>
+                            <td>${bouquet.name}</td>
+                            <!-- Вывод состава букета в несколько строк -->
+                            <td>
                                 <#list (bouquet.composition)?split("\n") as line>
                                     ${line}<br>
                                 </#list>
-                                Цена: ${(bouquet.price)!"цена"} руб.</p>
-                                <button type="submit" class="btn btn-primary btn-custom2">Редактировать</button>
+                            </td>
+                            <td>${bouquet.price}</td>
+                            <td>
+                                <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                    <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
 
+                                <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                    <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
+
+                                <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                    <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
+
+                            </td>
+                            <td>
+                                <a href="/bouquet/${bouquet.id}" class="btn btn-primary">Просмотр</a>
                                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-                                <form action = "/bouquet_delete/${bouquet.id}" method=post enctype="multipart/form-data">
-                                   <button type="submit" class="btn btn-primary btn-custom2">Удалить</button>
+                                <form action="/bouquet_delete/${bouquet.id}" method="post">
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </#list>
+                            </td>
+                        </tr>
+                        </#list>
+                    </tbody>
+                </table>
+            </div>
         <#else>
             <h4 class="text-center">Букетов нет</h4>
         </#if>
-    </div>
 
 
 <!-- Вывод всех букетов  -->
     <br> <br> <br>
-    <div class="container">
+    <div id="section4" class="container">
         <h4>Список букетов</h3>
         <table class="table">
             <thead>
