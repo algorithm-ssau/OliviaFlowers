@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column (name = "is_administrator")
     private Boolean isAdministrator;
 
+    @OneToMany
+    private List<Favorite> favorites = new ArrayList<>();
+
     @OneToMany(mappedBy="user")
     private List<Order> orders = new ArrayList<>();
 

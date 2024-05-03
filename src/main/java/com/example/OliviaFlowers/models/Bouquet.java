@@ -30,6 +30,10 @@ public class Bouquet {
 
     @OneToMany
     private List<Image> images = new ArrayList<>();
+
+    @OneToMany
+    private List<Favorite> favorites = new ArrayList<>();
+
     private Long previewImageID;
 
     @OneToMany(mappedBy = "bouquet")
