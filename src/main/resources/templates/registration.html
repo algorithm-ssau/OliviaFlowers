@@ -71,7 +71,6 @@
                 <label for="date_of_birthday">Дата рождения:</label>
                 <input type="text" class="form-control" id="date_of_birthday" name="date_of_birthday" required>
             </div>
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
             <button type="submit" class="btn btn-primary btn-custom">Зарегистрироваться</button>
         </form>
     </div>
