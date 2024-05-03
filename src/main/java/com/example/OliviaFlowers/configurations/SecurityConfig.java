@@ -18,28 +18,20 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
     private final CustomUserDetailsService userDetailsService;
 
     public SecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest()
-                        .permitAll())
-                .csrf().disable(); // Вместо AbstractHttpConfigurer::disable
-        return http.build();
-    }
-
     @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
+                .cors().disable()
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-
-                        .requestMatchers(HttpMethod.POST, "/", "/home", "/catalog/**", "/registration", "logo.png",
+                        .requestMatchers("/", "/home", "/catalog/**", "/registration", "logo.png",
                                 "inst.png", "logo_mini.png", "vk.png", "/bouquet/**", "/images/**", "requestMatchers",
                                  "/bouquet_delete/**", "/add_bouquets_to_homepage", "/find_bouquet_by_name")
                         .permitAll()

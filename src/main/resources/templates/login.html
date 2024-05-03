@@ -54,7 +54,6 @@
                 <label for="password">Пароль:</label>
                 <input type="password" class="form-control" id="password" name="password">
             </div>
-            <input type="hidden" name="_csrf" value="${_csrf.token}">
             <button type="submit" class="btn btn-custom">Вход</button>
         </form>
         <a href="/registration" class="btn btn-link mt-3">Зарегистрироваться</a>
