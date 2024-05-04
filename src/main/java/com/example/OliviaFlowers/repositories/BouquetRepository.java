@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface BouquetRepository extends JpaRepository<Bouquet, Long> {
     List<Bouquet> findByName(String name);
 
+
 }

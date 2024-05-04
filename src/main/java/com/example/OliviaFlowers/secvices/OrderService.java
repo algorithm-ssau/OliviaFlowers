@@ -1,6 +1,8 @@
 package com.example.OliviaFlowers.secvices;
 
+import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.repositories.BouquetRepository;
 import com.example.OliviaFlowers.repositories.OrderRepository;
 import com.example.OliviaFlowers.models.Order;
 import com.example.OliviaFlowers.repositories.UserRepository;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -17,6 +20,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     @Autowired
     private final UserRepository userRepository;
+
+
 
     public OrderService(OrderRepository orderRepository, UserRepository userRepository){
         this.orderRepository = orderRepository;
@@ -34,6 +39,12 @@ public class OrderService {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
     }
+
+    public List<Order> ListOrders() {
+        return orderRepository.findAll();
+    }
+
+
 
 
 
