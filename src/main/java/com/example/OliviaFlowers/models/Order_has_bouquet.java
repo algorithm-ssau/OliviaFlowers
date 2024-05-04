@@ -27,4 +27,17 @@ public class Order_has_bouquet {
 
     @Column
     private Long count; //Количество букетов
+
+    public order_has_bouquet_key GetId(){
+        return id;
+    }
+
+    public Long GetOrderId(){
+        return id.idOrder;
+    }
+
+    public Long GetBouquetId(){
+        return id.idBouquet;
+    }
+
 }

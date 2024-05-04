@@ -1,6 +1,7 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Order;
+import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
 import com.example.OliviaFlowers.secvices.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,12 @@ import java.security.Principal;
 public class OrderController {
     @Autowired
     public final OrderService orderService;
+    @Autowired
+    public final OrderHasBouquetService orderHasBouquetService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, OrderHasBouquetService orderHasBouquetService) {
         this.orderService = orderService;
+        this.orderHasBouquetService = orderHasBouquetService;
     }
 
     @GetMapping("/order")
