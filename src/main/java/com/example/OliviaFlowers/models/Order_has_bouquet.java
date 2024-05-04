@@ -12,10 +12,19 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Order_has_bouquet {
-    @Id
-    private Long idOrder; //id заказа
-    @Id
-    private Long idBouquet; //id букета
+    @EmbeddedId
+    order_has_bouquet_key id;
+
+    @ManyToOne
+    @MapsId("idOrder")
+    @JoinColumn(name = "order_id")
+    Order order; //заказ
+
+    @ManyToOne
+    @MapsId("idBouquet")
+    @JoinColumn(name = "bouquet_id")
+    Bouquet bouquet; //id букета
+
     @Column
     private Long count; //Количество букетов
 }

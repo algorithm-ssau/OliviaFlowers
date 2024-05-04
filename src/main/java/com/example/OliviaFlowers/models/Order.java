@@ -11,12 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;  //id заказа
-
 
     @ManyToOne
     private User user; //id пользователя
@@ -41,6 +40,8 @@ public class Order {
 
     @Column
     private LocalDateTime datePayment; //время оплаты заказа
+
+
 
 
 
