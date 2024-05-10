@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 
-@NoArgsConstructor
+
 @Embeddable
 public class order_has_bouquet_key implements Serializable {
 
@@ -52,6 +52,10 @@ public class order_has_bouquet_key implements Serializable {
     public order_has_bouquet_key(Long idOrder, Long idBouquet) {
         this.idOrder = idOrder;
         this.idBouquet = idBouquet;
+    }
+
+    public order_has_bouquet_key(){
+
     }
 
     public Long getIdOrder() {

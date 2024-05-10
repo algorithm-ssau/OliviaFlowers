@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Order_has_bouquet {
+
     @EmbeddedId
     order_has_bouquet_key id;
 

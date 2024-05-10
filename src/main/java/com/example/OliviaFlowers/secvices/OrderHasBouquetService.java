@@ -1,12 +1,10 @@
 package com.example.OliviaFlowers.secvices;
 
-import com.example.OliviaFlowers.models.Bouquet;
-import com.example.OliviaFlowers.models.Order;
-import com.example.OliviaFlowers.models.Order_has_bouquet;
-import com.example.OliviaFlowers.models.order_has_bouquet_key;
+import com.example.OliviaFlowers.models.*;
 import com.example.OliviaFlowers.repositories.BouquetRepository;
 import com.example.OliviaFlowers.repositories.OrderRepository;
 import com.example.OliviaFlowers.repositories.Order_has_bouquet_Repository;
+import com.example.OliviaFlowers.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +20,14 @@ public class OrderHasBouquetService {
     private final OrderRepository orderRepository;
     @Autowired
     private final BouquetRepository bouquetRepository;
+    @Autowired
+    private final UserRepository userRepository;
 
-    public OrderHasBouquetService(Order_has_bouquet_Repository order_has_bouquet_Repository, OrderRepository orderRepository, BouquetRepository bouquetRepository  ) {
+    public OrderHasBouquetService(Order_has_bouquet_Repository order_has_bouquet_Repository, OrderRepository orderRepository, BouquetRepository bouquetRepository, UserRepository userRepository ) {
         this.order_has_bouquet_Repository = order_has_bouquet_Repository;
         this.orderRepository = orderRepository;
         this.bouquetRepository = bouquetRepository;
+        this.userRepository = userRepository;
     }
 
     public boolean saveOrderHasBouquet(Order_has_bouquet order_has_bouquet) {
@@ -34,12 +35,14 @@ public class OrderHasBouquetService {
         return true;
     }
 
-    public boolean saveOrderHasBouquet(Long idOrder, Long idBouquet) {
+
+
+    public boolean saveOrderHasBouquet(Order order, Bouquet bouquet) {
+        Long idOrder = order.getId();
+        Long idBouquet = bouquet.getId();
         order_has_bouquet_key id = new order_has_bouquet_key(idOrder, idBouquet);
         Order_has_bouquet ohb = new Order_has_bouquet();
         ohb.setId(id);
-        Bouquet bouquet = bouquetRepository.findById(idBouquet).get();
-        Order order = orderRepository.findById(idOrder).get();
         if (bouquet != null && order != null) {
             ohb.setBouquet(bouquet);
             ohb.setOrder(order);
@@ -51,6 +54,30 @@ public class OrderHasBouquetService {
 
 
     }
+
+    public User getUserByPrincipal(Principal principal){
+        if (principal == null) return new User();
+        return userRepository.findByEmail(principal.getName());
+    }
+
+    public boolean createOrderHasBouquet(Bouquet bouquet, Principal principal) {
+        if (principal == null || bouquet == null) return false;
+        Long idUser = getUserByPrincipal(principal).getId();
+        if(orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1) == null){
+            Order order = new Order();
+            order.setUser(getUserByPrincipal(principal));
+            order.setActive((long)1);
+
+            orderRepository.save(order);
+        }
+        Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+        return saveOrderHasBouquet(ordere, bouquet);
+
+
+
+    }
+
+
 
 
 }

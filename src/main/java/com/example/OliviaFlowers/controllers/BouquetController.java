@@ -2,6 +2,7 @@ package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.secvices.BouquetService;
+import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,15 +14,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller
 
 public class BouquetController {
     @Autowired
     private final BouquetService bouquetService;
+    @Autowired
+    private final OrderHasBouquetService orderHasBouquetService;
 
-    public BouquetController(BouquetService bouquetService) {
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService) {
         this.bouquetService = bouquetService;
+        this.orderHasBouquetService = orderHasBouquetService;
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -67,6 +72,21 @@ public class BouquetController {
             redirectAttributes.addFlashAttribute("error", "Ошибка при удалении букета");
         }
         return "redirect:/admin";
+    }
+
+    @PostMapping("/bouquet_addcar/{id}")
+    public String addToCart(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+        try{
+            Bouquet bouquet = bouquetService.getBouquetByID(id);
+            orderHasBouquetService.createOrderHasBouquet(bouquet, principal);
+            redirectAttributes.addFlashAttribute("message", "Успешно добавлено в корзину");
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("error", "Ошибка при добавлении в корзину");
+        }
+
+
+        return "redirect:/bouquet/{id}";
+
     }
 
 

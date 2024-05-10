@@ -30,6 +30,7 @@ public class OrderService {
 
     public boolean saveOrder(Principal principal, Order order){
         order.setUser(getUserByPrincipal(principal));
+        order.setActive((long)1);
         orderRepository.save(order);
         return true;
 
@@ -38,6 +39,11 @@ public class OrderService {
     public User getUserByPrincipal(Principal principal){
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
+    }
+
+    public boolean SetInactive(Order order){
+        order.setActive((long)0);
+        return true;
     }
 
     public List<Order> ListOrders() {

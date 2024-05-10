@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
+@Data
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +33,20 @@ public class Order {
     @Column
     private String address; //Адрес доставки заказа
 
-    @Column
-    private LocalDateTime dateTimeDelivery; //время доставки
+    //@Column
+    //private LocalDateTime dateTimeDelivery; //время доставки
 
     @Column
     private Long sumOrderl; //сумма заказа
 
+    //@Column
+    //private LocalDateTime datePayment; //время оплаты заказа
+
+    @OneToMany(mappedBy = "order")
+    private Set<Order_has_bouquet> amounts;
+
     @Column
-    private LocalDateTime datePayment; //время оплаты заказа
+    private Long active; //активный заказ или нет
 
 
 
