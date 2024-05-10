@@ -40,8 +40,6 @@ public class BouquetService {
         return bouquetRepository.findAll();
     }
 
-
-
     //если что то не работает в методе можно try, catch использовать и ошибки будут выводиться в консоль
     public void saveBouquet(Bouquet bouquet, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         try {

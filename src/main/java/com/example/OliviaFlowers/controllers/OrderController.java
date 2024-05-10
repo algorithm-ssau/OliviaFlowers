@@ -1,6 +1,7 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Order;
+import com.example.OliviaFlowers.secvices.BouquetService;
 import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
 import com.example.OliviaFlowers.secvices.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,18 @@ public class OrderController {
     public final OrderService orderService;
     @Autowired
     public final OrderHasBouquetService orderHasBouquetService;
+    @Autowired
+    private BouquetService bouquetService;
 
     public OrderController(OrderService orderService, OrderHasBouquetService orderHasBouquetService) {
         this.orderService = orderService;
         this.orderHasBouquetService = orderHasBouquetService;
     }
 
-    @GetMapping("/order")
-    public String order(){
-        return "order";
-    }
+//    @GetMapping("/order")
+//    public String order(){
+//        return "order";
+//    }
 
     @GetMapping("/order/add")
     public String addOrder(Order order, Principal principal) throws IOException {
@@ -40,6 +43,31 @@ public class OrderController {
         model.addAttribute("user", orderService.getUserByPrincipal(principal));
         return "order";
     }
+
+    @GetMapping("/order")
+    public String getBouqordersAc(Principal principal,Model model){
+
+
+        model.addAttribute("acBouquets", (long)1);
+
+        return "order";
+    }
+
+    @GetMapping("/getinactorders")
+    public String getOrdersInactive(Principal principal, Model model){
+        model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
+        return"order";
+    }
+
+    @GetMapping("/getinacbouquets")
+    public String getBouqordersIn(Order order, Model model){
+        model.addAttribute("inacBouquets", orderHasBouquetService.getbouquetsByOrder(order));
+        return"order";
+    }
+
+
+
+
 
 
 
