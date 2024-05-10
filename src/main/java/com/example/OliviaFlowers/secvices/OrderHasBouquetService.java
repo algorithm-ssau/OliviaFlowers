@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -35,6 +37,16 @@ public class OrderHasBouquetService {
         return true;
     }
 
+    public List<Bouquet> getbouquetsByOrder(Order order){
+        List<Order_has_bouquet> OhBs = order_has_bouquet_Repository.findAllByOrder(order);
+        List<Bouquet> bouqlist = new ArrayList<Bouquet>();
+        OhBs.forEach(ohb -> {
+            bouqlist.add(ohb.getBouquet());
+        });
+        return  bouqlist;
+    }
+
+
 
 
     public boolean saveOrderHasBouquet(Order order, Bouquet bouquet) {
@@ -46,6 +58,7 @@ public class OrderHasBouquetService {
         if (bouquet != null && order != null) {
             ohb.setBouquet(bouquet);
             ohb.setOrder(order);
+            ohb.setCount((long)1);
             order_has_bouquet_Repository.save(ohb);
             return true;
         }

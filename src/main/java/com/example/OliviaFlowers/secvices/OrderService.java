@@ -45,9 +45,24 @@ public class OrderService {
         order.setActive((long)0);
         return true;
     }
+    public Order HaveActiveOrderByPrincipal(Principal principal){
+        return orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+    }
+
+
+
+
 
     public List<Order> ListOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<Order> ListOrdersActive(Principal principal){
+        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal), (long)1);
+    }
+
+    public List<Order> ListOrdersInactive(Principal principal){
+        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal), (long)0);
     }
 
 
