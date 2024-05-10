@@ -114,7 +114,10 @@
           ${line}<br>
         </#list></p>
         <h6 class="text">${bouquet.price} рублей</h6>
-        <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
+          <form action = "/bouquet_addcar/${bouquet.id}" method = "post">
+              <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
+          </form>
+
         <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
       </div>
     </div>

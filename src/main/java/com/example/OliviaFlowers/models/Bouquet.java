@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,5 +31,8 @@ public class Bouquet {
     @OneToMany
     private List<Image> images = new ArrayList<>();
     private Long previewImageID;
+
+    @OneToMany(mappedBy = "bouquet")
+    private Set<Order_has_bouquet> amounts;
 
 }

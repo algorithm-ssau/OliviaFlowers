@@ -255,7 +255,7 @@
 <!-- Вывод всех букетов  -->
     <br> <br> <br>
     <div id="section4" class="container">
-        <h4>Список букетов</h3>
+        <h4>Список букетов</h4>
         <table class="table">
             <thead>
                 <tr>
