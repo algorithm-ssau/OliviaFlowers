@@ -47,23 +47,15 @@ public class OrderController {
     @GetMapping("/order")
     public String getBouqordersAc(Principal principal,Model model){
 
+        model.addAttribute("acBouquets", orderHasBouquetService.getbouquetsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
 
-        model.addAttribute("acBouquets", (long)1);
-
+        model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
+        model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+        model.addAttribute("acOrder", orderService.HaveActiveOrderByPrincipal(principal));
         return "order";
     }
 
-    @GetMapping("/getinactorders")
-    public String getOrdersInactive(Principal principal, Model model){
-        model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
-        return"order";
-    }
 
-    @GetMapping("/getinacbouquets")
-    public String getBouqordersIn(Order order, Model model){
-        model.addAttribute("inacBouquets", orderHasBouquetService.getbouquetsByOrder(order));
-        return"order";
-    }
 
 
 
