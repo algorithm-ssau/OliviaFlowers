@@ -9,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +36,9 @@ public class User implements UserDetails {
     @Column (name = "is_administrator")
     private Boolean isAdministrator;
 
+    @OneToMany(mappedBy = "user")
+    Set<Favorite> favorites;
+
     @OneToMany(mappedBy="user")
     private List<Order> orders = new ArrayList<>();
 
@@ -60,6 +60,9 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
+
 
     // Security
     @Override
