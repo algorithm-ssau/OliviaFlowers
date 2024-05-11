@@ -33,14 +33,14 @@ public class Order {
     @Column
     private String address; //Адрес доставки заказа
 
-    //@Column
-    //private LocalDateTime dateTimeDelivery; //время доставки
+    @Column
+    private LocalDateTime dateTimeDelivery; //время доставки
 
     @Column
     private Long sumOrderl; //сумма заказа
 
-    //@Column
-    //private LocalDateTime datePayment; //время оплаты заказа
+    @Column
+    private LocalDateTime datePayment; //время оплаты заказа
 
     @OneToMany(mappedBy = "order")
     private Set<Order_has_bouquet> amounts;
