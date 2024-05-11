@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface Order_has_bouquet_Repository extends CrudRepository<Order_has_bouquet, Long> {
     List<Order_has_bouquet> findAllByOrder(Order order);
+    Order_has_bouquet findByBouquetAndOrder(Bouquet bouquet, Order order);
+    void deleteByBouquetAndOrder(Bouquet bouquet, Order order);
 }
