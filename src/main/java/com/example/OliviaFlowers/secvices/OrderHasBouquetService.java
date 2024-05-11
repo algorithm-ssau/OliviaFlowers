@@ -90,23 +90,31 @@ public class OrderHasBouquetService {
             Order order = new Order();
             order.setUser(getUserByPrincipal(principal));
             order.setActive((long)1);
+            order.setSumOrderl((long)0);
 
             orderRepository.save(order);
         }
         Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+        ordere.setSumOrderl(ordere.getSumOrderl() + bouquet.getPrice());
         return saveOrderHasBouquet(ordere, bouquet);
 
 
 
     }
 
+    @Transactional
+    public void removeOrderHasBouquet(Bouquet bouquet, Principal principal){
 
-    public boolean removeOrderHasBouquet(Bouquet bouquet, Principal principal){
-        if (principal == null || bouquet == null) return false;
         try{
             Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+            Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);
+            Long delta = ohb.getCount()*bouquet.getPrice();
             order_has_bouquet_Repository.deleteByBouquetAndOrder(bouquet, ordere);
-            if (getbouquetsByOrder(ordere)==null){
+            ordere.setSumOrderl(ordere.getSumOrderl()-delta);
+            orderRepository.save(ordere);
+
+
+            if (getbouquetsByOrder(ordere).isEmpty()){
                 orderRepository.deleteById(ordere.getId());
             }
         }
@@ -114,7 +122,27 @@ public class OrderHasBouquetService {
             e.printStackTrace();
         }
 
-        return true;
+
+    }
+
+    public void changeAmount(Bouquet bouquet, Principal principal, Long amount){
+        try{
+            Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+            Long oldamount = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere).getCount();
+            Long deltasum = amount*bouquet.getPrice() - oldamount*bouquet.getPrice();
+            Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);
+            ohb.setCount(amount);
+
+
+
+            ordere.setSumOrderl(ordere.getSumOrderl() + deltasum);
+            order_has_bouquet_Repository.save(ohb);
+            orderRepository.save(ordere);
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public boolean removeOhBById(Long id, Principal principal){

@@ -9,8 +9,10 @@ import com.example.OliviaFlowers.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,6 +49,24 @@ public class OrderService {
     }
     public Order HaveActiveOrderByPrincipal(Principal principal){
         return orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+    }
+
+    @Transactional
+    public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate){
+        try{
+            Order order = HaveActiveOrderByPrincipal(principal);
+            order.setAddress(address);
+            order.setToDeliver(toDeliver);
+            order.setTypePostcard(typepostcard);
+            order.setDatePayment(paydate);
+            order.setTextPostcard(textpostcard);
+            order.setActive((long)2);
+            orderRepository.save(order);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
     }
 
 
