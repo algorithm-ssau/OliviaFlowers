@@ -88,65 +88,55 @@
 
 <!-- Вывод всех букетов  -->
 <br> <br> <br>
-<div class="container">
-    <h4>Список букетов</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Состав</th>
-                <th>Цена</th>
-                <th>Фото</th>
-                <th>Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-            <#list allBouquets as bouquet>
-            <tr>
-                <td>${bouquet.id}</td>
-                <td>${bouquet.name}</td>
-                <!-- Вывод состава букета в несколько строк -->
-                <td>
-                    <#list (bouquet.composition)?split("\n") as line>
-                    ${line}<br>
-                </#list>
-                </td>
-                <td>${bouquet.price}</td>
-                <td>
-                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                    <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                    <#else>
-                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                </#if>
-
-                <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                <#else>
-                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
-
-            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-            <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-            <#else>
-            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
-
-            </td>
-            <td>
-                <a href="/bouquet/${bouquet.id}" class="btn btn-primary">Просмотр</a>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                <form action="/bouquet_delete/${bouquet.id}" method="post">
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                </form>
-            </td>
-            </tr>
+<#if favoriteBouquets?has_content>
+<h4>Избранные букеты</h4>
+<table class="table">
+    <!-- Заголовки таблицы -->
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Название</th>
+        <th>Состав</th>
+        <th>Цена</th>
+        <th>Фото</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <!-- Тело таблицы -->
+    <tbody>
+    <#list favoriteBouquets as bouquet>
+    <tr>
+        <td>${bouquet.id}</td>
+        <td>${bouquet.name}</td>
+        <!-- Вывод состава букета в несколько строк -->
+        <td>
+            <#list (bouquet.composition)?split("\n") as line>
+            ${line}<br>
         </#list>
-        </tbody>
-        </table>
-</div>
-
-
+        </td>
+        <td>${bouquet.price}</td>
+        <!-- Вывод фото букета -->
+        <td>
+            <#if bouquet.images?has_content && bouquet.images?size gt 0>
+            <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+        </#if>
+        </td>
+        <!-- Действия с букетом (например, просмотр и удаление) -->
+        <td>
+            <a href="/bouquet/${bouquet.id}" class="btn btn-primary">Просмотр</a>
+            <form action="/remove_from_favorites" method="post">
+                <input type="hidden" name="bouquetId" value="${bouquet.id}">
+                <input type="hidden" name="userId" value="${currentUser.id}">
+                <button type="submit" class="btn btn-danger">Удалить из избранного</button>
+            </form>
+        </td>
+    </tr>
+    </#list>
+    </tbody>
+</table>
+<#else>
+<p>Нет избранных букетов</p>
+</#if>
 
 
 </body>
