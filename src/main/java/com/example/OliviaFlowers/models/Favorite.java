@@ -9,13 +9,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Favorite {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    Favorite_key id;
+
+    @ManyToOne
+    @MapsId("idUser")
+    @JoinColumn(name = "user_id")
+    User user; //заказ
+
+    @ManyToOne
+    @MapsId("idBouquet")
+    @JoinColumn(name = "bouquet_id")
+    Bouquet bouquet; //id букета
+
     @Column
-    private boolean isPreviewImage;
-    @ManyToOne
-    private Bouquet bouquet;
-    @ManyToOne
-    private User user;
+    private boolean isFavorite; //Любимый букет или нет
 }
