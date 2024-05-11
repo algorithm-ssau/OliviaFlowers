@@ -14,18 +14,9 @@
         <a class="nav-link active" aria-current="page" href="/order">Корзина</a>
       </li>
 
-      <!-- Dropdown -->
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Аккаунт
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="/user">Мой профиль</a></li>
-          <!-- Добавьте ссылку на выход, если необходимо -->
-          <!-- <li><a class="dropdown-item" href="/logout">Выйти</a></li> -->
-        </ul>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/profile">Профиль</a>
       </li>
-      <!-- /Dropdown -->
     </ul>
   </nav>
 </div>
