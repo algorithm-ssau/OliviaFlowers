@@ -8,6 +8,7 @@ import com.example.OliviaFlowers.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -46,6 +47,16 @@ public class OrderHasBouquetService {
         return  bouqlist;
     }
 
+    public List<Long> getAmountsByOrder(Order order){
+        List<Order_has_bouquet> OhBs = order_has_bouquet_Repository.findAllByOrder(order);
+        List<Long> amlist= new ArrayList<Long>();
+        OhBs.forEach(ohb -> {
+            amlist.add(ohb.getCount());
+        });
+        return amlist;
+    }
+
+
 
 
 
@@ -75,7 +86,6 @@ public class OrderHasBouquetService {
 
     public boolean createOrderHasBouquet(Bouquet bouquet, Principal principal) {
         if (principal == null || bouquet == null) return false;
-        Long idUser = getUserByPrincipal(principal).getId();
         if(orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1) == null){
             Order order = new Order();
             order.setUser(getUserByPrincipal(principal));
@@ -88,6 +98,29 @@ public class OrderHasBouquetService {
 
 
 
+    }
+
+
+    public boolean removeOrderHasBouquet(Bouquet bouquet, Principal principal){
+        if (principal == null || bouquet == null) return false;
+        try{
+            Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+            order_has_bouquet_Repository.deleteByBouquetAndOrder(bouquet, ordere);
+            if (getbouquetsByOrder(ordere)==null){
+                orderRepository.deleteById(ordere.getId());
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    public boolean removeOhBById(Long id, Principal principal){
+        Bouquet bouquet = bouquetRepository.findById(id).get();
+        removeOrderHasBouquet(bouquet, principal);
+        return true;
     }
 
 
