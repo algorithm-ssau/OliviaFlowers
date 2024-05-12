@@ -1,7 +1,9 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.CatalogPage;
+import com.example.OliviaFlowers.models.HomePage;
 import com.example.OliviaFlowers.repositories.CatalogPageRepository;
+import com.example.OliviaFlowers.repositories.HomePageRepository;
 import org.springframework.ui.Model;
 import com.example.OliviaFlowers.models.Bouquet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 @Controller
 public class CatalogController {
-    @GetMapping("/catalog")
+   @GetMapping("/catalog")
     public String catalog(){
         return "catalog";
     }
 
-    @Autowired
+   /* @Autowired
     private final BouquetService bouquetService;
 
     @Autowired
@@ -32,14 +34,14 @@ public class CatalogController {
     }
 
     @GetMapping("/")
-    public String home(Model model){
+    public String catalog(Model model){
 
         try {
             // Получить все записи о букетах на главной странице из базы данных
             List<CatalogPage> catalogPageBouquets = catalogPageRepository.findAll();
 
             // Поместить полученные букеты в модель
-            model.addAttribute("homePageBouquets", catalogPageBouquets);
+            model.addAttribute("catalogPageBouquets", catalogPageBouquets);
 
             if (catalogPageBouquets.size() == 3) {
                 Bouquet bouquet1 = catalogPageBouquets.get(0).getBouquet();
@@ -57,12 +59,12 @@ public class CatalogController {
             e.printStackTrace();
         }
         // Вернуть страницу главного экрана
-        return "home";
+        return "catalog";
     }
 
 
-    @PostMapping("/add_bouquets_to_homepage")
-    public String addBouquetsToHomepage(@RequestParam(name = "bouquet1", required = false) Long bouquetId1, @RequestParam(name = "description1", required = false) String description1,
+    @PostMapping("/add_bouquets_to_catalog")
+    public String addBouquetsToCatalogpage(@RequestParam(name = "bouquet1", required = false) Long bouquetId1, @RequestParam(name = "description1", required = false) String description1,
                                         @RequestParam(name = "bouquet2", required = false) Long bouquetId2, @RequestParam(name = "description2", required = false) String description2,
                                         @RequestParam(name = "bouquet3", required = false) Long bouquetId3, @RequestParam(name = "description3", required = false) String description3,
                                         Model model, RedirectAttributes redirectAttributes) {
@@ -99,5 +101,5 @@ public class CatalogController {
             return "redirect:/admin";
         }
 
-    }
+    }*/
 }
