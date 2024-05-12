@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @Slf4j
 public class UserService {
@@ -25,9 +27,9 @@ public class UserService {
         String email = user.getEmail();
         if (userRepository.findByEmail(email) != null) return false;
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setIsAdministrator(true);
+        user.setIsAdministrator(false);
+
         userRepository.save(user);
-        System.out.println(user.getDateOfBirthday());
         return true;
     }
 }

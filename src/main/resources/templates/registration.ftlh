@@ -68,8 +68,8 @@
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="form-group">
-                <label for="date_of_birthday">Дата рождения:</label>
-                <input type="text" class="form-control" id="date_of_birthday" name="date_of_birthday" required>
+                <label for="dateOfBirthday">Дата рождения:</label>
+                <input type="date" class="form-control" id="dateOfBirthday" name="dateOfBirthday" required>
             </div>
             <button type="submit" class="btn btn-primary btn-custom">Зарегистрироваться</button>
         </form>

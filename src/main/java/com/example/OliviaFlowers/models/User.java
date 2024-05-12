@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -31,9 +32,9 @@ public class User implements UserDetails {
     private String name;
     @Column (name = "surname")
     private String surname;
-    @Column (name = "date_of_birthday")
-    private String dateOfBirthday;
-    @Column (name = "is_administrator")
+    @Column (name = "dateOfBirthday")
+    private LocalDate dateOfBirthday;
+    @Column (name = "isAdministrator")
     private Boolean isAdministrator;
 
     @OneToMany(mappedBy = "user")
@@ -53,7 +54,7 @@ public class User implements UserDetails {
         this.isAdministrator = isAdministrator;
     }
 
-    public String getDateOfBirthday() {
+    public LocalDate getDateOfBirthday() {
         return dateOfBirthday;
     }
 
