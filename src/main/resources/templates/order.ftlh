@@ -141,22 +141,17 @@
   </script>
 </#if>
 
-<div class="list-group">
-  <a class="list-group-item list-group-item-action custom-link" href="#section4">Активный заказ</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">Оформление заказа</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">История заказов</a>
-</div>
 <body>
 <br><br><br>
 <!-- Вывод букета активного заказа  -->
 <div id="section4" class="container">
   <#if acBouquets?size = 0>
-    <center><h4>Активного заказа нет.</h4></center>
+    <center><h4>Корзина пуста.</h4></center>
 
   <#else>
     <#assign x = 0>
 
-    <h4>Активный заказ:</h4>
+    <h4>Корзина:</h4>
     <table class="table">
       <thead>
       <tr>
@@ -227,7 +222,6 @@
             <select onchange = "showpostcardtext()" name = "typepostcard" id = "typepostcard" class = "form-control">
                 <option id = "nopostcard" value = "0">Без открытки</option>
                 <option value = "1">Открытка</option>
-                <option value = "2">Записка</option>
             </select>
         </div>
         <div id = "posttext" class ="mb-3" style = "display:none">
@@ -246,6 +240,12 @@
             <input type="text" class="form-control" id="address" name="address">
 
         </div>
+
+        <div class="form-group">
+            <label for="dateTimeDelivery">Желаемая дата доставки:</label>
+            <input type="datetime-local" class="form-control" id="dateTimeDelivery" name="dateTimeDelivery">
+        </div>
+
         <button type="submit" class="btn btn-custom3">Оформление заказа</button>
     </form>
 

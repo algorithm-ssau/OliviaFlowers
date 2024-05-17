@@ -92,13 +92,13 @@ public class OrderController {
 
     @PostMapping("/order_checkout")
     public String Checkoutbouquet(@RequestParam(name = "typepostcard") Long typepostcard,@RequestParam(name = "textpostcard") String textpostcard,
-                                  @RequestParam(name = "toDeliver") Long toDeliver, @RequestParam(name = "address") String address,  Principal principal, RedirectAttributes redirectAttributes){
+                                  @RequestParam(name = "toDeliver") Long toDeliver, @RequestParam(name = "address") String address,@RequestParam(name = "dateTimeDelivery") LocalDateTime dateTimeDelivery,  Principal principal, RedirectAttributes redirectAttributes){
         Boolean todel = true;
         if(toDeliver == 1) todel = false;
         LocalDateTime pay = LocalDateTime.now();
         if (todel == true || address == null) address = "дефолтный магазина на самовывоз";
         try{
-            orderService.CheckoutOrder(principal, typepostcard, textpostcard, todel, address, pay);
+            orderService.CheckoutOrder(principal, typepostcard, textpostcard, todel, address, pay, dateTimeDelivery);
             redirectAttributes.addFlashAttribute("message", "Оформлено, будет доставлено по адресу " + address);
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при оформлении заказа");

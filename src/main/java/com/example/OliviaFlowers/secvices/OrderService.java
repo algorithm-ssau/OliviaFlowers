@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class OrderService {
     }
 
     @Transactional
-    public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate){
+    public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate, LocalDateTime deliver){
         try{
             Order order = HaveActiveOrderByPrincipal(principal);
             order.setAddress(address);
@@ -76,6 +77,7 @@ public class OrderService {
             order.setTypePostcard(typepostcard);
             order.setDatePayment(paydate);
             order.setTextPostcard(textpostcard);
+            order.setDateTimeDelivery(deliver);
             order.setActive((long)2);
             orderRepository.save(order);
         }catch (Exception e){
@@ -86,9 +88,9 @@ public class OrderService {
     }
 
     @Transactional
-    public void DeliverOrder(Order order, LocalDateTime delierydate){
+    public void DeliverOrder(Order order, LocalDateTime deliverydate){
         try{order.setActive((long)3);
-            order.setDateTimeDelivery(delierydate);//3 активность - доставлен
+            order.setDateTimeDelivery(deliverydate);//3 активность - доставлен
         }catch(Exception e){
             e.printStackTrace();
         }

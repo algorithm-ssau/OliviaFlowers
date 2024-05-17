@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>
@@ -323,14 +322,18 @@
     <br><br><br>
     <div id ="section5" class = "container">
         <h4>Список заказов, которые нужно доставить</h4>
+        <br>
         <#assign x = 0>
         <#list toDeliverOrders as order>
 
-            <h5>Заказ №${order.id}</h5>
+            <h3>Заказ №${order.id}</h3>
+            <h5>Адрес: ${order.address}</h5>
+
+            <h5>Дата оплаты: ${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</h5>
+            <h5>Желаемая дата доставки: ${order.dateTimeDelivery.format('yyyy-MM-dd HH:mm:ss')!'Не указана'}</h5>
+            <h5>Текст карточки: ${order.textPostcard!'Не выбрана карточка'}</h5>
             <br>
-            <h5>Адрес - ${order.address}, Дата оплаты: ${order.datePayment}, Желаемая дата доставки: ${order.dateTimeDelivery!'Не указана'}, Текст карточки: ${order.textPostcard!'Нету'}</h5>
-            <br>
-            <h5>Букеты в заказе:</h5>
+            <h4>Букеты в заказе:</h4>
             <table class = "table">
                 <thead>
                     <tr>
@@ -386,7 +389,16 @@
                 </tbody>
             </table>
 
+            <form action = "deliver_order/${order.id}">
+                <button type="submit" class="btn btn-custom">Отметить доставленным</button>
+            </form>
+            <form action = "cancel_order/${order.id}">
+                <button type="submit" class="btn btn-custom">Отменить заказ</button>
+            </form>
+            <br>
+
             <#assign x++>
+
         </#list>
     </div>
 
