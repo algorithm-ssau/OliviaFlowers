@@ -15,9 +15,6 @@ public class Postcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String name; // Название открытки
-
     @OneToOne
     private Image image; // Изображение открытки
 }

@@ -128,12 +128,12 @@ public class OrderController {
                                   @RequestParam(name = "addressDelivery") String addressDelivery,
                                   @RequestParam(name = "dateDelivery") LocalDate dateDelivery,
                                   @RequestParam(name = "timeDelivery") String timeDelivery,
-                                  @RequestParam(name = "data_postcard_id") String data_postcard_id,
+                                  @RequestParam(name = "dataPostcardId") String dataPostcardId,
                                   Principal principal, RedirectAttributes redirectAttributes){
         LocalDateTime datePayment = LocalDateTime.now();
         //даже не спрашивайте , что это. Только так работает
         if(typePostcard == 0){
-            char secondChar = data_postcard_id.charAt(0);
+            char secondChar = dataPostcardId.charAt(0);
             // Преобразование char в String
             String secondCharAsString = String.valueOf(secondChar);
             // Преобразование String в Long

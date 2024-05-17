@@ -299,7 +299,7 @@
       <#list allPostcards as postcard>
       <div class="carousel-item<#if postcard_index == 0> active</#if>">
         <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
-        <input type="hidden" id="postcardId" name="data_postcard_id" value="${postcard.id}">
+        <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
       </div>
     </#list>
 </div>
