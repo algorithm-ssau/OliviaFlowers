@@ -52,4 +52,6 @@ public class Favorite_key implements Serializable {
 
     public void setIdBouquet(Long bouquetId) { this.idBouquet = bouquetId;
     }
+
+
 }

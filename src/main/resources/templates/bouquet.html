@@ -118,7 +118,10 @@
       <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
     </form>
 
-    <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
+    <form action="/add_to_favorites" method="post">
+      <input type="hidden" name="bouquetId" value="${bouquet.id}">
+      <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
+    </form>
   </div>
 </div>
 </div>
