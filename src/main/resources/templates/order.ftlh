@@ -137,6 +137,19 @@
       border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
     }
 
+    .btn-custom-order {
+      margin-top: 10px;
+      background-color: #f0eade; /* Основной цвет кнопки */
+      border-color: #f0eade; /* Цвет границы кнопки */
+      color: #333; /* Цвет текста кнопки */
+    }
+
+    .btn-custom-order:hover {
+      color: #333; /* Цвет текста кнопки */
+      background-color: #e0d8d0; /* Цвет кнопки при наведении */
+      border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+    }
+
     .custom-link {
       width: 87%;
       margin-left: 5rem;
@@ -147,27 +160,11 @@
       text-decoration: none;
     }
 
-    .dropdown-item {
-        border-bottom: 2px solid #f0eade; /* Цвет и ширина границы между элементами */
-    }
-
-    /* Если вы хотите изменить цвет выделенной границы */
-    .dropdown-item.active,
-    .dropdown-item:active {
-        border-color: #f0eade; /* Цвет выделенной границы */
-    }
 
     /* Стили для границы карты */
     .custom-card {
-      border-radius: 10px; /* Скругление углов */
-      max-width: 150px; /* Максимальная ширина карточки */
+      max-width: 8rem; /* Максимальная ширина карточки */
       margin: auto; /* Центрирование карточки */
-    }
-
-
-
-    input[type="text"][disabled] {
-       color: black;
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
@@ -319,7 +316,7 @@
       <div class="col">
         <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
             <label for="textPostcard" class="form-label">Текст открытки:</label>
-            <textarea class="form-control" id="textPostcard" name="textPostcard"></textarea>
+            <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
         </div>
       </div>
 
@@ -333,11 +330,12 @@
         <input type="text" class="form-control" id="addressDelivery" name="addressDelivery" required>
     </div>
 
-    <div id = "dateTimeDeliveryContainer" class ="mb-3">
+    <div class ="mb-3">
       <label for="dateDelivery" class="form-label">Дата доставки</label>
       <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" required>
+    </div>
 
-
+    <div class ="mb-3">
       <label for="dateTimeDelivery" class="form-label">Время доставки:</label>
         <select name="timeDelivery" id="timeDelivery" class="form-control" required>
           <option value="08:00 - 10:00">08:00 - 10:00</option>
@@ -350,7 +348,7 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-custom">Оформление заказа</button>
+    <button type="submit" class="btn btn-custom-order">Заказать</button>
     </form>
 
   </#if>

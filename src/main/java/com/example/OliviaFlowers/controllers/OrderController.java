@@ -132,7 +132,7 @@ public class OrderController {
                                   Principal principal, RedirectAttributes redirectAttributes){
         LocalDateTime datePayment = LocalDateTime.now();
         //даже не спрашивайте , что это. Только так работает
-        if(typePostcard == 1){
+        if(typePostcard == 0){
             char secondChar = data_postcard_id.charAt(0);
             // Преобразование char в String
             String secondCharAsString = String.valueOf(secondChar);
