@@ -33,8 +33,7 @@ public class Order_has_bouquet_key implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Order_has_b
-        ouquet_key other = (Order_has_bouquet_key) obj;
+        Order_has_bouquet_key other = (Order_has_bouquet_key) obj;
         if (idOrder == null) {
             if (other.idOrder != null)
                 return false;
