@@ -63,7 +63,7 @@ public class OrderHasBouquetService {
     public boolean saveOrderHasBouquet(Order order, Bouquet bouquet) {
         Long idOrder = order.getId();
         Long idBouquet = bouquet.getId();
-        order_has_bouquet_key id = new order_has_bouquet_key(idOrder, idBouquet);
+        Order_has_bouquet_key id = new Order_has_bouquet_key(idOrder, idBouquet);
         Order_has_bouquet ohb = new Order_has_bouquet();
         ohb.setId(id);
         if (bouquet != null && order != null) {
