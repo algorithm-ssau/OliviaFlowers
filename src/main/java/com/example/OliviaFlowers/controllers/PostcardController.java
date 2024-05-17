@@ -1,13 +1,18 @@
-/*
 package com.example.OliviaFlowers.controllers;
 
 import ch.qos.logback.core.model.Model;
+import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.models.Postcard;
 import com.example.OliviaFlowers.secvices.PostcardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -19,10 +24,15 @@ public class PostcardController {
         this.postcardService = postcardService;
     }
 
-    @GetMapping("/choose_postcard")
-    public String admin(org.springframework.ui.Model model){
-        model.addAttribute("allPostcard", postcardService.listAllPostcards());
-        return "redirect:/order";
+    @PostMapping("/add_postcard")
+    public String admin(@RequestParam("file") MultipartFile file, Postcard postcard, RedirectAttributes redirectAttributes) throws IOException {
+        try {
+            postcardService.savePostcard(postcard, file);
+            redirectAttributes.addFlashAttribute("message", "Открытка успешно сохранена");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении букета");
+        }
+        return "redirect:/admin";
     }
 }
-*/
+

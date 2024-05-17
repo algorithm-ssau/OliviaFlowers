@@ -109,6 +109,9 @@
     <a class="list-group-item list-group-item-action custom-link" href="#section2">Выбор букетов для главного экрана</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section3">Поиск букета по названию</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section4">Вывод всех букетов</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section5">Добавление открыток</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section6">Вывод всех открыток</a>
+
     </div>
 
 
@@ -312,6 +315,54 @@
         </table>
     </div>
 
+
+<!-- Добавление открыток -->
+    <br> <br> <br>
+    <div id="section5" class="container">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <h4>Добавление открытки:</h4>
+        <form action="/add_postcard" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="file" class="form-label">Фото:</label>
+                <input type="file" class="form-control" id="file" name="file">
+            </div>
+            <button type="submit" class="btn btn-custom">Добавить открытку</button>
+        </form>
+    </div>
+
+<!-- Вывод открыток в таблице -->
+    <br> <br> <br>
+    <div id="section6" class="container">
+        <h4>Список открыток:</h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Фото</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#list allPostcards as postcard>
+                    <tr>
+                        <td>${postcard.id}</td>
+                        <td>
+                            <#if postcard.image?has_content>
+                                <img src="/images/${postcard.image.id}" alt="Фото" style="max-width: 100px;">
+                            <#else>
+                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                            </#if>
+                        </td>
+                        <td>
+                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                            <form action="/postcard_delete/${postcard.id}" method="post">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                </#list>
+            </tbody>
+        </table>
+    </div>
 
 
 </body>

@@ -29,7 +29,7 @@ public class BouquetService {
 
     public BouquetService(BouquetRepository bouquetRepository, ImageRepository imageRepository, ImageRepository imageRepository1) {
         this.bouquetRepository = bouquetRepository;
-        this.imageRepository = imageRepository1;
+        this.imageRepository = imageRepository;
     }
 
     public List<Bouquet> listAllBouquetsByName(String name){

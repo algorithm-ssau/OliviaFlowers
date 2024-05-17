@@ -3,6 +3,7 @@ package com.example.OliviaFlowers.controllers;
 import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.secvices.BouquetService;
 import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
+import com.example.OliviaFlowers.secvices.PostcardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,14 @@ public class BouquetController {
     private final BouquetService bouquetService;
     @Autowired
     private final OrderHasBouquetService orderHasBouquetService;
+    @Autowired
+    private final PostcardService postcardService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService) {
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, PostcardService postcardService) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
+        this.postcardService = postcardService;
+
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -39,6 +44,7 @@ public class BouquetController {
     @GetMapping("/admin")
         public String admin(Model model){
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
+        model.addAttribute("allPostcards", postcardService.listAllPostcards());
         return "admin";
     }
 
