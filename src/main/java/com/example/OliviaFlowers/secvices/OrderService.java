@@ -51,6 +51,22 @@ public class OrderService {
         return orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
     }
 
+    public Order getOrderByID(Long id){
+        return orderRepository.findById(id).orElse(null);
+    }
+
+    public List<Order> ListOrderActivity2(Principal principal){
+        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal),(long)2); //заказы к доставке
+    }
+
+    public List<Order> ListOrderActivity0(Principal principal){ //полностью закрытые заказы
+        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal),(long)0);
+    }
+
+    public List<Order> ListAllOrdersToDeliver(){
+        return orderRepository.findAllByActive((long)2);
+    }
+
     @Transactional
     public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate){
         try{
@@ -67,6 +83,24 @@ public class OrderService {
         }
 
 
+    }
+
+    @Transactional
+    public void DeliverOrder(Order order, LocalDateTime delierydate){
+        try{order.setActive((long)3);
+            order.setDateTimeDelivery(delierydate);//3 активность - доставлен
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Transactional
+    public void CancelOrder(Order order){
+        try{
+            order.setActive((long)4); //4 активность - отменён
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 
