@@ -6,33 +6,68 @@
   </title>
 
   <script>
+
     function showMessage(message) {
       alert(message);
     }
 
-    function showpostcardtext() {
-      if(document.getElementById("nopostcard").selected){
-        document.getElementById("posttext").style.display = "none"
+    function showPostcardText() {
+      if(document.getElementById("noPostcard").selected){
+        document.getElementById("postcardCarousel").style.display = "none"
+        document.getElementById("textPostcardContainer").style.display = "none"
       } else{
-        document.getElementById("posttext").style.display = "block"
+        document.getElementById("postcardCarousel").style.display = "block"
+        document.getElementById("textPostcardContainer").style.display = "block"
       }
-
-
-
-
     }
+
+    function showDateTimeDeliverySelect() {
+      if(document.getElementById("earliest").selected){
+        document.getElementById("dateTimeDeliveryContainer").style.display = "none"
+      } else{
+        document.getElementById("dateTimeDeliveryContainer").style.display = "block"
+      }
+    }
+
     function showaddress() {
         if (document.getElementById("nodelivery").selected) {
-            document.getElementById("address").style.display = "none"
+            document.getElementById("addressDelivery").style.display = "none"
         } else {
-            document.getElementById("address").style.display = "block"
+            document.getElementById("addressDelivery").style.display = "block"
         }
     }
+
+    function validateForm() {
+        var addressDelivery = document.getElementById("addressDelivery").value;
+        var dateDelivery = document.getElementById("dateDelivery").value;
+        var timeDelivery = document.getElementById("timeDelivery").value;
+
+        console.log("Address Delivery:", addressDelivery);
+        console.log("Date Delivery:", dateDelivery);
+        console.log("Time Delivery:", timeDelivery);
+
+
+        if (addressDelivery === "" || dateDelivery === "" || timeDelivery === "") {
+            alert("Пожалуйста, заполните все обязательные поля.");
+            return false;
+        }
+
+    }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var carousel = document.getElementById("postcardCarousel");
+
+            carousel.addEventListener('slid.bs.carousel', function (event) {
+                var activeImage = carousel.querySelector('.carousel-item.active img');
+                var postcardId = activeImage.getAttribute('data-postcard-id');
+                document.getElementById("postcardId").value = postcardId;
+            });
+        });
+
+
   </script>
 
-  <script>
-
-  </script>
 
   <style>
     h5{text-align:right;}
@@ -111,6 +146,44 @@
       color: #333;
       text-decoration: none;
     }
+
+    .dropdown-item {
+        border-bottom: 2px solid #f0eade; /* Цвет и ширина границы между элементами */
+    }
+
+    /* Если вы хотите изменить цвет выделенной границы */
+    .dropdown-item.active,
+    .dropdown-item:active {
+        border-color: #f0eade; /* Цвет выделенной границы */
+    }
+
+    /* Стили для границы карты */
+    .custom-card {
+      border-radius: 10px; /* Скругление углов */
+      max-width: 150px; /* Максимальная ширина карточки */
+      margin: auto; /* Центрирование карточки */
+    }
+
+
+
+    input[type="text"][disabled] {
+       color: black;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+    }
+
+    input::-webkit-datetime-edit {
+      position: relative;
+      left: 15px;
+    }
+
+    input::-webkit-datetime-edit-fields-wrapper {
+      position: relative;
+      left: 15px;
+    }
+
   </style>
 
 
@@ -133,7 +206,8 @@
   <a class="list-group-item list-group-item-action custom-link" href="#section3">Оформление заказа</a>
   <a class="list-group-item list-group-item-action custom-link" href="#section3">История заказов</a>
 </div>
-<body>
+
+
 <br><br><br>
 <!-- Вывод букета активного заказа  -->
 <div id="section4" class="container">
@@ -200,48 +274,89 @@
       </tbody>
     </table>
 
-    <h5>Стоимость всего заказа - ${acOrder.sumOrderl} руб.</h5>
+    <h5>Стоимость всего заказа - ${acOrder.sumOrder} руб.</h5>
 
   </#if>
 </div>
 <div id="section3" class="container">
   <#if acBouquets?size != 0>
-    <br>
-    <h4>Оформление заказа:</h4>
-    <form action = "/order_checkout" method = "post">
-        <div class="mb-3">
-            <label for="typepostcard" class="form-label">Тип открытки:</label>
-            <select onchange = "showpostcardtext()" name = "typepostcard" id = "typepostcard" class = "form-control">
-                <option id = "nopostcard" value = "0">Без открытки</option>
-                <option value = "1">Открытка</option>
-                <option value = "2">Записка</option>
-            </select>
-        </div>
-        <div id = "posttext" class ="mb-3" style = "display:none">
-            <label for="textpostcard" class="form-label">Текст открытки:</label>
-            <input type="text" class="form-control" id="textpostcard" name="textpostcard">
-        </div>
-        <div class="mb-3">
-            <label for="toDeliver" class="form-label">Самовывоз или доставка:</label>
-            <select onchange = "showaddress()" name = "toDeliver" id = "toDeliver" class = "form-control">
-                <option id = "nodelivery" value = "0">Самовывоз</option>
-                <option value = "1">Доставка</option>
-            </select>
-        </div>
-        <div id = "address" class ="mb-3" style = "display:none">
-            <label for="address" class="form-label">Адрес доставки:</label>
-            <input type="text" class="form-control" id="address" name="address">
+  <h4>Оформление заказа:</h4>
+      <form action="/order_checkout" method="post" onsubmit="return validateForm()" class="row">
 
+      <div class="mb-3">
+          <label for="typePostcard" class="form-label">Тип открытки:</label>
+          <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
+              <option id = "noPostcard" value = "-1">Без открытки</option>
+              <option value = "0">C открыткой</option>
+          </select>
+      </div>
+
+      <div class="col-md-auto">
+            <div id="postcardCarousel" class="carousel slide custom-card" style="display:none">
+              <div class="carousel-indicators">
+                <#list allPostcards as postcard>
+                  <button type="button" data-bs-target="#postcardCarousel" data-bs-slide-to="${postcard_index}"<#if postcard_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${postcard_index + 1}"></button>
+                </#list>
+              </div>
+              <div class="carousel-inner">
+                <#list allPostcards as postcard>
+                  <div class="carousel-item<#if postcard_index == 0> active</#if>">
+                    <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
+                    <input type="hidden" id="postcardId" name="data_postcard_id" value="${postcard.id}">
+                  </div>
+                </#list>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+      </div>
+      <div class="col">
+        <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
+            <label for="textPostcard" class="form-label">Текст открытки:</label>
+            <textarea class="form-control" id="textPostcard" name="textPostcard"></textarea>
         </div>
-        <button type="submit" class="btn btn-custom">Оформление заказа</button>
+      </div>
+
+
+
+
+
+
+    <div id = "addressDelivery" class ="mb-3">
+        <label for="addressDelivery" class="form-label">Адрес доставки:</label>
+        <input type="text" class="form-control" id="addressDelivery" name="addressDelivery" required>
+    </div>
+
+    <div id = "dateTimeDeliveryContainer" class ="mb-3">
+      <label for="dateDelivery" class="form-label">Дата доставки</label>
+      <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" required>
+
+
+      <label for="dateTimeDelivery" class="form-label">Время доставки:</label>
+        <select name="timeDelivery" id="timeDelivery" class="form-control" required>
+          <option value="08:00 - 10:00">08:00 - 10:00</option>
+          <option value="10:00 - 12:00">10:00 - 12:00</option>
+          <option value="12:00 - 14:00">12:00 - 14:00</option>
+          <option value="14:00 - 16:00">14:00 - 16:00</option>
+          <option value="16:00 - 18:00">16:00 - 18:00</option>
+          <option value="18:00 - 20:00">18:00 - 20:00</option>
+          <option value="20:00 - 22:00">20:00 - 22:00</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-custom">Оформление заказа</button>
     </form>
 
   </#if>
 <br><br><br>
 </div>
 
-
-
-
 </body>
 <#include "blocks/footer.ftlh">
+</html>

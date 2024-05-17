@@ -10,8 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -52,14 +54,17 @@ public class OrderService {
     }
 
     @Transactional
-    public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate){
+    public void CheckoutOrder(Principal principal, Long typePostcard, String textPostcard,
+                              String addressDelivery, LocalDateTime datePayment,
+                              LocalDate dateDelivery, String timeDelivery){
         try{
             Order order = HaveActiveOrderByPrincipal(principal);
-            order.setAddress(address);
-            order.setToDeliver(toDeliver);
-            order.setTypePostcard(typepostcard);
-            order.setDatePayment(paydate);
-            order.setTextPostcard(textpostcard);
+            order.setTypePostcard(typePostcard);
+            order.setTextPostcard(textPostcard);
+            order.setAddressDelivery(addressDelivery);
+            order.setDatePayment(datePayment);
+            order.setDateDelivery(dateDelivery);
+            order.setTimeDelivery(timeDelivery);
             order.setActive((long)2);
             orderRepository.save(order);
         }catch (Exception e){
