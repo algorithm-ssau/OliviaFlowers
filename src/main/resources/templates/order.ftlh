@@ -81,6 +81,19 @@
       border-color: #f0eade; /* Цвет границы кнопки */
       color: #333; /* Цвет текста кнопки */
     }
+    .btn-custom3 {
+        width: 100%;
+        margin-top: 10px;
+        background-color: #f0eade; /* Основной цвет кнопки */
+        border-color: #f0eade; /* Цвет границы кнопки */
+        color: #333; /* Цвет текста кнопки */
+    }
+
+    .btn-custom3:hover {
+        color: #333; /* Цвет текста кнопки */
+        background-color: #e0d8d0; /* Цвет кнопки при наведении */
+        border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+    }
 
     .btn-custom:hover {
       color: #333; /* Цвет текста кнопки */
@@ -233,7 +246,7 @@
             <input type="text" class="form-control" id="address" name="address">
 
         </div>
-        <button type="submit" class="btn btn-custom">Оформление заказа</button>
+        <button type="submit" class="btn btn-custom3">Оформление заказа</button>
     </form>
 
   </#if>

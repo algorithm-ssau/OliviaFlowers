@@ -1,8 +1,10 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
+import com.example.OliviaFlowers.models.Order;
 import com.example.OliviaFlowers.secvices.BouquetService;
 import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
+import com.example.OliviaFlowers.secvices.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 
@@ -23,10 +27,13 @@ public class BouquetController {
     private final BouquetService bouquetService;
     @Autowired
     private final OrderHasBouquetService orderHasBouquetService;
+    @Autowired
+    private final OrderService orderService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService) {
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -39,8 +46,23 @@ public class BouquetController {
     @GetMapping("/admin")
         public String admin(Model model){
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
+        model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
+        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
+        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
+
+
         return "admin";
     }
+
+    /*@GetMapping("/getbouquetsbyorder/{id}")
+    public String findbouquets(@PathVariable Long id, Model model){
+        Order order = orderService.getOrderByID(id);
+        model.addAttribute("bouquetsorderful",orderHasBouquetService.getbouquetsByOrder(order));
+        model.addAttribute("amountsorderful",orderHasBouquetService.getAmountsByOrder(order));
+        return "admin";
+    }*/
+
+
 
     @GetMapping("/bouquet/{id}")
     public String bouquet(@PathVariable Long id, Model model){
@@ -75,7 +97,7 @@ public class BouquetController {
     }
 
     @PostMapping("/bouquet_addcar/{id}")
-    public String addToCart(@PathVariable Long id, Model model, Principal principal, RedirectAttributes redirectAttributes) {
+    public String addToCart(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
         try{
             Bouquet bouquet = bouquetService.getBouquetByID(id);
             orderHasBouquetService.createOrderHasBouquet(bouquet, principal);
@@ -87,6 +109,34 @@ public class BouquetController {
 
         return "redirect:/bouquet/{id}";
 
+    }
+
+    @PostMapping("deliver_order/{id}")
+    public String finishOrder(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        try{
+            Order order = orderService.getOrderByID(id);
+            LocalDateTime delivered = LocalDateTime.now();
+            orderService.DeliverOrder(order, delivered);
+            redirectAttributes.addFlashAttribute("message", "Заказ отмечен как доставленный");
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");
+        }
+
+        return"redirect:/admin";
+    }
+
+    @PostMapping("cancel_order/{id}")
+    public String cancelOrder(@PathVariable Long id, RedirectAttributes redirectAttributes){
+        try{
+            Order order = orderService.getOrderByID(id);
+            orderService.CancelOrder(order);
+
+            redirectAttributes.addFlashAttribute("message", "Заказ отменён");
+        }catch(Exception e){
+            redirectAttributes.addFlashAttribute("message", "Ошибка при отмене заказа");
+        }
+
+        return"redirect:/admin";
     }
 
 

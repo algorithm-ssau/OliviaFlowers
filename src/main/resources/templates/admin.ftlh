@@ -12,6 +12,13 @@
         }
     </script>
 
+    <script>
+        function request (id){
+
+        }
+
+    </script>
+
     <style>
 
         .container-fluid, .navbar-custom, .image-container{
@@ -310,6 +317,77 @@
                 </#list>
             </tbody>
         </table>
+    </div>
+
+
+    <br><br><br>
+    <div id ="section5" class = "container">
+        <h4>Список заказов, которые нужно доставить</h4>
+        <#assign x = 0>
+        <#list toDeliverOrders as order>
+
+            <h5>Заказ №${order.id}</h5>
+            <br>
+            <h5>Адрес - ${order.address}, Дата оплаты: ${order.datePayment}, Желаемая дата доставки: ${order.dateTimeDelivery!'Не указана'}, Текст карточки: ${order.textPostcard!'Нету'}</h5>
+            <br>
+            <h5>Букеты в заказе:</h5>
+            <table class = "table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Состав</th>
+                        <th>Фото</th>
+                        <th>Количество</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <#assign y = 0>
+                    <#list toDeliverBouquets[x] as bouquet>
+                        <tr>
+                            <td>${bouquet.id}</td>
+                            <td>${bouquet.name}</td>
+                            <!-- Вывод состава букета в несколько строк -->
+                            <td>
+                                <#list (bouquet.composition)?split("\n") as line>
+                                    ${line}<br>
+                                </#list>
+                            </td>
+                            <td>
+                                <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                    <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
+
+                                <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                    <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
+
+                                <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                    <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                <#else>
+                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                </#if>
+
+                            </td>
+                            <td>
+                                ${toDeliverAmounts[x][y]}
+                            </td>
+
+
+                        </tr>
+                        <#assign y++>
+
+
+                    </#list>
+                </tbody>
+            </table>
+
+            <#assign x++>
+        </#list>
     </div>
 
 
