@@ -141,3 +141,5 @@
 
 </body>
 </html>
+
+<#include "blocks/footer.ftlh">
