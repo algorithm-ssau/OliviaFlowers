@@ -390,10 +390,10 @@
                 </tbody>
             </table>
 
-            <form action = "deliver_order/${order.id}">
+            <form action = "deliver_order/${order.id}" method="post">
                 <button type="submit" class="btn btn-custom">Отметить доставленным</button>
             </form>
-            <form action = "cancel_order/${order.id}">
+            <form action = "cancel_order/${order.id}" method="post">
                 <button type="submit" class="btn btn-custom">Отменить заказ</button>
             </form>
             <br>
