@@ -93,5 +93,63 @@
 <#include "blocks/header.ftlh">
 
 
+<!-- Вывод всех букетов  -->
+<br> <br> <br>
+<div id="section4" class="container">
+    <h4>Список букетов</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Состав</th>
+                <th>Цена</th>
+                <th>Фото</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list allBouquets as bouquet>
+            <tr>
+                <td>${bouquet.id}</td>
+                <td>${bouquet.name}</td>
+                <!-- Вывод состава букета в несколько строк -->
+                <td>
+                    <#list (bouquet.composition)?split("\n") as line>
+                    ${line}<br>
+                </#list>
+                </td>
+                <td>${bouquet.price}</td>
+                <td>
+                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                    <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                    <#else>
+                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                </#if>
 
+                <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+                <#else>
+                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+            </#if>
+
+            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+            <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+            <#else>
+            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+            </#if>
+
+            </td>
+            <td>
+                <a href="/bouquet/${bouquet.id}" class="btn btn-primary">Просмотр</a>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                <form action="/bouquet_delete/${bouquet.id}" method="post">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+            </tr>
+        </#list>
+        </tbody>
+        </table>
+</div>
 <#include "blocks/footer.ftlh">
