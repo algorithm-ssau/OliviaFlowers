@@ -8,11 +8,13 @@ import com.example.OliviaFlowers.repositories.PostcardRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -54,5 +56,16 @@ public class PostcardService {
         image.setSize(file.getSize());
         image.setBytes(file.getBytes());
         return image;
+    }
+
+    @Transactional
+    public void deletePostcard(Long id){
+        try {
+            Long imageId = postcardRepository.findById(id).get().getImage().getId();
+            imageRepository.deleteById(imageId);
+            postcardRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

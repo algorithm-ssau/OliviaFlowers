@@ -7,6 +7,7 @@ import com.example.OliviaFlowers.secvices.PostcardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +31,18 @@ public class PostcardController {
             postcardService.savePostcard(postcard, file);
             redirectAttributes.addFlashAttribute("message", "Открытка успешно сохранена");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении букета");
+            redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении открытки");
+        }
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/postcard_delete/{id}")
+    public String deletePostcard(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            postcardService.deletePostcard(id);
+            redirectAttributes.addFlashAttribute("message", "Открытка успешно удалена");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Ошибка при удалении открытки");
         }
         return "redirect:/admin";
     }

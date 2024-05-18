@@ -137,7 +137,7 @@ public class OrderController {
             // Преобразование char в String
             String secondCharAsString = String.valueOf(secondChar);
             // Преобразование String в Long
-            typePostcard = Long.parseLong(secondCharAsString) - 1;
+            typePostcard = Long.parseLong(secondCharAsString);
         }
         if(textPostcard == ""){
             textPostcard = null;
