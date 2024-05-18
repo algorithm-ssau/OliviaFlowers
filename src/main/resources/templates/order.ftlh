@@ -180,191 +180,189 @@
       left: 15px;
     }
 
-    /*
 
     /* Для футера внизу */
-    .body_1{
-        min-height:100%;
+    html, body {
+        height: 100%;
     }
-
-    .footer_1{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -4em; // значение обратное высоте footer
+        flex: 1; /* Раздвигает контент до максимально возможного размера */
     }
-
-    */
-
+    .footer, .push {
+        height: 4em; // высота footer
+    }
 
   </style>
-
-
 </head>
-<body>
 
-<#include "blocks/header.ftlh">
-
-
-<!-- Вывод информационных сообщений  -->
-
-<#if message??>
-  <script>
-    showMessage("${message}");
-  </script>
-</#if>
 
 <body>
-<br><br><br>
-<!-- Вывод букета активного заказа  -->
-<div id="section4" class="container">
-  <#if acBouquets?size = 0>
-    <center><h4>Ваша корзина пуста</h4></center>
+<div class="wrapper">
+ <#include "blocks/header.ftlh">
 
-  <#else>
-    <#assign x = 0>
+ <!-- Вывод информационных сообщений  -->
 
-    <h4>Корзина:</h4>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Название</th>
-        <th>Цена</th>
-        <th>Фото</th>
-        <th>Количество</th>
-        <th>Действия</th>
-      </tr>
-      </thead>
-      <tbody>
-      <#list acBouquets as bouquet>
-        <tr>
-          <td>${bouquet.name}</td>
-          <td>${bouquet.price}</td>
-          <td>
-            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-              <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-            <#else>
-              <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
+ <#if message??>
+   <script>
+     showMessage("${message}");
+   </script>
+ </#if>
 
-            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-              <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-            <#else>
-              <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
+ <br><br><br>
+ <!-- Вывод букета активного заказа  -->
+ <div id="section4" class="container">
+   <#if acBouquets?size = 0>
+     <center><h4>Ваша корзина пуста</h4></center>
 
-            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-              <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-            <#else>
-              <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
+   <#else>
+     <#assign x = 0>
 
-          </td>
-          <td>
-            <br>
-            <form action = "/order_amountchange/${bouquet.id}" method = "post">
-              <input type="number" id="count" name="count" min = "1" max = "20" value=${acAmounts[x]}>
-              <br>
-              <button type="submit" class="btn btn-custom2">Обновить</button>
-            </form>
-          </td>
-          <td>
-            <a href="/bouquet/${bouquet.id}" class="btn btn-custom">Просмотр</a>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            <form action="/order_delete/${bouquet.id}" method="post">
-              <button type="submit" class="btn btn-custom">Удалить</button>
-            </form>
-          </td>
-        </tr>
-        <#assign x++>
-      </#list>
-      </tbody>
-    </table>
+     <h4>Корзина:</h4>
+     <table class="table">
+       <thead>
+       <tr>
+         <th>Название</th>
+         <th>Цена</th>
+         <th>Фото</th>
+         <th>Количество</th>
+         <th>Действия</th>
+       </tr>
+       </thead>
+       <tbody>
+       <#list acBouquets as bouquet>
+         <tr>
+           <td>${bouquet.name}</td>
+           <td>${bouquet.price}</td>
+           <td>
+             <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+               <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+             <#else>
+               <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+             </#if>
 
-    <h5>Стоимость всего заказа - ${acOrder.sumOrderl} руб.</h5>
+             <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+               <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+             <#else>
+               <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+             </#if>
 
-  </#if>
+             <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+               <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+             <#else>
+               <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+             </#if>
+
+           </td>
+           <td>
+             <br>
+             <form action = "/order_amountchange/${bouquet.id}" method = "post">
+               <input type="number" id="count" name="count" min = "1" max = "20" value=${acAmounts[x]}>
+               <br>
+               <button type="submit" class="btn btn-custom2">Обновить</button>
+             </form>
+           </td>
+           <td>
+             <a href="/bouquet/${bouquet.id}" class="btn btn-custom">Просмотр</a>
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+             <form action="/order_delete/${bouquet.id}" method="post">
+               <button type="submit" class="btn btn-custom">Удалить</button>
+             </form>
+           </td>
+         </tr>
+         <#assign x++>
+       </#list>
+       </tbody>
+     </table>
+
+     <h5>Стоимость всего заказа - ${acOrder.sumOrder} руб.</h5>
+
+   </#if>
+ </div>
+ <div id="section3" class="container">
+   <#if acBouquets?size != 0>
+   <h4>Оформление заказа:</h4>
+       <form action="/order_checkout" method="post" onsubmit="return validateForm()" class="row">
+
+       <div class="mb-3">
+           <label for="typePostcard" class="form-label">Тип открытки:</label>
+           <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
+               <option id = "noPostcard" value = "-1">Без открытки</option>
+               <option value = "0">C открыткой</option>
+           </select>
+       </div>
+
+       <div class="col-md-auto">
+             <div id="postcardCarousel" class="carousel slide custom-card" style="display:none">
+               <div class="carousel-indicators">
+                 <#list allPostcards as postcard>
+                   <button type="button" data-bs-target="#postcardCarousel" data-bs-slide-to="${postcard_index}"<#if postcard_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${postcard_index + 1}"></button>
+                 </#list>
+               </div>
+               <div class="carousel-inner">
+                 <#list allPostcards as postcard>
+                   <div class="carousel-item<#if postcard_index == 0> active</#if>">
+                     <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
+                     <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
+                   </div>
+                 </#list>
+               </div>
+               <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
+                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                 <span class="visually-hidden">Previous</span>
+               </button>
+               <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
+                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                 <span class="visually-hidden">Next</span>
+               </button>
+             </div>
+       </div>
+       <div class="col">
+         <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
+             <label for="textPostcard" class="form-label">Текст открытки:</label>
+             <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
+         </div>
+       </div>
+
+
+
+
+
+
+     <div id = "addressDelivery" class ="mb-3">
+         <label for="addressDelivery" class="form-label">Адрес доставки:</label>
+         <input type="text" class="form-control" id="addressDelivery" name="addressDelivery" required>
+     </div>
+
+     <div class ="mb-3">
+       <label for="dateDelivery" class="form-label">Дата доставки</label>
+       <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" required>
+     </div>
+
+     <div class ="mb-3">
+       <label for="dateTimeDelivery" class="form-label">Время доставки:</label>
+         <select name="timeDelivery" id="timeDelivery" class="form-control" required>
+           <option value="08:00 - 10:00">08:00 - 10:00</option>
+           <option value="10:00 - 12:00">10:00 - 12:00</option>
+           <option value="12:00 - 14:00">12:00 - 14:00</option>
+           <option value="14:00 - 16:00">14:00 - 16:00</option>
+           <option value="16:00 - 18:00">16:00 - 18:00</option>
+           <option value="18:00 - 20:00">18:00 - 20:00</option>
+           <option value="20:00 - 22:00">20:00 - 22:00</option>
+         </select>
+     </div>
+
+     <button type="submit" class="btn btn-custom-order">Заказать</button>
+     </form>
+
+   </#if>
+ <br><br><br>
+ </div>
 </div>
-<div id="section3" class="container">
-  <#if acBouquets?size != 0>
-  <h4>Оформление заказа:</h4>
-      <form action="/order_checkout" method="post" onsubmit="return validateForm()" class="row">
-
-      <div class="mb-3">
-          <label for="typePostcard" class="form-label">Тип открытки:</label>
-          <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
-              <option id = "noPostcard" value = "-1">Без открытки</option>
-              <option value = "0">C открыткой</option>
-          </select>
-      </div>
-
-      <div class="col-md-auto">
-            <div id="postcardCarousel" class="carousel slide custom-card" style="display:none">
-              <div class="carousel-indicators">
-                <#list allPostcards as postcard>
-                  <button type="button" data-bs-target="#postcardCarousel" data-bs-slide-to="${postcard_index}"<#if postcard_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${postcard_index + 1}"></button>
-                </#list>
-              </div>
-              <div class="carousel-inner">
-                <#list allPostcards as postcard>
-                  <div class="carousel-item<#if postcard_index == 0> active</#if>">
-                    <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
-                    <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
-                  </div>
-                </#list>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-              </button>
-            </div>
-      </div>
-      <div class="col">
-        <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
-            <label for="textPostcard" class="form-label">Текст открытки:</label>
-            <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
-        </div>
-      </div>
-
-
-
-
-
-
-    <div id = "addressDelivery" class ="mb-3">
-        <label for="addressDelivery" class="form-label">Адрес доставки:</label>
-        <input type="text" class="form-control" id="addressDelivery" name="addressDelivery" required>
-    </div>
-
-    <div class ="mb-3">
-      <label for="dateDelivery" class="form-label">Дата доставки</label>
-      <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" required>
-    </div>
-
-    <div class ="mb-3">
-      <label for="dateTimeDelivery" class="form-label">Время доставки:</label>
-        <select name="timeDelivery" id="timeDelivery" class="form-control" required>
-          <option value="08:00 - 10:00">08:00 - 10:00</option>
-          <option value="10:00 - 12:00">10:00 - 12:00</option>
-          <option value="12:00 - 14:00">12:00 - 14:00</option>
-          <option value="14:00 - 16:00">14:00 - 16:00</option>
-          <option value="16:00 - 18:00">16:00 - 18:00</option>
-          <option value="18:00 - 20:00">18:00 - 20:00</option>
-          <option value="20:00 - 22:00">20:00 - 22:00</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-custom-order">Заказать</button>
-    </form>
-
-  </#if>
-<br><br><br>
-</div>
+<#include "blocks/footer.ftlh">
 
 </body>
-<#include "blocks/footer.ftlh">
 </html>

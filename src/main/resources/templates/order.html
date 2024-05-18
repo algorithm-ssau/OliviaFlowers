@@ -52,7 +52,6 @@
             alert("Пожалуйста, заполните все обязательные поля.");
             return false;
         }
-
     }
 
 
@@ -68,7 +67,6 @@
 
 
   </script>
-
 
   <style>
     h5{text-align:right;}
@@ -182,46 +180,37 @@
       left: 15px;
     }
 
-    /*
 
     /* Для футера внизу */
-    .body_1{
-        min-height:100%;
+    html, body {
+        height: 100%;
     }
-
-    .footer_1{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
+    .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -4em; // значение обратное высоте footer
+        flex: 1; /* Раздвигает контент до максимально возможного размера */
     }
-
-    */
-
+    .footer, .push {
+        height: 4em; // высота footer
+    }
 
   </style>
-
-
 </head>
+
+
 <body>
+<div class="wrapper">
+  <#include "blocks/header.ftlh">
 
-<#include "blocks/header.ftlh">
+  <!-- Вывод информационных сообщений  -->
 
-
-<!-- Вывод информационных сообщений  -->
-
-<#if message??>
-<script>
-    showMessage("${message}");
-  </script>
+  <#if message??>
+  <script>
+     showMessage("${message}");
+   </script>
 </#if>
-
-<div class="list-group">
-  <a class="list-group-item list-group-item-action custom-link" href="#section4">Активный заказ</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">Оформление заказа</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">История заказов</a>
-</div>
-
 
 <br><br><br>
 <!-- Вывод букета активного заказа  -->
@@ -232,7 +221,7 @@
   <#else>
   <#assign x = 0>
 
-  <h4>Активный заказ:</h4>
+  <h4>Корзина:</h4>
   <table class="table">
     <thead>
     <tr>
@@ -372,7 +361,8 @@
 </#if>
 <br><br><br>
 </div>
+</div>
+<#include "blocks/footer.ftlh">
 
 </body>
-<#include "blocks/footer.ftlh">
 </html>
