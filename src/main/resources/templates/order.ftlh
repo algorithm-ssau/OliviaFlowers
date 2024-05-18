@@ -181,6 +181,20 @@
       left: 15px;
     }
 
+
+    /* Для футера внизу */
+    .body{
+        min-height:100%;
+    }
+
+    .footer{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+
   </style>
 
 
