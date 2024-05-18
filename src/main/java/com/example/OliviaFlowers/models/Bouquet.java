@@ -41,4 +41,11 @@ public class Bouquet {
     @OneToMany(mappedBy = "bouquet")
     private Set<Order_has_bouquet> amounts;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

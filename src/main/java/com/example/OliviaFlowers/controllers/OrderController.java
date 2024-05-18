@@ -92,7 +92,6 @@ public class OrderController {
             e.printStackTrace();
         }
         return "order";
-
     }
 
     @PostMapping("/order_delete/{id}")

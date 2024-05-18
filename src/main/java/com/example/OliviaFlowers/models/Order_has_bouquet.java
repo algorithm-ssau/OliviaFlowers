@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,7 +12,7 @@ import java.util.List;
 public class Order_has_bouquet {
 
     @EmbeddedId
-    order_has_bouquet_key id;
+    Order_has_bouquet_key id;
 
     @ManyToOne
     @MapsId("idOrder")
@@ -29,7 +27,7 @@ public class Order_has_bouquet {
     @Column
     private Long count; //Количество букетов
 
-    public order_has_bouquet_key GetId(){
+    public Order_has_bouquet_key GetId(){
         return id;
     }
 

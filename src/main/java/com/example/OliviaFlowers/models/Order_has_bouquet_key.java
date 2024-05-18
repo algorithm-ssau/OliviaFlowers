@@ -2,15 +2,13 @@ package com.example.OliviaFlowers.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 
 
 @Embeddable
-public class order_has_bouquet_key implements Serializable {
+public class Order_has_bouquet_key implements Serializable {
 
     @Column(name = "order_id")
     Long idOrder;
@@ -35,7 +33,7 @@ public class order_has_bouquet_key implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        order_has_bouquet_key other = (order_has_bouquet_key) obj;
+        Order_has_bouquet_key other = (Order_has_bouquet_key) obj;
         if (idOrder == null) {
             if (other.idOrder != null)
                 return false;
@@ -49,12 +47,12 @@ public class order_has_bouquet_key implements Serializable {
         return true;
     }
 
-    public order_has_bouquet_key(Long idOrder, Long idBouquet) {
+    public Order_has_bouquet_key(Long idOrder, Long idBouquet) {
         this.idOrder = idOrder;
         this.idBouquet = idBouquet;
     }
 
-    public order_has_bouquet_key(){
+    public Order_has_bouquet_key(){
 
     }
 

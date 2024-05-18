@@ -32,7 +32,7 @@ public class Favorite_key implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        order_has_bouquet_key other = (order_has_bouquet_key) obj;
+        Order_has_bouquet_key other = (Order_has_bouquet_key) obj;
         if (idUser == null) {
             if (other.idOrder != null)
                 return false;
@@ -52,4 +52,6 @@ public class Favorite_key implements Serializable {
 
     public void setIdBouquet(Long bouquetId) { this.idBouquet = bouquetId;
     }
+
+
 }

@@ -52,7 +52,6 @@
             alert("Пожалуйста, заполните все обязательные поля.");
             return false;
         }
-
     }
 
 
@@ -68,7 +67,6 @@
 
 
   </script>
-
 
   <style>
     h5{text-align:right;}
@@ -216,13 +214,7 @@
   </script>
 </#if>
 
-<div class="list-group">
-  <a class="list-group-item list-group-item-action custom-link" href="#section4">Активный заказ</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">Оформление заказа</a>
-  <a class="list-group-item list-group-item-action custom-link" href="#section3">История заказов</a>
-</div>
-
-
+<body>
 <br><br><br>
 <!-- Вывод букета активного заказа  -->
 <div id="section4" class="container">
@@ -232,7 +224,7 @@
   <#else>
     <#assign x = 0>
 
-    <h4>Активный заказ:</h4>
+    <h4>Корзина:</h4>
     <table class="table">
       <thead>
       <tr>
@@ -289,7 +281,7 @@
       </tbody>
     </table>
 
-    <h5>Стоимость всего заказа - ${acOrder.sumOrder} руб.</h5>
+    <h5>Стоимость всего заказа - ${acOrder.sumOrderl} руб.</h5>
 
   </#if>
 </div>

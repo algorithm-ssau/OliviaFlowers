@@ -1,66 +1,220 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
-  <title>User</title>
+  <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
-            /* Стили для фона */
-        .container-fluid, .navbar-custom {
-            background-color: #f0eade;
+    /* Стили для фона */
+    .container-fluid, .navbar-custom, .image-container{
+      background-color: #f0eade;
+    }
+
+    .image-container{
+      background-color: #f0eade;
+      padding-bottom: 2rem;
+    }
+
+    /* Стили для заголовка для сезонных цветов */
+    .p-custom {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 21px;
+    }
+
+    /* Отступы карт */
+    .row-custom-flower {
+      margin-left: 14rem;
+      margin-right: 14rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Стили для границы карты */
+    .custom-card-flower {
+      border: 2px solid #f0eade; /* Цвет границы */
+      border-radius: 10px; /* Скругление углов */
+      max-width: 250px; /* Максимальная ширина карточки */
+      margin: auto; /* Центрирование карточки */
+    }
+
+    .custom-card-flower_img {
+      border-radius: 10px; /* Скругление углов для изображения */
+    }
+
+    /* Фон у блока "О нас" */
+    .background_color_about_us {
+      background-color: #f0eade;
+      padding-top: 2rem;          /* padding отступ внутри блока */
+      padding-bottom: 1rem;
+    }
+
+    /* Отступы карт */
+    .row-custom-delivery {
+      margin-left: 22rem;
+      margin-right: 22rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Стили для границы карты */
+    .custom-card-delivery {
+      border: 2px solid #f0eade; /* Цвет границы */
+      border-radius: 10px; /* Скругление углов */
+      max-width: 500px; /* Максимальная ширина карточки */
+      margin: auto; /* Центрирование карточки */
+    }
+
+    /* Стили для заголовка для сезонных цветов */
+    .p-custom-text {
+      text-align: center;
+      font-size: 16px;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 4rem;
+    }
+
+    .card-link {
+        margin-bottom: .75rem; /* Отступ снизу */
+        font-size: 1.25rem; /* Размер шрифта */
+        font-weight: 500; /* Жирность шрифта */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .p-text-center {
+          text-align: center;
+          margin: auto;
+          margin-bottom: 4rem;
         }
 
-        /* Отступы карт */
-        .mx-custom {
-            margin-left: 10rem;
-            margin-right: 10rem;
-        }
-
-        /* Стили для границы карты */
-        .custom-card {
-            border: 2px solid #f0eade; /* Цвет границы */
-            border-radius: 10px; /* Скругление углов */
-        }
-
-        /* Дополнительные стили для формы */
-        .form-container {
-            max-width: 300px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        /* Стили для кнопки */
-        .btn-custom {
-            width: 100%;
-            margin-top: 10px;
-            background-color: #f0eade; /* Основной цвет кнопки */
-            border-color: #f0eade; /* Цвет границы кнопки */
-            color: #333; /* Цвет текста кнопки */
 
 
-
-        }
-
-        .btn-custom:hover {
-            background-color: #e0d8d0; /* Цвет кнопки при наведении */
-            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
-        }
   </style>
 </head>
 <body>
 <#include "blocks/header.ftlh">
-<body>
-<h4>Каталог букетов</h4>
-<div class="col">
-  <div class="card h-100 custom-card-flower">
-    <img src="../bouquet1.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">Букет с гиацинтами</h5>
-      <p class="card-text">2000 Р</p>
+
+
+<p class="p-custom">Вам могут понравиться наши сезонные букеты</p>
+
+<#if catalogPageBouquets?has_content>
+<!-- Если есть букеты, выводим данные о сезонных цветах -->
+
+<div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <div class="col">
+    <div class="card h-100 custom-card-flower">
+      <div id="carouselBouquet1" class="carousel slide">
+        <div class="carousel-indicators">
+          <#list bouquet11.images as image>
+          <button type="button" data-bs-target="#carouselBouquet1" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+      </#list>
     </div>
+    <div class="carousel-inner">
+      <#list bouquet11.images as image>
+      <div class="carousel-item<#if image_index == 0> active</#if>">
+        <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+      </div>
+    </#list>
   </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
-</body>
+
+<div class="card-body">
+  <a href="/bouquet/${bouquet11.id}" class="card-link">${bouquet11.name}</a>
+
+  <p class="card-text">
+    <#list (catalogPageBouquets[0].description)?split("\n") as line>
+    ${line}<br>
+  </#list>
+  </p>
+</div>
+</div>
+</div>
+
+<div class="col">
+  <div class="card h-100 custom-card-flower">
+    <div id="carouselBouquet2" class="carousel slide">
+      <div class="carousel-indicators">
+        <#list bouquet22.images as image>
+        <button type="button" data-bs-target="#carouselBouquet2" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+    </#list>
+  </div>
+  <div class="carousel-inner">
+    <#list bouquet22.images as image>
+    <div class="carousel-item<#if image_index == 0> active</#if>">
+      <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+    </div>
+  </#list>
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet2" data-bs-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet2" data-bs-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
+
+
+<div class="card-body">
+  <a href="/bouquet/${bouquet22.id}" class="card-link">${bouquet22.name}</a>
+  <p class="card-text">
+    <#list (catalogPageBouquets[1].description)?split("\n") as line>
+    ${line}<br>
+  </#list>
+  </p>
+</div>
+</div>
+</div>
+
+<div class="col">
+  <div class="card h-100 custom-card-flower">
+    <div id="carouselBouquet3" class="carousel slide">
+      <div class="carousel-indicators">
+        <#list bouquet33.images as image>
+        <button type="button" data-bs-target="#carouselBouquet3" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+    </#list>
+  </div>
+  <div class="carousel-inner">
+    <#list bouquet33.images as image>
+    <div class="carousel-item<#if image_index == 0> active</#if>">
+      <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+    </div>
+  </#list>
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet3" data-bs-slide="prev">
+  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet3" data-bs-slide="next">
+  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  <span class="visually-hidden">Next</span>
+</button>
+</div>
+
+
+<div class="card-body">
+  <a href="/bouquet/${bouquet33.id}" class="card-link">${bouquet33.name}</a>
+  <p class="card-text">
+    <#list (catalogPageBouquets[2].description)?split("\n") as line>
+    ${line}<br>
+  </#list>
+  </p>
+</div>
+</div>
+</div>
+</div>
+<#else>
+<!-- Если нет букетов, выводим сообщение о их отсутствии -->
+<p class="p-text-center">На данный момент у нас нет сезонных букетов.</p>
+</#if>
+
 <#include "blocks/footer.ftlh">

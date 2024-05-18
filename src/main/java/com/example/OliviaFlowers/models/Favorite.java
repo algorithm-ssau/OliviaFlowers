@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Favorite {
     @EmbeddedId
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Favorite_key id;
 
     @ManyToOne
@@ -24,4 +25,21 @@ public class Favorite {
 
     @Column
     private boolean isFavorite; //Любимый букет или нет
+
+    public Favorite_key getId() {
+        return id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+    public void setBouquet(Bouquet bouquet) {
+        this.bouquet = bouquet;
+    }
+
+    public void setId(Favorite_key id) {
+        this.id = id;
+    }
 }

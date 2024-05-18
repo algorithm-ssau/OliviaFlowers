@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +57,39 @@ public class OrderHasBouquetService {
         return amlist;
     }
 
+    public List<Bouquet> getBouquetsByListOrder(List<Order> orderlist){
+        List<Order_has_bouquet> OhBs = new ArrayList<Order_has_bouquet>();
+        orderlist.forEach(order -> {
+            OhBs.addAll(order_has_bouquet_Repository.findAllByOrder(order));
+        });
+        List<Bouquet> bouqlist = new ArrayList<Bouquet>();
+        OhBs.forEach(ohb -> {
+            bouqlist.add(ohb.getBouquet());
+        });
+        return bouqlist;
+    }
+
+    public List<List<Bouquet>> getPendingBouquets(List<Order> orderList){
+        List<List<Bouquet>> listoflists = new ArrayList<>();
+        orderList.forEach(order -> {
+            listoflists.add(getbouquetsByOrder(order));
+        });
+        return listoflists;
+    }
+
+    public List<List<Long>> getPendingamount(List<Order> orderList){
+        List<List<Long>> listoflists = new ArrayList<>();
+        orderList.forEach(order -> {
+            listoflists.add(getAmountsByOrder(order));
+        });
+        return listoflists;
+    }
+
+
+
+
+
+
 
 
 
@@ -63,7 +97,7 @@ public class OrderHasBouquetService {
     public boolean saveOrderHasBouquet(Order order, Bouquet bouquet) {
         Long idOrder = order.getId();
         Long idBouquet = bouquet.getId();
-        order_has_bouquet_key id = new order_has_bouquet_key(idOrder, idBouquet);
+        Order_has_bouquet_key id = new Order_has_bouquet_key(idOrder, idBouquet);
         Order_has_bouquet ohb = new Order_has_bouquet();
         ohb.setId(id);
         if (bouquet != null && order != null) {
