@@ -37,9 +37,13 @@
         }
 
         .btn-custom:hover {
-            background-color: #e0d8d0; /* Цвет кнопки при наведении */
-            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+            color: #333; /* Цвет текста кнопки */
+              background-color: #e0d8d0; /* Цвет кнопки при наведении */
+              border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+            }
         }
+
+
     </style>
 </head>
 <body>
