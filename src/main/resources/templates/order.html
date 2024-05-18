@@ -202,12 +202,17 @@
 
 <body>
 <div class="wrapper">
+
+  <#if isAdmin?? && isAdmin == true>
+  <#include "blocks/headerAdmin.ftlh">
+  <#else>
   <#include "blocks/header.ftlh">
+</#if>
 
-  <!-- Вывод информационных сообщений  -->
+<!-- Вывод информационных сообщений  -->
 
-  <#if message??>
-  <script>
+<#if message??>
+<script>
      showMessage("${message}");
    </script>
 </#if>

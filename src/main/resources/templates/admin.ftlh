@@ -118,9 +118,8 @@
     <a class="list-group-item list-group-item-action custom-link" href="#section4">Вывод всех букетов</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section5">Добавление открыток</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section6">Вывод всех открыток</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section7">Заказы к доставка</a>
 
-    </div>
-        <a class="list-group-item list-group-item-action custom-link" href="#section7">Заказы к доставка</a>
 </div>
 
 
@@ -364,11 +363,13 @@
         <#list toDeliverOrders as order>
 
             <h3>Заказ №${order.id}</h3>
-            <h5>Адрес: ${order.address}</h5>
-
+            <h5>Адрес доставки: ${order.addressDelivery}</h5>
+            <h5>Дата доставки: ${order.dateDelivery.format('yyyy-MM-dd')}</h5>
+            <h5>Время доставки: ${order.timeDelivery!}</h5>
+            <h5>Тип карточки: ${order.typePostcard!}</h5>
+            <h5>Текст карточки: ${order.textPostcard!'-'}</h5>
             <h5>Дата оплаты: ${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</h5>
-            <h5>Желаемая дата доставки: ${order.dateTimeDelivery.format('yyyy-MM-dd HH:mm:ss')!'Не указана'}</h5>
-            <h5>Текст карточки: ${order.textPostcard!'Не выбрана карточка'}</h5>
+
             <br>
             <h4>Букеты в заказе:</h4>
             <table class = "table">

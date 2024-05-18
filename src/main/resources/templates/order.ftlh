@@ -202,7 +202,12 @@
 
 <body>
 <div class="wrapper">
- <#include "blocks/header.ftlh">
+
+  <#if isAdmin?? && isAdmin == true>
+    <#include "blocks/headerAdmin.ftlh">
+  <#else>
+     <#include "blocks/header.ftlh">
+  </#if>
 
  <!-- Вывод информационных сообщений  -->
 

@@ -1,13 +1,12 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
-import com.example.OliviaFlowers.models.Image;
 import com.example.OliviaFlowers.models.Order;
-import com.example.OliviaFlowers.secvices.BouquetService;
-import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
-import com.example.OliviaFlowers.secvices.OrderService;
-import com.example.OliviaFlowers.secvices.PostcardService;
+import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.secvices.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,16 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class OrderController {
@@ -39,15 +31,19 @@ public class OrderController {
     @Autowired
     private final PostcardService postcardService;
 
+    @Autowired
+    private final UserService userService;
+
 
     @Autowired
     private BouquetService bouquetService;
 
     public OrderController(OrderService orderService, OrderHasBouquetService orderHasBouquetService,
-                           PostcardService postcardService) {
+                           PostcardService postcardService, UserService userService) {
         this.orderService = orderService;
         this.orderHasBouquetService = orderHasBouquetService;
         this.postcardService = postcardService;
+        this.userService = userService;
     }
 
 //    @GetMapping("/order")
@@ -87,6 +83,15 @@ public class OrderController {
 
             model.addAttribute("minDate", minDate);
             model.addAttribute("maxDate", maxDate);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+                String username = authentication.getName(); // Получить имя пользователя
+                User user = userService.getUserByEmail(username);
+                model.addAttribute("isAdmin", user.getIsAdministrator());
+
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

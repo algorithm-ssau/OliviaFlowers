@@ -12,6 +12,13 @@
         }
     </script>
 
+    <script>
+        function request (id){
+
+        }
+
+    </script>
+
     <style>
 
         .container-fluid, .navbar-custom, .image-container{
@@ -109,6 +116,10 @@
     <a class="list-group-item list-group-item-action custom-link" href="#section2">Выбор букетов для главного экрана</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section3">Поиск букета по названию</a>
     <a class="list-group-item list-group-item-action custom-link" href="#section4">Вывод всех букетов</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section5">Добавление открыток</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section6">Вывод всех открыток</a>
+    <a class="list-group-item list-group-item-action custom-link" href="#section7">Заказы к доставка</a>
+
 </div>
 
 
@@ -175,6 +186,37 @@
 
         </div>
         <button type="submit" class="btn btn-custom">Добавить на главный экран</button>
+    </form>
+</div>
+
+<!-- Выбор букетов для каталога  -->
+<br> <br> <br>
+<div id="section5" class="container">
+    <h4>Выбор букетов для каталога</h4>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <form action="/add_bouquets_to_catalog" method="post">
+        <div class="mb-3">
+            <label for="bouquet11" class="form-label">ID букета 1:</label>
+            <input type="text" class="form-control" id="bouquet11" name="bouquet11">
+            <label for="description11" class="form-label">Описание букета:</label>
+            <textarea class="form-control" id="description11" name="description11" style="height: auto"></textarea>
+
+        </div>
+        <div class="mb-3">
+            <label for="bouquet22" class="form-label">ID букета 2:</label>
+            <input type="text" class="form-control" id="bouquet22" name="bouquet22">
+            <label for="description22" class="form-label">Описание букета:</label>
+            <textarea class="form-control" id="description22" name="description22" style="height: auto"></textarea>
+
+        </div>
+        <div class="mb-33">
+            <label for="bouquet33" class="form-label">ID букета 3:</label>
+            <input type="text" class="form-control" id="bouquet33" name="bouquet33">
+            <label for="description33" class="form-label">Описание букета:</label>
+            <textarea class="form-control" id="description33" name="description33" style="height: auto"></textarea>
+
+        </div>
+        <button type="submit" class="btn btn-custom">Добавить на каталог/button>
     </form>
 </div>
 
@@ -312,6 +354,140 @@
         </table>
 </div>
 
+
+<br><br><br>
+<div id ="section7" class = "container">
+    <h4>Список заказов, которые нужно доставить</h4>
+    <br>
+    <#assign x = 0>
+    <#list toDeliverOrders as order>
+
+    <h3>Заказ №${order.id}</h3>
+    <h5>Адрес доставки: ${order.addressDelivery}</h5>
+    <h5>Дата доставки: ${order.dateDelivery.format('yyyy-MM-dd')}</h5>
+    <h5>Время доставки: ${order.timeDelivery!}</h5>
+    <h5>Тип карточки: ${order.typePostcard!}</h5>
+    <h5>Текст карточки: ${order.textPostcard!'-'}</h5>
+    <h5>Дата оплаты: ${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</h5>
+
+    <br>
+    <h4>Букеты в заказе:</h4>
+    <table class = "table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Состав</th>
+            <th>Фото</th>
+            <th>Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#assign y = 0>
+        <#list toDeliverBouquets[x] as bouquet>
+        <tr>
+            <td>${bouquet.id}</td>
+            <td>${bouquet.name}</td>
+            <!-- Вывод состава букета в несколько строк -->
+            <td>
+                <#list (bouquet.composition)?split("\n") as line>
+                ${line}<br>
+            </#list>
+            </td>
+            <td>
+                <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                <#else>
+                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+            </#if>
+
+            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+            <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+            <#else>
+            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+        </#if>
+
+        <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+        <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+        <#else>
+        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+        </#if>
+
+        </td>
+        <td>
+            ${toDeliverAmounts[x][y]}
+        </td>
+
+
+        </tr>
+        <#assign y++>
+
+
+    </#list>
+    </tbody>
+    </table>
+
+    <form action = "deliver_order/${order.id}" method="post">
+        <button type="submit" class="btn btn-custom">Отметить доставленным</button>
+    </form>
+    <form action = "cancel_order/${order.id}" method="post">
+        <button type="submit" class="btn btn-custom">Отменить заказ</button>
+    </form>
+    <br>
+
+    <#assign x++>
+
+</#list>
+</div>
+
+
+<!-- Добавление открыток -->
+<br> <br> <br>
+<div id="section5" class="container">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <h4>Добавление открытки:</h4>
+    <form action="/add_postcard" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="file" class="form-label">Фото:</label>
+            <input type="file" class="form-control" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-custom">Добавить открытку</button>
+    </form>
+</div>
+
+<!-- Вывод открыток в таблице -->
+<br> <br> <br>
+<div id="section6" class="container">
+    <h4>Список открыток:</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Фото</th>
+        </tr>
+        </thead>
+        <tbody>
+        <#list allPostcards as postcard>
+        <tr>
+            <td>${postcard.id}</td>
+            <td>
+                <#if postcard.image?has_content>
+                <img src="/images/${postcard.image.id}" alt="Фото" style="max-width: 100px;">
+                <#else>
+                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+            </#if>
+            </td>
+            <td>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                <form action="/postcard_delete/${postcard.id}" method="post">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </#list>
+        </tbody>
+    </table>
+</div>
 
 
 </body>
