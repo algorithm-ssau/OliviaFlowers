@@ -42,6 +42,11 @@ public class BouquetController {
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
         return "admin";
     }
+    @GetMapping("/catalog")
+    public String catalog(Model model){
+        model.addAttribute("allBouquets", bouquetService.listAllBouquets());
+        return "catalog";
+    }
 
     @GetMapping("/admin")
         public String admin(Model model){
