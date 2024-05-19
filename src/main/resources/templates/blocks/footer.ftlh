@@ -1,4 +1,4 @@
-<ul class="nav navbar-custom nav-fill">
+<ul class="nav navbar-custom nav-fill footer">
     <li class="nav-item my-3">
         <span class="nav-text disabled">Самара</span>
     </li>

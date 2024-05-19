@@ -1,5 +1,6 @@
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="icon_logo.png" type="image/x-icon">
   <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script>
@@ -75,71 +76,102 @@
     .div_center {
       margin: auto;
     }
+    html,
+    body {
+        height: 100%;
+    }
+
+    .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -4em;
+        flex: 1;
+    }
+
+    .footer,
+    .push {
+        height: 4em;
+    }
 
 
   </style>
 </head>
+
 <body>
-<#include "blocks/header.ftlh">
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
 
-<!-- Вывод информационных сообщений  -->
+        <!-- Вывод информационных сообщений  -->
 
-<#if message??>
-    <script>
-        showMessage("${message}");
-    </script>
-</#if>
+        <#if message??>
+            <script>
+                showMessage("${message}");
+            </script>
+        </#if>
 
 
-<div class="border">
-  <div class="row">
-    <div class="col-md-6">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-      <div class="card h-100">
-        <div id="carouselBouquet" class="carousel slide div_center">
-            <div class="carousel-indicators">
-                <#list bouquet.images as image>
-                    <button type="button" data-bs-target="#carouselBouquet" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-                </#list>
-            </div>
-            <div class="carousel-inner">
-                <#list bouquet.images as image>
-                    <div class="carousel-item<#if image_index == 0> active</#if>">
-                        <img src="/images/${image.id}" class="d-block w-100 image" alt="Фото">
+        <div class="border">
+          <div class="row">
+            <div class="col-md-6">
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+              <div class="card h-100">
+                <div id="carouselBouquet" class="carousel slide div_center">
+                    <div class="carousel-indicators">
+                        <#list bouquet.images as image>
+                            <button type="button" data-bs-target="#carouselBouquet" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                        </#list>
                     </div>
-                </#list>
+                    <div class="carousel-inner">
+                        <#list bouquet.images as image>
+                            <div class="carousel-item<#if image_index == 0> active</#if>">
+                                <img src="/images/${image.id}" class="d-block w-100 image" alt="Фото">
+                            </div>
+                        </#list>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+              </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+
+            <div class="col-md-6">
+              <div class="content">
+                <h4 class="text">${bouquet.name}</h4>
+                <h6 class="text">Состав:</h6>
+                <p><#list (bouquet.composition)?split("\n") as line>
+                  ${line}<br>
+                </#list></p>
+                <h6 class="text">${bouquet.price} рублей</h6>
+                  <form action = "/bouquet_addcar/${bouquet.id}" method = "post">
+                      <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
+                  </form>
+
+                <form action="/add_to_favorites" method="post">
+                  <input type="hidden" name="bouquetId" value="${bouquet.id}">
+                  <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        </body>
 
-    <div class="col-md-6">
-      <div class="content">
-        <h4 class="text">${bouquet.name}</h4>
-        <h6 class="text">Состав:</h6>
-        <p><#list (bouquet.composition)?split("\n") as line>
-          ${line}<br>
-        </#list></p>
-        <h6 class="text">${bouquet.price} рублей</h6>
-          <form action = "/bouquet_addcar/${bouquet.id}" method = "post">
-              <button type="submit" class="btn btn-primary btn-custom">Добавить в корзину</button>
-          </form>
 
-        <form action="/add_to_favorites" method="post">
-          <input type="hidden" name="bouquetId" value="${bouquet.id}">
-          <button type="submit" class="btn btn-primary btn-custom2">Добавить в избранное</button>
-        </form>
-      </div>
+        <div class="push"></div>
+        <footer class="footer">
+            <#include "blocks/footer.ftlh">
+        </footer>
     </div>
-  </div>
-</div>
 </body>
-<#include "blocks/footer.ftlh">
+</html>

@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Olivia Flowers</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
@@ -38,26 +39,56 @@
             background-color: #e0d8d0; /* Цвет кнопки при наведении */
             border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
         }
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -4em;
+            flex: 1;
+        }
+
+        .footer,
+        .push {
+            height: 4em;
+        }
     </style>
 </head>
 <body>
-<#include "blocks/header.ftlh">
-<div class="container text-center">
-    <h4 class="mt-4">Авторизация</h4>
-    <div class="form-container">
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label for="email">Эл. почта:</label>
-                <input type="email" class="form-control" id="email" name="username">
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
+
+        <div class="container text-center">
+            <h4 class="mt-4">Авторизация</h4>
+            <div class="form-container">
+                <form action="/login" method="post">
+                    <div class="form-group">
+                        <label for="email">Эл. почта:</label>
+                        <input type="email" class="form-control" id="email" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-custom">Вход</button>
+                </form>
+                <a href="/registration" class="btn btn-link mt-3">Зарегистрироваться</a>
             </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <button type="submit" class="btn btn-custom">Вход</button>
-        </form>
-        <a href="/registration" class="btn btn-link mt-3">Зарегистрироваться</a>
+        </div>
+
+
+        <div class="push"></div>
+        <footer class="footer">
+            <#include "blocks/footer.ftlh">
+        </footer>
     </div>
-</div>
 </body>
 </html>

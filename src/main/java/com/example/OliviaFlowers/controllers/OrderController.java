@@ -2,10 +2,11 @@ package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.models.Order;
-import com.example.OliviaFlowers.secvices.BouquetService;
-import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
-import com.example.OliviaFlowers.secvices.OrderService;
+import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.secvices.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Controller
 public class OrderController {
@@ -24,12 +27,23 @@ public class OrderController {
     public final OrderService orderService;
     @Autowired
     public final OrderHasBouquetService orderHasBouquetService;
+
+    @Autowired
+    private final PostcardService postcardService;
+
+    @Autowired
+    private final UserService userService;
+
+
     @Autowired
     private BouquetService bouquetService;
 
-    public OrderController(OrderService orderService, OrderHasBouquetService orderHasBouquetService) {
+    public OrderController(OrderService orderService, OrderHasBouquetService orderHasBouquetService,
+                           PostcardService postcardService, UserService userService) {
         this.orderService = orderService;
         this.orderHasBouquetService = orderHasBouquetService;
+        this.postcardService = postcardService;
+        this.userService = userService;
     }
 
 //    @GetMapping("/order")
@@ -52,16 +66,38 @@ public class OrderController {
 
     @GetMapping("/order")
     public String getBouqordersAc(Principal principal,Model model){
+        try {
 
-        model.addAttribute("acBouquets", orderHasBouquetService.getbouquetsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+            // Получение текущей даты
+            LocalDate minDate = LocalDate.now();
 
-        model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
-        model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
-        model.addAttribute("acOrder", orderService.HaveActiveOrderByPrincipal(principal));
+            // Получение текущей даты плюс три месяца
+            LocalDate maxDate = minDate.plus(3, ChronoUnit.MONTHS);
+
+            model.addAttribute("acBouquets", orderHasBouquetService.getbouquetsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+
+            model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
+            model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+            model.addAttribute("acOrder", orderService.HaveActiveOrderByPrincipal(principal));
+            model.addAttribute("allPostcards", postcardService.listAllPostcards());
+
+            model.addAttribute("minDate", minDate);
+            model.addAttribute("maxDate", maxDate);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+                String username = authentication.getName(); // Получить имя пользователя
+                User user = userService.getUserByEmail(username);
+                model.addAttribute("isAdmin", user.getIsAdministrator());
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "order";
     }
-
-
 
     @PostMapping("/order_delete/{id}")
     public String deleteOrderBouquet(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes){
@@ -86,31 +122,40 @@ public class OrderController {
         }
 
         return "redirect:/order";
-
-
     }
 
     @PostMapping("/order_checkout")
-    public String Checkoutbouquet(@RequestParam(name = "typepostcard") Long typepostcard,@RequestParam(name = "textpostcard") String textpostcard,
-                                  @RequestParam(name = "toDeliver") Long toDeliver, @RequestParam(name = "address") String address,@RequestParam(name = "dateTimeDelivery") LocalDateTime dateTimeDelivery,  Principal principal, RedirectAttributes redirectAttributes){
-        Boolean todel = true;
-        if(toDeliver == 1) todel = false;
-        LocalDateTime pay = LocalDateTime.now();
-        if (todel == true || address == null) address = "дефолтный магазина на самовывоз";
+    public String Checkoutbouquet(@RequestParam(name = "typePostcard") Long typePostcard,
+                                  @RequestParam(name = "textPostcard") String textPostcard,
+                                  @RequestParam(name = "addressDelivery") String addressDelivery,
+                                  @RequestParam(name = "dateDelivery") LocalDate dateDelivery,
+                                  @RequestParam(name = "timeDelivery") String timeDelivery,
+                                  @RequestParam(name = "dataPostcardId") String dataPostcardId,
+                                  Principal principal, RedirectAttributes redirectAttributes){
+        LocalDateTime datePayment = LocalDateTime.now();
+        //даже не спрашивайте , что это. Только так работает
+        if(typePostcard == 0){
+            char secondChar = dataPostcardId.charAt(0);
+            // Преобразование char в String
+            String secondCharAsString = String.valueOf(secondChar);
+            // Преобразование String в Long
+            typePostcard = Long.parseLong(secondCharAsString);
+        }
+        if(textPostcard == ""){
+            textPostcard = null;
+        }
+        if(textPostcard == ""){
+            textPostcard = null;
+        }
         try{
-            orderService.CheckoutOrder(principal, typepostcard, textpostcard, todel, address, pay, dateTimeDelivery);
-            redirectAttributes.addFlashAttribute("message", "Оформлено, будет доставлено по адресу " + address);
+            orderService.CheckoutOrder(principal, typePostcard, textPostcard, addressDelivery, datePayment, dateDelivery, timeDelivery);
+            redirectAttributes.addFlashAttribute("message", "Оформлено, будет доставлено по адресу " + addressDelivery);
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при оформлении заказа");
         }
 
         return "redirect:/order";
     }
-
-
-
-
-
 
 
 

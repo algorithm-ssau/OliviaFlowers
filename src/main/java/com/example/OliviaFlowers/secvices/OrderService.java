@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -69,15 +70,17 @@ public class OrderService {
     }
 
     @Transactional
-    public void CheckoutOrder(Principal principal, Long typepostcard, String textpostcard, Boolean toDeliver, String address, LocalDateTime paydate, LocalDateTime deliver){
+    public void CheckoutOrder(Principal principal, Long typePostcard, String textPostcard,
+                              String addressDelivery, LocalDateTime datePayment,
+                              LocalDate dateDelivery, String timeDelivery){
         try{
             Order order = HaveActiveOrderByPrincipal(principal);
-            order.setAddress(address);
-            order.setToDeliver(toDeliver);
-            order.setTypePostcard(typepostcard);
-            order.setDatePayment(paydate);
-            order.setTextPostcard(textpostcard);
-            order.setDateTimeDelivery(deliver);
+            order.setTypePostcard(typePostcard);
+            order.setTextPostcard(textPostcard);
+            order.setAddressDelivery(addressDelivery);
+            order.setDatePayment(datePayment);
+            order.setDateDelivery(dateDelivery);
+            order.setTimeDelivery(timeDelivery);
             order.setActive((long)2);
             orderRepository.save(order);
         }catch (Exception e){
@@ -87,14 +90,14 @@ public class OrderService {
 
     }
 
-    @Transactional
+    /*@Transactional
     public void DeliverOrder(Order order, LocalDateTime deliverydate){
         try{order.setActive((long)3);
             order.setDateTimeDelivery(deliverydate);//3 активность - доставлен
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Transactional
     public void CancelOrder(Order order){

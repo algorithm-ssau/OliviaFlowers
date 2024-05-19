@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -28,17 +29,18 @@ public class Order {
     @Column
     private String textPostcard; //текст открытки
 
-    @Column
-    private Boolean toDeliver; //доставка или самовывоз
 
     @Column
-    private String address; //Адрес доставки заказа
+    private String addressDelivery; //Адрес доставки заказа
 
     @Column
-    private LocalDateTime dateTimeDelivery; //время доставки
+    private LocalDate dateDelivery; //дата доставки
 
     @Column
-    private Long sumOrderl; //сумма заказа
+    private String timeDelivery; //время доставки
+
+    @Column
+    private Long sumOrder; //сумма заказа
 
     @Column
     private LocalDateTime datePayment; //время оплаты заказа
@@ -48,8 +50,6 @@ public class Order {
 
     @Column
     private Long active; //активный заказ или нет
-
-
 
 
 

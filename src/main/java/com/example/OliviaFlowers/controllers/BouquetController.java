@@ -5,6 +5,7 @@ import com.example.OliviaFlowers.models.Order;
 import com.example.OliviaFlowers.secvices.BouquetService;
 import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
 import com.example.OliviaFlowers.secvices.OrderService;
+import com.example.OliviaFlowers.secvices.PostcardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,15 @@ public class BouquetController {
     private final OrderHasBouquetService orderHasBouquetService;
     @Autowired
     private final OrderService orderService;
+    @Autowired
+    private final PostcardService postcardService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService) {
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
         this.orderService = orderService;
+        this.postcardService = postcardService;
+
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -51,6 +56,7 @@ public class BouquetController {
     @GetMapping("/admin")
         public String admin(Model model){
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
+        model.addAttribute("allPostcards", postcardService.listAllPostcards());
         model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
         model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
         model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
@@ -121,7 +127,7 @@ public class BouquetController {
         try{
             Order order = orderService.getOrderByID(id);
             LocalDateTime delivered = LocalDateTime.now();
-            orderService.DeliverOrder(order, delivered);
+            //orderService.DeliverOrder(order, delivered);
             redirectAttributes.addFlashAttribute("message", "Заказ отмечен как доставленный");
         }catch(Exception e){
             redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");

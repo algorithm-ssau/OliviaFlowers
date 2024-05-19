@@ -124,12 +124,12 @@ public class OrderHasBouquetService {
             Order order = new Order();
             order.setUser(getUserByPrincipal(principal));
             order.setActive((long)1);
-            order.setSumOrderl((long)0);
+            order.setSumOrder((long)0);
 
             orderRepository.save(order);
         }
         Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
-        ordere.setSumOrderl(ordere.getSumOrderl() + bouquet.getPrice());
+        ordere.setSumOrder(ordere.getSumOrder() + bouquet.getPrice());
         return saveOrderHasBouquet(ordere, bouquet);
 
 
@@ -144,7 +144,7 @@ public class OrderHasBouquetService {
             Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);
             Long delta = ohb.getCount()*bouquet.getPrice();
             order_has_bouquet_Repository.deleteByBouquetAndOrder(bouquet, ordere);
-            ordere.setSumOrderl(ordere.getSumOrderl()-delta);
+            ordere.setSumOrder(ordere.getSumOrder()-delta);
             orderRepository.save(ordere);
 
 
@@ -169,7 +169,7 @@ public class OrderHasBouquetService {
 
 
 
-            ordere.setSumOrderl(ordere.getSumOrderl() + deltasum);
+            ordere.setSumOrder(ordere.getSumOrder() + deltasum);
             order_has_bouquet_Repository.save(ohb);
             orderRepository.save(ordere);
 
