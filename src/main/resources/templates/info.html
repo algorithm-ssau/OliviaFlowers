@@ -81,57 +81,41 @@
             <img src="user.jpg" alt="Фото пользователя" class="img-thumbnail mb-3" style="max-width: 100px; max-height: 100px;">
             <h3 class="mb-3">${currentUser.name} ${currentUser.surname}</h3>
             <nav class="nav flex-column">
-                <a href="info.ftlh" class="btn btn-custom2">Главная</a>
+                <a href="/info" class="btn btn-custom2">Информация о пользователе</a>
+                <a href="/profile" class="btn btn-custom2">Избранные букеты</a>
                 <form action="/logout" method="post style="border: 2px solid #000000; padding: 5px; border-radius: 5px;">
                 <button type="submit" class="btn btn-custom2">Выйти</button>
                 </form>
             </nav>
         </div>
         <div class="col-md-9 mt-4">
-            <h4>Избранные букеты</h4>
-            <#if favoriteBouquets?has_content>
+            <h4>Информация о пользователе</h4>
             <table class="table">
-                <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Состав</th>
-                    <th>Цена</th>
-                    <th>Фото</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
                 <tbody>
-                <#list favoriteBouquets as bouquet>
                 <tr>
-                    <td>${bouquet.name}</td>
-                    <td>
-                        <#list (bouquet.composition)?split("\n") as line>
-                        ${line}<br>
-                    </#list>
-                    </td>
-                    <td>${bouquet.price}</td>
-                    <td>
-                        <#if bouquet.images?has_content && bouquet.images?size gt 0>
-                        <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                    </#if>
-                    </td>
-                    <td>
-                        <a href="/bouquet/${bouquet.id}" class="btn btn-custom">Просмотр</a>
-                        <form action="/remove_from_favorites" method="post" style="display: inline;">
-                            <input type="hidden" name="bouquetId" value="${bouquet.id}">
-                            <input type="hidden" name="userId" value="${currentUser.id}">
-                            <button type="submit" class="btn btn-custom">Удалить из избранного</button>
-                        </form>
-                    </td>
+                    <th>Имя</th>
+                    <td>${currentUser.name}</td>
                 </tr>
-                </#list>
+                <tr>
+                    <th>Фамилия</th>
+                    <td>${currentUser.surname}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>${currentUser.email}</td>
+                </tr>
+                <tr>
+                    <th>Номер телефона</th>
+                    <td>${currentUser.phoneNumber}</td>
+                </tr>
+                <tr>
+                    <th>Дата рождения</th>
+                    <td>${currentUser.dateOfBirthday!"N/A"}</td>
+                </tr>
                 </tbody>
             </table>
-            <#else>
-            <p>Нет избранных букетов</p>
-        </#if>
+        </div>
     </div>
-</div>
 </div>
 </body>
 <#include "blocks/footer.ftlh">

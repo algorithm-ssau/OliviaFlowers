@@ -3,6 +3,18 @@
   <meta charset="UTF-8">
   <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap reboot (для сброса стилей) -->
+  <link rel="stylesheet" href="libs/bootstrap-reboot.min.css">
+
+  <!-- Bootstrap сетка -->
+  <link rel="stylesheet" href="libs/bootstrap-grid.min.css">
+
+  <!-- Шрифты с Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Стили сайта -->
+  <link rel="stylesheet" href="css/styles.css">
   <style>
     /* Стили для фона */
     .container-fluid, .navbar-custom, .image-container{
@@ -71,6 +83,58 @@
       margin-bottom: 4rem;
     }
 
+    .product{
+      margin-top: 3rem;
+      margin-bottom: 30px;
+    }
+    .image{
+      margin-bottom: 10px;
+    }
+    .image img{
+      height: 400px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 7px;
+    }
+    .h3{
+      font-size: 10 px;
+    }
+    .info-price{
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .add-to-cart{
+      border: none;
+      width: 50px;
+      heigth: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #8bc34a;
+      color: #fff;
+      border-radius: 7px;
+    }
+    .price{
+      font-size: 22px;
+
+    }
+        .btn-custom2 {
+      width: 30%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: #ffffff; /* Основной цвет кнопки */
+            border-color: #e0d8d0; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
+    }
+
+    .btn-custom2:hover {
+      color: #333; /* Цвет текста кнопки */
+      background-color: #e0d8d0; /* Цвет кнопки при наведении */
+      border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+    }
+
     .card-link {
         margin-bottom: .75rem; /* Отступ снизу */
         font-size: 1.25rem; /* Размер шрифта */
@@ -79,77 +143,40 @@
         text-decoration: none;
     }
 
-    .p-text-center {
-          text-align: center;
-          margin: auto;
-          margin-bottom: 4rem;
-        }
-
-
 
   </style>
 </head>
 <body>
 <#include "blocks/header.ftlh">
+<div class="container">
+  <div class="row">
 
-
-<!-- Вывод всех букетов  -->
-<br> <br> <br>
-<div id="section4" class="container">
-    <h4>Список букетов</h3>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Состав</th>
-                <th>Цена</th>
-                <th>Фото</th>
-                <th>Действия</th>
-            </tr>
-            </thead>
-            <tbody>
-            <#list allBouquets as bouquet>
-            <tr>
-                <td>${bouquet.id}</td>
-                <td>${bouquet.name}</td>
-                <!-- Вывод состава букета в несколько строк -->
-                <td>
-                    <#list (bouquet.composition)?split("\n") as line>
-                    ${line}<br>
-                </#list>
-                </td>
-                <td>${bouquet.price}</td>
-                <td>
-                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                    <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                    <#else>
-                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                </#if>
-
-                <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                <#else>
-                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
-
-            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-            <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-            <#else>
-            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-            </#if>
-
-            </td>
-            <td>
-                <a href="/bouquet/${bouquet.id}" class="btn btn-primary">Просмотр</a>
+    <br> <br> <br>
+        <tbody>
+        <#list allBouquets as bouquet>
+        <div class="col-md-4">
+          <div class="product">
+            <div class="image">
+              <img src="/images/${bouquet.images[0].id}" alt="Фото">
+            </div>
+            <div class="info">
+              <div class="card-link">${bouquet.name}</div >
+              <div class="info-price">
+                <span class="price">${bouquet.price}&#8381</span>
+                <a href="/bouquet/${bouquet.id}" class="btn btn-primary btn-custom2">К товару <ion-icon name="search"></ion-icon></a>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                <form action="/bouquet_delete/${bouquet.id}" method="post">
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                </form>
-            </td>
-            </tr>
-        </#list>
-        </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+  </#list>
+  <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+  </tbody>
+
+  </div>
 </div>
+
 <#include "blocks/footer.ftlh">
