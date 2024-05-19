@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:border="http://www.w3.org/1999/xhtml" xmlns:padding="http://www.w3.org/1999/xhtml"
+      xmlns:border-radius="http://www.w3.org/1999/xhtml">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Мой профиль</title>
@@ -78,11 +79,12 @@
     <div class="row">
         <div class="col-md-3 d-flex flex-column align-items-center">
             <img src="user.jpg" alt="Фото пользователя" class="img-thumbnail mb-3" style="max-width: 100px; max-height: 100px;">
-             <h3 class="mb-3">${currentUser.name} ${currentUser.surname}</h3>
+            <h3 class="mb-3">${currentUser.name} ${currentUser.surname}</h3>
             <nav class="nav flex-column">
-                <a href="info.ftlh" class="btn btn-custom2">Главная</a>
-                <form action="/logout" method="post style="border: 2px solid #000000; padding: 5px; border-radius: 5px;">
-                    <button type="submit" class="btn btn-custom2">Выйти</button>
+                <a href="/info" class="btn btn-custom2">Информация о пользователе</a>
+                <a href="/profile" class="btn btn-custom2">Избранные букеты</a>
+                <form action="/logout" method="post">
+                <button type="submit" class="btn btn-custom2">Выйти</button>
                 </form>
             </nav>
         </div>
