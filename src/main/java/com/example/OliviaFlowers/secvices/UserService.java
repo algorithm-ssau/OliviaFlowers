@@ -18,6 +18,7 @@ public class UserService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -36,4 +37,9 @@ public class UserService {
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
+
+    public void save(User user) {
+        userRepository.save(user);  // Сохраняем изменения в базе данных
+    }
+
 }
