@@ -91,7 +91,7 @@
         }
     </style>
 </head>
-<#include "blocks/header.ftlh">
+
 <body>
     <div class="wrapper">
         <#if isAdmin?? && isAdmin == true>
