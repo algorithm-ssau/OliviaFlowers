@@ -75,7 +75,9 @@
 </head>
 <body>
 <#include "blocks/header.ftlh">
-
+<form action="/logout" method = "post">
+    <input type = "submit" value="Выйти"/>
+</form>
 
 <!-- Вывод информационных сообщений  -->
 
