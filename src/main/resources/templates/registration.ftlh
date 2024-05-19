@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Регистрация</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -42,42 +43,73 @@
               border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
             }
         }
+        html,
+        body {
+            height: 100%;
+        }
 
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -4em;
+            flex: 1;
+        }
 
+        .footer,
+        .push {
+            height: 4em;
+        }
     </style>
 </head>
+
 <body>
-<div class="container">
-    <div class="form-container">
-        <h4 class="text-center mb-4">Регистрация</h4>
-        <form action="/registration" method="post">
-            <div class="form-group">
-                <label for="name">Имя:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
+
+
+        <div class="container">
+            <div class="form-container">
+                <h4 class="text-center mb-4">Регистрация</h4>
+                <form action="/registration" method="post">
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="surname">Фамилия:</label>
+                        <input type="text" class="form-control" id="surname" name="surname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Эл. почта:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Номер телефона:</label>
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateOfBirthday">Дата рождения:</label>
+                        <input type="date" class="form-control" id="dateOfBirthday" name="dateOfBirthday" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-custom">Зарегистрироваться</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="surname">Фамилия:</label>
-                <input type="text" class="form-control" id="surname" name="surname" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Эл. почта:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="phoneNumber">Номер телефона:</label>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="dateOfBirthday">Дата рождения:</label>
-                <input type="date" class="form-control" id="dateOfBirthday" name="dateOfBirthday" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-custom">Зарегистрироваться</button>
-        </form>
+        </div>
+
+
+        <div class="push"></div>
+        <footer class="footer">
+            <#include "blocks/footer.ftlh">
+        </footer>
     </div>
-</div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="icon_logo.png" type="image/x-icon">
   <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <!-- Bootstrap reboot (для сброса стилей) -->
@@ -142,41 +143,73 @@
         color: #333;
         text-decoration: none;
     }
+    html,
+    body {
+        height: 100%;
+    }
+
+    .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -4em;
+        flex: 1;
+    }
+
+    .footer,
+    .push {
+        height: 4em;
+    }
 
 
   </style>
 </head>
-<body>
-<#include "blocks/header.ftlh">
-<div class="container">
-  <div class="row">
 
-    <br> <br> <br>
-        <tbody>
-        <#list allBouquets as bouquet>
-        <div class="col-md-4">
-          <div class="product">
-            <div class="image">
-              <img src="/images/${bouquet.images[0].id}" alt="Фото">
-            </div>
-            <div class="info">
-              <div class="card-link">${bouquet.name}</div >
-              <div class="info-price">
-                <span class="price">${bouquet.price}&#8381</span>
-                <a href="/bouquet/${bouquet.id}" class="btn btn-primary btn-custom2">К товару <ion-icon name="search"></ion-icon></a>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-              </div>
-            </div>
+<body>
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
+
+        <div class="container">
+          <div class="row">
+
+            <br> <br> <br>
+                <tbody>
+                <#list allBouquets as bouquet>
+                <div class="col-md-4">
+                  <div class="product">
+                    <div class="image">
+                      <img src="/images/${bouquet.images[0].id}" alt="Фото">
+                    </div>
+                    <div class="info">
+                      <div class="card-link">${bouquet.name}</div >
+                      <div class="info-price">
+                        <span class="price">${bouquet.price}&#8381</span>
+                        <a href="/bouquet/${bouquet.id}" class="btn btn-primary btn-custom2">К товару <ion-icon name="search"></ion-icon></a>
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+          </#list>
+          <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+          </tbody>
+
           </div>
         </div>
 
 
+        <div class="push"></div>
+        <footer class="footer">
+            <#include "blocks/footer.ftlh">
+        </footer>
+    </div>
+</body>
+</html>
 
-  </#list>
-  <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
-  </tbody>
-
-  </div>
-</div>
-
-<#include "blocks/footer.ftlh">

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Регистрация</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -42,11 +43,35 @@
               border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
             }
         }
+        html,
+        body {
+            height: 100%;
+        }
 
+        .wrapper {
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -4em;
+            flex: 1;
+        }
 
+        .footer,
+        .push {
+            height: 4em;
+        }
     </style>
 </head>
+
 <body>
+<div class="wrapper">
+    <#if isAdmin?? && isAdmin == true>
+    <#include "blocks/headerAdmin.ftlh">
+    <#else>
+    <#include "blocks/header.ftlh">
+</#if>
+
+
 <div class="container">
     <div class="form-container">
         <h4 class="text-center mb-4">Регистрация</h4>
@@ -78,6 +103,13 @@
             <button type="submit" class="btn btn-primary btn-custom">Зарегистрироваться</button>
         </form>
     </div>
+</div>
+
+
+<div class="push"></div>
+<footer class="footer">
+    <#include "blocks/footer.ftlh">
+</footer>
 </div>
 </body>
 </html>
