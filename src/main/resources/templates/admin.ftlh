@@ -185,38 +185,6 @@
     </form>
 </div>
 
-<!-- Выбор букетов для каталога  -->
-<br> <br> <br>
-<div id="section5" class="container">
-    <h4>Выбор букетов для каталога</h4>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <form action="/add_bouquets_to_catalog" method="post">
-        <div class="mb-3">
-            <label for="bouquet11" class="form-label">ID букета 1:</label>
-            <input type="text" class="form-control" id="bouquet11" name="bouquet11">
-            <label for="description11" class="form-label">Описание букета:</label>
-            <textarea class="form-control" id="description11" name="description11" style="height: auto"></textarea>
-
-        </div>
-        <div class="mb-3">
-            <label for="bouquet22" class="form-label">ID букета 2:</label>
-            <input type="text" class="form-control" id="bouquet22" name="bouquet22">
-            <label for="description22" class="form-label">Описание букета:</label>
-            <textarea class="form-control" id="description22" name="description22" style="height: auto"></textarea>
-
-        </div>
-        <div class="mb-33">
-            <label for="bouquet33" class="form-label">ID букета 3:</label>
-            <input type="text" class="form-control" id="bouquet33" name="bouquet33">
-            <label for="description33" class="form-label">Описание букета:</label>
-            <textarea class="form-control" id="description33" name="description33" style="height: auto"></textarea>
-
-        </div>
-        <button type="submit" class="btn btn-custom">Добавить на каталог/button>
-    </form>
-</div>
-
-
 <!-- Поиск букета по названию  -->
 <br> <br> <br>
 <div id="section3" class="container">
