@@ -91,6 +91,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="wrapper">
         <#if isAdmin?? && isAdmin == true>
