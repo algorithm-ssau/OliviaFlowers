@@ -127,7 +127,7 @@ public class BouquetController {
         try{
             Order order = orderService.getOrderByID(id);
             LocalDateTime delivered = LocalDateTime.now();
-            orderService.DeliverOrder(order, delivered);
+            //orderService.DeliverOrder(order, delivered);
             redirectAttributes.addFlashAttribute("message", "Заказ отмечен как доставленный");
         }catch(Exception e){
             redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");

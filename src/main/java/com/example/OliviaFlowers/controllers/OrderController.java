@@ -122,8 +122,6 @@ public class OrderController {
         }
 
         return "redirect:/order";
-
-
     }
 
     @PostMapping("/order_checkout")

@@ -90,14 +90,14 @@ public class OrderService {
 
     }
 
-    @Transactional
+    /*@Transactional
     public void DeliverOrder(Order order, LocalDateTime deliverydate){
         try{order.setActive((long)3);
             order.setDateTimeDelivery(deliverydate);//3 активность - доставлен
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Transactional
     public void CancelOrder(Order order){
