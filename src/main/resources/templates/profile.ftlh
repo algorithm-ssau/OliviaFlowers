@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Мой профиль</title>
     <style>
-
-        .container-fluid, .navbar-custom, .image-container {
-            background-color: #f0eade; /* Также устанавливаем фоновый цвет для других контейнеров или элементов при необходимости */
         body {
             background-color: #fff; /* Фоновый цвет */
         }
@@ -112,7 +108,8 @@
                 </table>
         </div>
     </div>
-    <footer class="footer mt-auto">
+    <div class="push"></div>
+    <footer class="footer">
         <#include "blocks/footer.ftlh">
     </footer>
 </div>
