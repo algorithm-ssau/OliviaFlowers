@@ -46,6 +46,31 @@
             }
         }
 
+
+        function timeSelect() {
+            const timeDelivery = document.getElementById("timeDelivery");
+            const timeDeliveryToday = document.getElementById("timeDeliveryToday");
+
+
+            const q = new Date();
+                        const today = new Date(q.getFullYear(), q.getMonth(), q.getDate());
+                        const dateDelivery = document.getElementById("dateDelivery").value;
+                        const inpDate = new Date(dateDelivery);
+
+                        console.log("Today's date:", today); // Для отладки
+                        console.log("Input date:", inpDate); // Для отладки
+
+                        if (inpDate === today) {
+                            timeDelivery.style.display = "none";
+                            timeDeliveryToday.style.display = "block";
+
+                        } else {
+                            timeDelivery.style.display = "block";
+                            timeDeliveryToday.style.display = "none";
+
+                        }
+        }
+
         function validateForm() {
             var addressDelivery = document.getElementById("addressDelivery").value;
             var dateDelivery = document.getElementById("dateDelivery").value;
@@ -373,13 +398,7 @@
                                     </div>
 
                                     <div class="col-md-auto">
-                                        <div id="postcardCarousel" class="carousel slide custom-card" style="display:none">
-                                            <div class="carousel-indicators">
-                                                <#list allPostcards as postcard>
-                                                    <button type="button" data-bs-target="#postcardCarousel" data-bs-slide-to="${postcard_index}"<#if postcard_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${postcard_index + 1}"></button>
-                                                </#list>
-                                            </div>
-
+                                        <div id="postcardCarousel" class="carousel carousel-dark slide custom-card" style="display:none">
                                             <div class="carousel-inner">
                                                 <#list allPostcards as postcard>
                                                     <div class="carousel-item<#if postcard_index == 0> active</#if>">
@@ -436,13 +455,13 @@
                                     <div class="col-12 mb-3">
                                         <div class="form-group">
                                             <h6 class="text-start">Дата доставки</h6>
-                                                <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" required>
+                                                <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeSelect()" required>
                                         </div>
                                     </div>
 
                                     <div class="col-12 mb-3">
                                        <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
-                                       <select name="timeDelivery" id="timeDelivery" class="form-control" required>
+                                       <select name="timeDelivery" id="timeDelivery" class="form-control">
                                           <option value="08:00 - 10:00">08:00 - 10:00</option>
                                           <option value="10:00 - 12:00">10:00 - 12:00</option>
                                           <option value="12:00 - 14:00">12:00 - 14:00</option>
@@ -452,6 +471,19 @@
                                           <option value="20:00 - 22:00">20:00 - 22:00</option>
                                           <option value="Спросить у получателя">Спросить у получателя</option>
                                        </select>
+                                    </div>
+
+                                    <div class="col-12 mb-3 ">
+                                       <div class="form-group" id="dateTimeDeliveryToday">
+                                           <h6 class="form-label" style = "display:none">Время доставки:</h6>
+                                           <select name="timeDeliveryToday" id="timeDeliveryToday" class="form-control">
+                                               <#if timeSlots?size != 0>
+                                                  <#list timeSlots as time>
+                                                      <option value="${time}">${time}</option>
+                                                  </#list>
+                                               </#if>
+                                           </select>
+                                       </div>
                                     </div>
                                 </div>
 

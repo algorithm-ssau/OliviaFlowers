@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -72,6 +74,69 @@ public class OrderController {
             // Получение текущей даты
             LocalDate minDate = LocalDate.now();
 
+            int availableHours = 0;
+            int hourNow = LocalTime.now().getHour();
+            ArrayList<String> timeSlots = new ArrayList<>();
+            if (hourNow <= 8){
+                timeSlots.add("08:00 - 10:00");
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if (hourNow < 10){
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 12){
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 14){
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 16){
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 18){
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 20){
+                timeSlots.add("20:00 - 22:00");
+            }
+            else {
+                timeSlots.add("08:00 - 10:00");
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+
+
             // Получение текущей даты плюс три месяца
             LocalDate maxDate = minDate.plus(3, ChronoUnit.MONTHS);
 
@@ -102,6 +167,8 @@ public class OrderController {
 
             model.addAttribute("minDate", minDate);
             model.addAttribute("maxDate", maxDate);
+            model.addAttribute("timeSlots", timeSlots);
+
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
