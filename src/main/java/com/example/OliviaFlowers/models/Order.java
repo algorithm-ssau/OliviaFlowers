@@ -51,6 +51,9 @@ public class Order {
     @Column
     private Long active; //активный заказ или нет
 
-
+    // Геттер для datePayment
+    public LocalDateTime getDatePayment() {
+        return datePayment;
+    }
 
 }

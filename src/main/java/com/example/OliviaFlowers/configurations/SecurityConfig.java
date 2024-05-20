@@ -33,7 +33,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/home", "/catalog/**", "/registration", "logo.png",
                                 "inst.png", "logo_mini.png", "vk.png", "/bouquet/**", "/images/**", "requestMatchers",
-                                 "/bouquet_delete/**", "/add_bouquets_to_homepage", "/find_bouquet_by_name")
+                                 "/bouquet_delete/**", "/add_bouquets_to_homepage", "/find_bouquet_by_name", "icon_logo.png")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

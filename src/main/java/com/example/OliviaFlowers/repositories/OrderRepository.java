@@ -16,4 +16,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Order findByUserAndActive(User user, Long active);
     List<Order> findAllByActive(Long active);
 
+    List<Order> findByUser(User user);
 }
