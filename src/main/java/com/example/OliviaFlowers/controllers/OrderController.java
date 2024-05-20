@@ -90,7 +90,6 @@ public class OrderController {
                 String username = authentication.getName(); // Получить имя пользователя
                 User user = userService.getUserByEmail(username);
                 model.addAttribute("isAdmin", user.getIsAdministrator());
-
             }
 
         } catch (Exception e) {

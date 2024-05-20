@@ -6,7 +6,9 @@ import com.example.OliviaFlowers.secvices.BouquetService;
 import com.example.OliviaFlowers.secvices.FavoriteService;
 import com.example.OliviaFlowers.secvices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,15 @@ public class InfoController {
     @GetMapping("/info")
     public String profile(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("currentUser", user);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+            String username = authentication.getName(); // Получить имя пользователя
+            User user1 = userService.getUserByEmail(username);
+            model.addAttribute("isAdmin", user1.getIsAdministrator());
+        }
+
         return "info";
     }
 

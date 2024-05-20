@@ -1,7 +1,11 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.HomePage;
+import com.example.OliviaFlowers.models.User;
 import com.example.OliviaFlowers.repositories.HomePageRepository;
+import com.example.OliviaFlowers.secvices.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import com.example.OliviaFlowers.models.Bouquet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +26,14 @@ public class HomePageController {
     private final BouquetService bouquetService;
 
     @Autowired
+    private final UserService userService;
+
+    @Autowired
     private final HomePageRepository homePageRepository;
 
-    public HomePageController(BouquetService bouquetService, HomePageRepository homePageRepository) {
+    public HomePageController(BouquetService bouquetService, UserService userService, HomePageRepository homePageRepository) {
         this.bouquetService = bouquetService;
+        this.userService = userService;
         this.homePageRepository = homePageRepository;
     }
 
@@ -47,6 +55,14 @@ public class HomePageController {
                 model.addAttribute("bouquet1", bouquet1);
                 model.addAttribute("bouquet2", bouquet2);
                 model.addAttribute("bouquet3", bouquet3);
+
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                if (authentication != null && authentication.isAuthenticated()) {
+                    // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+                    String username = authentication.getName(); // Получить имя пользователя
+                    User user = userService.getUserByEmail(username);
+                    model.addAttribute("isAdmin", user.getIsAdministrator());
+                }
             } else {
                 // Логика для обработки случая, когда список пустой
             }

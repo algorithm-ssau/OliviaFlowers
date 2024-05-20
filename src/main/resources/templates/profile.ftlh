@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:border="http://www.w3.org/1999/xhtml" xmlns:padding="http://www.w3.org/1999/xhtml"
-      xmlns:border-radius="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Мой профиль</title>
     <style>
-        body {
-                background-color: #f0eade; /* Устанавливаем фоновый цвет для всего документа */
-            }
-            .container-fluid, .navbar-custom, .image-container {
-                background-color: #f0eade; /* Также устанавливаем фоновый цвет для других контейнеров или элементов при необходимости */
-            }
+
         .container-fluid, .navbar-custom, .image-container {
-            background-color: #f0eade;
+            background-color: #f0eade; /* Также устанавливаем фоновый цвет для других контейнеров или элементов при необходимости */
         }
         .border {
             border: 2px solid #f0eade;
@@ -72,23 +67,7 @@
         table th, table td {
             text-align: center;
         }
-        html,
-        body {
-            height: 100%;
-        }
 
-        .wrapper {
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            margin: 0 auto -4em;
-            flex: 1;
-        }
-
-        .footer,
-        .push {
-            height: 4em;
-        }
     </style>
 </head>
 
@@ -158,13 +137,10 @@
                 </#if>
             </div>
         </div>
-
-
-        <div class="push"></div>
-        <footer class="footer">
-            <#include "blocks/footer.ftlh">
-        </footer>
     </div>
+    <footer class="footer mt-auto">
+       <#include "blocks/footer.ftlh">
+    </footer>
 </body>
 </html>
 

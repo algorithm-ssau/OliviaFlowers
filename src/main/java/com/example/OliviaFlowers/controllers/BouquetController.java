@@ -2,13 +2,11 @@ package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.models.Order;
-import com.example.OliviaFlowers.secvices.BouquetService;
-import com.example.OliviaFlowers.secvices.OrderHasBouquetService;
-import com.example.OliviaFlowers.secvices.OrderService;
-import com.example.OliviaFlowers.secvices.PostcardService;
+import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.secvices.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 
@@ -32,13 +29,16 @@ public class BouquetController {
     private final OrderService orderService;
     @Autowired
     private final PostcardService postcardService;
+    @Autowired
+    private final UserService userService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService) {
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService, UserService userService) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
         this.orderService = orderService;
         this.postcardService = postcardService;
 
+        this.userService = userService;
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -50,6 +50,14 @@ public class BouquetController {
     @GetMapping("/catalog")
     public String catalog(Model model){
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
         return "catalog";
     }
 
@@ -61,6 +69,13 @@ public class BouquetController {
         model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
         model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
 
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
 
         return "admin";
     }
@@ -79,6 +94,15 @@ public class BouquetController {
     public String bouquet(@PathVariable Long id, Model model){
         Bouquet bouquet = bouquetService.getBouquetByID(id);
         model.addAttribute("bouquet", bouquet);
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
         return "bouquet";
     }
 
