@@ -60,5 +60,9 @@ public class Order {
     @Column
     private String phoneNumber; //номер телефона получателя
 
+    // Геттер для datePayment
+    public LocalDateTime getDatePayment() {
+        return datePayment;
+    }
 
 }

@@ -72,19 +72,27 @@
         table th, table td {
             text-align: center;
         }
-
-        /* Для футера внизу страницы: html, body, wrapper*/
-        html, body {
+        html,
+        body {
             height: 100%;
         }
+
         .wrapper {
-            flex-grow: 1;
-            padding-bottom: 3rem; /* Добавление отступа снизу */
+            min-height: 100%;
+            height: auto !important;
+            height: 100%;
+            margin: 0 auto -4em;
+            flex: 1;
+        }
+
+        .footer,
+        .push {
+            height: 4em;
         }
     </style>
 </head>
-<body class="d-flex flex-column h-100">
-    <div class="wrapper flex-grow-1">
+<body>
+    <div class="wrapper">
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -146,10 +154,13 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="push"></div>
+        <footer class="footer">
+            <#include "blocks/footer.ftlh">
+        </footer>
     </div>
-    <footer class="footer mt-auto">
-       <#include "blocks/footer.ftlh">
-    </footer>
 </body>
 </html>
 
