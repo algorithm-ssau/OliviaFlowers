@@ -72,7 +72,7 @@ public class OrderService {
     @Transactional
     public void CheckoutOrder(Principal principal, Long typePostcard, String textPostcard,
                               String addressDelivery, LocalDateTime datePayment,
-                              LocalDate dateDelivery, String timeDelivery){
+                              LocalDate dateDelivery, String timeDelivery, String phoneNumber){
         try{
             Order order = HaveActiveOrderByPrincipal(principal);
             order.setTypePostcard(typePostcard);
@@ -82,6 +82,7 @@ public class OrderService {
             order.setDateDelivery(dateDelivery);
             order.setTimeDelivery(timeDelivery);
             order.setActive((long)2);
+            order.setPhoneNumber(phoneNumber);
             orderRepository.save(order);
         }catch (Exception e){
             e.printStackTrace();

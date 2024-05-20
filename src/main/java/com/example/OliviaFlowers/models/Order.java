@@ -43,6 +43,12 @@ public class Order {
     private Long sumOrder; //сумма заказа
 
     @Column
+    private Long sumDelivery; //сумма заказа
+
+    @Column
+    private Long sumOrderWithDelivery; //сумма заказа
+
+    @Column
     private LocalDateTime datePayment; //время оплаты заказа
 
     @OneToMany(mappedBy = "order")
@@ -51,6 +57,8 @@ public class Order {
     @Column
     private Long active; //активный заказ или нет
 
+    @Column
+    private String phoneNumber; //номер телефона получателя
 
 
 }

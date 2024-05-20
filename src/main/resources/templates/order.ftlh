@@ -21,6 +21,15 @@
             }
         }
 
+        function showNumberPhone() {
+            if (document.getElementById("me").selected) {
+                document.getElementById("phoneNumber").style.display = "none"
+
+            } else {
+                document.getElementById("phoneNumber").style.display = "block"
+            }
+        }
+
         function showDateTimeDeliverySelect() {
             if (document.getElementById("earliest").selected) {
                 document.getElementById("dateTimeDeliveryContainer").style.display = "none"
@@ -167,7 +176,7 @@
             font-weight: 500; /* Жирность шрифта */
         }
 
-        .carousel-item img {
+        .photo {
             margin-top: 10px; /* Отступ сверху */
             margin-bottom: 10px; /* Отступ снизу */
             border-radius: 10px;
@@ -223,6 +232,13 @@
             left: 50%;
             border-left: 2px solid #f0eade; /* Цвет и стиль линии */
         }
+
+        #emptyCartMessage {
+            flex-direction: column; /* Отображаем дочерние элементы в столбце */
+            justify-content: center; /* Выравниваем элементы по вертикали */
+            align-items: center; /* Выравниваем элементы по горизонтали */
+        }
+
     </style>
 </head>
 
@@ -239,15 +255,15 @@
                 showMessage("${message}");
             </script>
         </#if>
+        <#if acBouquets?size = 0>
+            <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
+                <h4>Ваша корзина пуста</h4>
+            </div>
 
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-7">
-                    <#if acBouquets?size = 0>
-                        <center>
-                            <h4>Ваша корзина пуста</h4>
-                        </center>
-                    <#else>
+        <#else>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-7">
                         <#assign x = 0>
                         <h4>Корзина:</h4>
                         <table class="table">
@@ -264,28 +280,9 @@
                                 <#list acBouquets as bouquet>
                                     <tr>
                                         <td>
-                                        <div id="carouselBouquet_${bouquet.id}" class="carousel slide" style="max-width: 8rem;">
-                                            <div class="carousel-indicators">
-                                                <#list bouquet.images as image>
-                                                    <button type="button" data-bs-target="#carouselBouquet_${bouquet.id}" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-                                                </#list>
-                                            </div>
-                                            <div class="carousel-inner">
-                                                <#list bouquet.images as image>
-                                                    <div class="carousel-item<#if image_index == 0> active</#if>">
-                                                        <img src="/images/${image.id}" class="d-block w-100" alt="Фото">
-                                                    </div>
-                                                </#list>
-                                            </div>
-                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet_${bouquet.id}" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet_${bouquet.id}" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
-                                        </div>
+                                            <#if bouquet.images?has_content>
+                                                <img src="/images/${bouquet.images[0].id}" class="d-block w-100 photo" alt="Фото" style="max-width: 8rem;">
+                                            </#if>
                                         </td>
 
                                         <td style="vertical-align: middle; text-align: center;">
@@ -338,7 +335,7 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <p>...  букетов</p>
+                                    <p>${countBouquetsInOrderString}</p>
                                 </div>
                                 <div class="col-6">
                                     <p class="text-end">${acOrder.sumOrder} руб.</p>
@@ -349,7 +346,7 @@
                                     <p>Доставка</p>
                                 </div>
                                 <div class="col-6">
-                                    <p class="text-end">0 руб.</p>
+                                    <p class="text-end">${acOrder.sumDelivery} руб.</p>
                                 </div>
                             </div>
 
@@ -360,11 +357,11 @@
                                     <h5 class="text-start">Сумма заказа:</h5>
                                 </div>
                                 <div class="col-6">
-                                    <h5 class="text-end">${acOrder.sumOrder} руб.</h5>
+                                    <h5 class="text-end">${acOrder.sumOrderWithDelivery} руб.</h5>
                                 </div>
                             </div>
 
-                            <br>
+                            <br><br>
                             <div class="">
                                 <div class="row">
                                     <div class="col-12 mb-3">
@@ -409,12 +406,31 @@
                                     </div>
 
                                     <div class="col-12 mb-3">
+                                        <h6 for="typeRecipient" class="form-label">Получатель:</h6>
+                                        <select onchange = "showNumberPhone()" name = "typeRecipient" id = "typeRecipient" class = "form-control">
+                                            <option id = "me" value = "0">Я</option>
+                                            <option value = "1">Другой человек</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 mb-3">
+                                        <div class="form-group" id="phoneNumber" style = "display:none">
+                                            <h6 class="text-start">Номер телефона</h6>
+                                            <input class="form-control" name="phoneNumber" id="phoneNumber" value="${phoneNumber}" required>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-12 mb-3">
                                         <div class="form-group" id="addressDelivery">
                                             <h6 class="text-start">Адрес доставки</h6>
                                             <input class="form-control" name="addressDelivery" id="addressDelivery"
                                                 placeholder="Улица, дом, квартира" / required>
                                         </div>
                                     </div>
+
+
 
 
                                     <div class="col-12 mb-3">
@@ -427,13 +443,14 @@
                                     <div class="col-12 mb-3">
                                        <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
                                        <select name="timeDelivery" id="timeDelivery" class="form-control" required>
-                                         <option value="08:00 - 10:00">08:00 - 10:00</option>
-                                         <option value="10:00 - 12:00">10:00 - 12:00</option>
-                                         <option value="12:00 - 14:00">12:00 - 14:00</option>
-                                         <option value="14:00 - 16:00">14:00 - 16:00</option>
-                                         <option value="16:00 - 18:00">16:00 - 18:00</option>
-                                         <option value="18:00 - 20:00">18:00 - 20:00</option>
-                                         <option value="20:00 - 22:00">20:00 - 22:00</option>
+                                          <option value="08:00 - 10:00">08:00 - 10:00</option>
+                                          <option value="10:00 - 12:00">10:00 - 12:00</option>
+                                          <option value="12:00 - 14:00">12:00 - 14:00</option>
+                                          <option value="14:00 - 16:00">14:00 - 16:00</option>
+                                          <option value="16:00 - 18:00">16:00 - 18:00</option>
+                                          <option value="18:00 - 20:00">18:00 - 20:00</option>
+                                          <option value="20:00 - 22:00">20:00 - 22:00</option>
+                                          <option value="Спросить у получателя">Спросить у получателя</option>
                                        </select>
                                     </div>
                                 </div>

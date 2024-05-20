@@ -125,14 +125,21 @@ public class OrderHasBouquetService {
             order.setUser(getUserByPrincipal(principal));
             order.setActive((long)1);
             order.setSumOrder((long)0);
+            order.setSumDelivery((long)0);
+            order.setSumOrderWithDelivery((long)0);
 
             orderRepository.save(order);
         }
         Order ordere = orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
         ordere.setSumOrder(ordere.getSumOrder() + bouquet.getPrice());
+        if (ordere.getSumOrder() < 3000L){
+            ordere.setSumDelivery((long)300);
+        }
+        else if(ordere.getSumOrder() >= 3000L){
+            ordere.setSumDelivery((long)0);
+        }
+        ordere.setSumOrderWithDelivery(ordere.getSumOrder() + ordere.getSumDelivery());
         return saveOrderHasBouquet(ordere, bouquet);
-
-
 
     }
 
@@ -167,9 +174,16 @@ public class OrderHasBouquetService {
             Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);
             ohb.setCount(amount);
 
-
-
             ordere.setSumOrder(ordere.getSumOrder() + deltasum);
+
+            if (ordere.getSumOrder() < 3000L){
+                ordere.setSumDelivery((long)300);
+            }
+            else if(ordere.getSumOrder() >= 3000L){
+                ordere.setSumDelivery((long)0);
+            }
+            ordere.setSumOrderWithDelivery(ordere.getSumOrder() + ordere.getSumDelivery());
+
             order_has_bouquet_Repository.save(ohb);
             orderRepository.save(ordere);
 
