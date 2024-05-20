@@ -19,7 +19,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -71,6 +74,69 @@ public class OrderController {
             // Получение текущей даты
             LocalDate minDate = LocalDate.now();
 
+            int availableHours = 0;
+            int hourNow = LocalTime.now().getHour();
+            ArrayList<String> timeSlots = new ArrayList<>();
+            if (hourNow <= 8){
+                timeSlots.add("08:00 - 10:00");
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if (hourNow < 10){
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 12){
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 14){
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 16){
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 18){
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+            else if(hourNow < 20){
+                timeSlots.add("20:00 - 22:00");
+            }
+            else {
+                timeSlots.add("08:00 - 10:00");
+                timeSlots.add("10:00 - 12:00");
+                timeSlots.add("12:00 - 14:00");
+                timeSlots.add("14:00 - 16:00");
+                timeSlots.add("16:00 - 18:00");
+                timeSlots.add("18:00 - 20:00");
+                timeSlots.add("20:00 - 22:00");
+                timeSlots.add("Спросить у получателя");
+            }
+
+
             // Получение текущей даты плюс три месяца
             LocalDate maxDate = minDate.plus(3, ChronoUnit.MONTHS);
 
@@ -78,19 +144,38 @@ public class OrderController {
 
             model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
             model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+            List<Long> acAmounts = orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal));
+            Long countBouquetsInOrder = 0L;
+            for(int i = 0; i < acAmounts.size(); i++){
+                countBouquetsInOrder += acAmounts.get(i);
+            }
+            String countBouquetsInOrderString = "";
+            if (countBouquetsInOrder == 1){ countBouquetsInOrderString = "1 букет";}
+            else if (countBouquetsInOrder >= 2 && countBouquetsInOrder <= 4){countBouquetsInOrderString = countBouquetsInOrder + " букета";}
+            else {countBouquetsInOrderString = countBouquetsInOrder + " букетов";}
+
+            model.addAttribute("countBouquetsInOrderString", countBouquetsInOrderString);
+
             model.addAttribute("acOrder", orderService.HaveActiveOrderByPrincipal(principal));
             model.addAttribute("allPostcards", postcardService.listAllPostcards());
 
+            // Получение пользователя из базы данных по его email (имени пользователя)
+            User user = userService.getUserByEmail(principal.getName());
+
+            // Передача номера телефона в модель
+            model.addAttribute("phoneNumber", user.getPhoneNumber());
+
             model.addAttribute("minDate", minDate);
             model.addAttribute("maxDate", maxDate);
+            model.addAttribute("timeSlots", timeSlots);
+
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
                 // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
                 String username = authentication.getName(); // Получить имя пользователя
-                User user = userService.getUserByEmail(username);
-                model.addAttribute("isAdmin", user.getIsAdministrator());
-
+                User user1 = userService.getUserByEmail(username);
+                model.addAttribute("isAdmin", user1.getIsAdministrator());
             }
 
         } catch (Exception e) {
@@ -117,6 +202,7 @@ public class OrderController {
         try{
             Bouquet bouquet = bouquetService.getBouquetByID(id);
             orderHasBouquetService.changeAmount(bouquet, principal, count);
+
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при изменении стоимости");
         }
@@ -131,6 +217,7 @@ public class OrderController {
                                   @RequestParam(name = "dateDelivery") LocalDate dateDelivery,
                                   @RequestParam(name = "timeDelivery") String timeDelivery,
                                   @RequestParam(name = "dataPostcardId") String dataPostcardId,
+                                  @RequestParam(name = "phoneNumber") String phoneNumber,
                                   Principal principal, RedirectAttributes redirectAttributes){
         LocalDateTime datePayment = LocalDateTime.now();
         //даже не спрашивайте , что это. Только так работает
@@ -148,7 +235,7 @@ public class OrderController {
             textPostcard = null;
         }
         try{
-            orderService.CheckoutOrder(principal, typePostcard, textPostcard, addressDelivery, datePayment, dateDelivery, timeDelivery);
+            orderService.CheckoutOrder(principal, typePostcard, textPostcard, addressDelivery, datePayment, dateDelivery, timeDelivery, phoneNumber);
             redirectAttributes.addFlashAttribute("message", "Оформлено, будет доставлено по адресу " + addressDelivery);
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при оформлении заказа");

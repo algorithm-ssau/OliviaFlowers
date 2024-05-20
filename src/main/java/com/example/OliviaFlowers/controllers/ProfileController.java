@@ -9,7 +9,9 @@ import com.example.OliviaFlowers.secvices.OrderService;
 import com.example.OliviaFlowers.secvices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,15 @@ public class ProfileController {
                 .collect(Collectors.toList());
         model.addAttribute("currentUser", user);
         model.addAttribute("orders", filteredOrders);
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user1 = userService.getUserByEmail(username);
+        if (user1 != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
         return "profile";
     }
 

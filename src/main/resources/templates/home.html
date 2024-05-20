@@ -52,7 +52,7 @@
     .row-custom-delivery {
       margin-left: 22rem;
       margin-right: 22rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
     }
 
     /* Стили для границы карты */
@@ -86,30 +86,19 @@
           margin-bottom: 4rem;
         }
 
-    html,
-    body {
-        height: 100%;
-    }
-
-    .wrapper {
-        min-height: 100%;
-        height: auto !important;
-        height: 100%;
-        margin: 0 auto -4em;
-        flex: 1;
-    }
-
-    .footer,
-    .push {
-        height: 4em;
-    }
-
-
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
   </style>
 </head>
 
-<body>
-<div class="wrapper">
+<body class="d-flex flex-column h-100">
+<div class="wrapper flex-grow-1">
   <#if isAdmin?? && isAdmin == true>
   <#include "blocks/headerAdmin.ftlh">
   <#else>
@@ -246,7 +235,7 @@
 
 
 <div class="background_color_about_us text-center">
-  <p class="p-custom">О нас</p>
+  <p class="p-custom">О нас<br> <br></p>
   <h5>OLIVIA - это цветы, собранные с любовью.</h5>
   <p class="p-custom-text">Цветы сопровождают нас в самые радостные моменты жизни, и мы рады проживать их вместе с вами.<br>
     Наша команда занимается разработкой авторских букетов и композиций, декором свадеб и других мероприятий.<br>
@@ -260,8 +249,7 @@
     <div class="card h-100 custom-card-delivery">
       <div class="card-body">
         <h5 class="card-title">Бесплатная доставка</h5>
-        <p class="card-text">-Самовывоз<br>
-          -Курьером по городу заказе от 3000₽<br></p>
+        <p class="card-text">Курьером по городу заказе от 3000₽</p>
       </div>
     </div>
   </div>
@@ -269,18 +257,14 @@
     <div class="card h-100 custom-card-delivery">
       <div class="card-body">
         <h5 class="card-title">Доставка по городу</h5>
-        <p class="card-text">-По городу 300₽<br>
-          -Условия доставки в пригород уточняются при оформлении заказа </p>
+        <p class="card-text">-По городу 300₽</p>
       </div>
     </div>
   </div>
 </div>
-
-
-<div class="push"></div>
-<footer class="footer">
+</div>
+<footer class="footer mt-auto">
   <#include "blocks/footer.ftlh">
 </footer>
-</div>
 </body>
 </html>
