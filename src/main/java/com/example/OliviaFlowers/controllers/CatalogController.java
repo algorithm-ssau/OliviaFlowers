@@ -25,6 +25,8 @@ public class CatalogController {
     private final BouquetService bouquetService;
     private final UserService userService;
 
+    private List<Bouquet> bouquets;
+
     @Autowired
     public CatalogController(BouquetService bouquetService, UserService userService) {
         this.bouquetService = bouquetService;
@@ -33,7 +35,8 @@ public class CatalogController {
 
     @GetMapping("/lookAll")
     public String lookAll(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("allBouquets", bouquetService.listAllBouquets()); // Получаем заказы пользователя
+        bouquets = bouquetService.listAllBouquets();
+        model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -46,7 +49,8 @@ public class CatalogController {
 
     @GetMapping("/authorBouquet")
     public String authorBouquet(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("allBouquets", bouquetService.listAuthorBouquets()); // Получаем заказы пользователя
+        bouquets = bouquetService.listAuthorBouquets();
+        model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -59,7 +63,8 @@ public class CatalogController {
 
     @GetMapping("/boxBouquet")
     public String boxBouquet(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("allBouquets", bouquetService.listBoxBouquets()); // Получаем заказы пользователя
+        bouquets = bouquetService.listBoxBouquets();
+        model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -72,7 +77,8 @@ public class CatalogController {
 
     @GetMapping("/weddingBouquet")
     public String weddingBouquet(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("allBouquets", bouquetService.listWeddingBouquets()); // Получаем заказы пользователя
+        bouquets = bouquetService.listWeddingBouquets();
+        model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -89,7 +95,6 @@ public class CatalogController {
             @RequestParam(required = false) Long minPrice,
             @RequestParam(required = false) Long maxPrice,
             @RequestParam(required = false) String priceRange,
-            @RequestParam(required = false) List<Bouquet> a,
             Model model,
             @AuthenticationPrincipal User user
     ) {
@@ -102,8 +107,14 @@ public class CatalogController {
             max = Long.parseLong(range[1]);
         }
 
-        List<Bouquet> bouquets = bouquetService.filterBouquets(sort, min, max, a);
-        model.addAttribute("allBouquets", bouquets);
+        if (sort != 0){
+            List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
+            model.addAttribute("allBouquets", sortedBouquets);
+        }
+        else{
+            model.addAttribute("allBouquets", bouquets);
+        }
+
 
         // Проверка пользователя, администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

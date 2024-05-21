@@ -71,7 +71,7 @@ public class BouquetController {
         String username = authentication.getName(); // Получить имя пользователя
         User user = userService.getUserByEmail(username);
         if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
+        else { model.addAttribute("isAdmin", false);}
         return "catalogPostcard";
     }
 
