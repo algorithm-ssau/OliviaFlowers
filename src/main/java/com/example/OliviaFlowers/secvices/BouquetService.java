@@ -141,8 +141,8 @@ public class BouquetService {
     }
 
 
-    public List<Bouquet> filterBouquets(Integer sort, Long minPrice, Long maxPrice) {
-        List<Bouquet> bouquets = bouquetRepository.findAll();
+    public List<Bouquet> filterBouquets(Integer sort, Long minPrice, Long maxPrice, List<Bouquet> a) {
+        List<Bouquet> bouquets = a;
         bouquets = bouquets.stream()
                 .filter(b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice)
                 .collect(Collectors.toList());

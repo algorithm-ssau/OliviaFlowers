@@ -89,10 +89,10 @@ public class CatalogController {
             @RequestParam(required = false) Long minPrice,
             @RequestParam(required = false) Long maxPrice,
             @RequestParam(required = false) String priceRange,
+            @RequestParam(required = false) List<Bouquet> a,
             Model model,
             @AuthenticationPrincipal User user
     ) {
-
         Long  min = minPrice != null ? minPrice : 0;
         Long  max = maxPrice != null ? maxPrice : Long.MAX_VALUE;
 
@@ -102,7 +102,7 @@ public class CatalogController {
             max = Long.parseLong(range[1]);
         }
 
-        List<Bouquet> bouquets = bouquetService.filterBouquets(sort, min, max);
+        List<Bouquet> bouquets = bouquetService.filterBouquets(sort, min, max, a);
         model.addAttribute("allBouquets", bouquets);
 
         // Проверка пользователя, администратор он или нет
