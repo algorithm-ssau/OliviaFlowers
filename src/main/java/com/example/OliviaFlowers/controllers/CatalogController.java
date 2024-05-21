@@ -107,13 +107,9 @@ public class CatalogController {
             max = Long.parseLong(range[1]);
         }
 
-        if (sort != 0){
             List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
             model.addAttribute("allBouquets", sortedBouquets);
-        }
-        else{
-            model.addAttribute("allBouquets", bouquets);
-        }
+
 
 
         // Проверка пользователя, администратор он или нет

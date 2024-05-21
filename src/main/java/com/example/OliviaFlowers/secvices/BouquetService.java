@@ -147,6 +147,10 @@ public class BouquetService {
                 .filter(b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice)
                 .collect(Collectors.toList());
         if (sort != null) {
+            if(sort == 0)
+            {
+                return bouquets;
+            }
             if (sort == 1) {
                 bouquets.sort(Comparator.comparingLong(Bouquet::getPrice));
             } else if (sort == 2) {
