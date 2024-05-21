@@ -82,7 +82,7 @@
         }
 
         .btn-custom2 {
-            width: 50%;
+            width: 94%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -152,61 +152,49 @@
             <a href="/adminorderlist" class="btn btn-custom">Заказы к доставке</a>
         </div>
         <div class="main-content">
-            <h2>Вывод букетов</h2>
+            <h2>Открытки</h2>
+            <br></br>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <h4>Добавление открытки:</h4>
+            <form action="/add_postcard" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Фото:</label>
+                    <input type="file" class="form-control" id="file" name="file">
+                </div>
+                <button type="submit" class="btn btn-custom">Добавить открытку</button>
+            </form>
+            <br>
             <table class="table">
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Название</th>
-                    <th>Состав</th>
-                    <th>Цена</th>
                     <th>Фото</th>
-                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-                <#list allBouquets as bouquet>
+                <#list allPostcards as postcard>
                     <tr>
-                        <td>${bouquet.id}</td>
-                        <td>${bouquet.name}</td>
-                        <!-- Вывод состава букета в несколько строк -->
+                        <td>${postcard.id}</td>
                         <td>
-                            <#list (bouquet.composition)?split("\n") as line>
-                                ${line}<br>
-                            </#list>
-                        </td>
-                        <td>${bouquet.price}</td>
-                        <td>
-                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                            <#if postcard.image?has_content>
+                                <img src="/images/${postcard.image.id}" alt="Фото" style="max-width: 100px;">
                             <#else>
                                 <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
                             </#if>
-
-                            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-                                <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
                         </td>
                         <td>
-                            <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
                             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                            <form action="/bouquet_delete/${bouquet.id}" method="post">
-                                <button type="submit" class="btn btn-custom2">Удалить</button>
+                            <form action="/postcard_delete/${postcard.id}" method="post">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
                         </td>
                     </tr>
                 </#list>
                 </tbody>
             </table>
+
+
+
         </div>
     </div>
     <div class="push"></div>

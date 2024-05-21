@@ -1,10 +1,12 @@
 package com.example.OliviaFlowers.secvices;
 
 import com.example.OliviaFlowers.models.Bouquet;
+import com.example.OliviaFlowers.models.Postcard;
 import com.example.OliviaFlowers.models.User;
 import com.example.OliviaFlowers.repositories.BouquetRepository;
 import com.example.OliviaFlowers.repositories.OrderRepository;
 import com.example.OliviaFlowers.models.Order;
+import com.example.OliviaFlowers.repositories.PostcardRepository;
 import com.example.OliviaFlowers.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +27,8 @@ public class OrderService {
     private final OrderRepository orderRepository;
     @Autowired
     private final UserRepository userRepository;
-
+    @Autowired
+    private PostcardRepository postcardRepository;
 
 
     public OrderService(OrderRepository orderRepository, UserRepository userRepository){
@@ -67,6 +71,16 @@ public class OrderService {
 
     public List<Order> ListAllOrdersToDeliver(){
         return orderRepository.findAllByActive((long)2);
+    }
+
+    public List<Postcard> getPostCardToDelivery(){
+        List<Postcard> postcards = new ArrayList<>();
+        List<Order> orders = orderRepository.findAllByActive((long)2);
+        orders.forEach(order -> {
+            postcards.add(postcardRepository.findById(order.getTypePostcard()).orElse(null));
+        });
+
+        return postcards;
     }
 
     @Transactional

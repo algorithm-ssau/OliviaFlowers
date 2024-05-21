@@ -33,7 +33,7 @@ public class PostcardController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении открытки");
         }
-        return "redirect:/admin";
+        return "redirect:/adminpostcard";
     }
 
     @PostMapping("/postcard_delete/{id}")
@@ -44,7 +44,7 @@ public class PostcardController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при удалении открытки");
         }
-        return "redirect:/admin";
+        return "redirect:/adminpostcard";
     }
 }
 

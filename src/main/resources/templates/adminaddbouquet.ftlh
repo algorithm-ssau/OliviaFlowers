@@ -82,7 +82,7 @@
         }
 
         .btn-custom2 {
-            width: 50%;
+            width: 94%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -152,61 +152,43 @@
             <a href="/adminorderlist" class="btn btn-custom">Заказы к доставке</a>
         </div>
         <div class="main-content">
-            <h2>Вывод букетов</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Название</th>
-                    <th>Состав</th>
-                    <th>Цена</th>
-                    <th>Фото</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list allBouquets as bouquet>
-                    <tr>
-                        <td>${bouquet.id}</td>
-                        <td>${bouquet.name}</td>
-                        <!-- Вывод состава букета в несколько строк -->
-                        <td>
-                            <#list (bouquet.composition)?split("\n") as line>
-                                ${line}<br>
-                            </#list>
-                        </td>
-                        <td>${bouquet.price}</td>
-                        <td>
-                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-                                <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                        </td>
-                        <td>
-                            <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                            <form action="/bouquet_delete/${bouquet.id}" method="post">
-                                <button type="submit" class="btn btn-custom2">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                </#list>
-                </tbody>
-            </table>
+            <h2>Добавление букета</h2>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <form action="/bouquet_create" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Название:</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="file1" class="form-label">Первое фото:</label>
+                    <input type="file" class="form-control" id="file1" name="file1">
+                </div>
+                <div class="mb-3">
+                    <label for="file2" class="form-label">Второе фото:</label>
+                    <input type="file" class="form-control" id="file2" name="file2">
+                </div>
+                <div class="mb-3">
+                    <label for="file3" class="form-label">Третье фото:</label>
+                    <input type="file" class="form-control" id="file3" name="file3">
+                </div>
+                <div class="mb-3">
+                    <label for="composition" class="form-label">Состав:</label>
+                    <textarea class="form-control" id="composition" name="composition" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Цена:</label>
+                    <input type="number" class="form-control" id="price" name="price">
+                </div>
+                <div class="mb-3">
+                    <h6 for="type" class="form-label">Тип букета:</h6>
+                    <select name="type" id="type" class="form-control">
+                        <option value="Cвадебный">Cвадебный</option>
+                        <option value="Авторский">Авторский</option>
+                        <option value="В коробке">В коробке</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-custom">Добавить</button>
+            </form>
         </div>
     </div>
     <div class="push"></div>
