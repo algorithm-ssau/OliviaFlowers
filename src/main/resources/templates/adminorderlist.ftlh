@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="icon_logo.png" type="image/x-icon">
+
+    <title>
+        Администратор
+    </title>
+
+    <script>
+        function showMessage(message) {
+            alert(message);
+        }
+    </script>
+
+    <script>
+        function request (id){
+
+        }
+
+    </script>
+
+    <style>
+
+        .main-content {
+            padding: 20px;
+            border-left: 1px solid #ccc;
+            margin-left: 100px;
+            flex-grow: 1;
+        }
+
+        .container-fluid, .navbar-custom, .image-container{
+            background-color: #f0eade;
+        }
+        .border{
+            border: 2px solid #f0eade; /* Цвет границы */
+            border-radius: 10px; /* Скругление углов */
+            max-width: 500px; /* Максимальная ширина карточки */
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .form-container {
+            max-width: 300px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .background_color_pw {
+            background-color: #f0eade;
+            padding-top: 2rem;          /* padding отступ внутри блока */
+            padding-bottom: 1rem;
+        }
+
+
+        .image{
+            border-radius: 10px; /* Скругление углов */
+            margin: auto;
+        }
+
+        .text{
+            margin-top: 2rem;
+        }
+
+        .btn-custom {
+            width: 80%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
+        }
+
+        .btn-custom:hover {
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+        }
+
+        .btn-custom2 {
+            width: 94%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
+        }
+
+        .btn-custom2:hover {
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+        }
+
+        .custom-link {
+            width: 87%;
+            margin-left: 5rem;
+            margin-bottom: .75rem; /* Отступ снизу */
+            font-size: 1.25rem; /* Размер шрифта */
+            font-weight: 500; /* Жирность шрифта */
+            color: #333;
+            text-decoration: none;
+        }
+
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #f0eade;
+            text-align: center;
+            line-height: 50px;
+        }
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <#if isAdmin?? && isAdmin == true>
+        <#include "blocks/headerAdmin.ftlh">
+    <#else>
+        <#include "blocks/header.ftlh">
+    </#if>
+    <div class="d-flex">
+        <div class="profile-container">
+            <h3>Админ</h3>
+            <a href="/admin" class="btn btn-custom">Список букетов</a>
+            <a href="/adminaddbouquet" class="btn btn-custom">Добавить букет</a>
+            <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букета на главный экран</a>
+            <a href="/adminpostcard" class="btn btn-custom">Работа с карточками</a>
+            <a href="/adminorderlist" class="btn btn-custom">Заказы к доставке</a>
+        </div>
+        <div class="main-content">
+            <h2>Заказы к доставке</h2>
+            <br>
+            <#if toDeliverOrders??>
+                <#assign x = 0>
+                <#list toDeliverOrders as order>
+                    <h4>Заказ №${order.id}</h4>
+                    <h4>Контактный номер: ${order.phoneNumber!}</h4>
+                    <table class = "table">
+                        <thead>
+                        <tr>
+                            <th>Адрес доставки</th>
+                            <th>Дата доставки</th>
+                            <th>Время доставки</th>
+                            <th>Карточка</th>
+                            <th>Текст карточки</th>
+                            <th>Дата оплаты</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>${order.addressDelivery}</td>
+                            <td>${order.dateDelivery.format('yyyy-MM-dd')}</td>
+                            <td>${order.timeDelivery!}</td>
+                            <td><#if toDeliverPostcards[x]??><img src="/images/${toDeliverPostcards[x].image.id}" alt="Фото" style="max-width: 60px ;max-height: 80px;"><#else>Отсутствует</#if></td>
+                            <td>${order.textPostcard!'-'}</td>
+                            <td>${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Букеты в заказе:</h4>
+                    <table class = "table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Состав</th>
+                            <th>Фото</th>
+                            <th>Количество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#assign y = 0>
+                        <#list toDeliverBouquets[x] as bouquet>
+                            <tr>
+                                <td>${bouquet.id}</td>
+                                <td>${bouquet.name}</td>
+                                <!-- Вывод состава букета в несколько строк -->
+                                <td>
+                                    <#list (bouquet.composition)?split("\n") as line>
+                                        ${line}<br>
+                                    </#list>
+                                </td>
+                                <td>
+                                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                        <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
+
+                                    <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                        <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
+
+                                    <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                        <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
+
+                                </td>
+                                <td>
+                                    ${toDeliverAmounts[x][y]}
+                                </td>
+
+
+                            </tr>
+                            <#assign y++>
+
+
+                        </#list>
+                        </tbody>
+                    </table>
+
+                    <form action = "deliver_order/${order.id}" method="post">
+                        <button type="submit" class="btn btn-custom2">Отметить доставленным</button>
+                    </form>
+                    <form action = "cancel_order/${order.id}" method="post">
+                        <button type="submit" class="btn btn-custom2">Отменить заказ</button>
+                    </form>
+                    <br>
+
+                    <#assign x++>
+                </#list>
+            <#else>
+                <h4>Актуальных заказов нету</h4>
+            </#if>
+
+
+        </div>
+    </div>
+    <div class="push"></div>
+    <footer class="footer mt-auto">
+        <#include "blocks/footer.ftlh">
+        <br>
+    </footer>
+</div>
+</body>

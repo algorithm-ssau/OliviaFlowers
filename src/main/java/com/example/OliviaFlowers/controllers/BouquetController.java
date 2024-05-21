@@ -82,6 +82,7 @@ public class BouquetController {
         model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
         model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
         model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery());
 
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -93,6 +94,8 @@ public class BouquetController {
 
         return "admin";
     }
+
+
 
     /*@GetMapping("/getbouquetsbyorder/{id}")
     public String findbouquets(@PathVariable Long id, Model model){
@@ -130,7 +133,7 @@ public class BouquetController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении букета");
         }
-        return "redirect:/admin";
+        return "redirect:/adminaddbouquet";
     }
 
 
@@ -171,7 +174,7 @@ public class BouquetController {
             redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");
         }
 
-        return"redirect:/admin";
+        return"redirect:/adminorderlist";
     }
 
     @PostMapping("cancel_order/{id}")
@@ -185,7 +188,62 @@ public class BouquetController {
             redirectAttributes.addFlashAttribute("message", "Ошибка при отмене заказа");
         }
 
-        return"redirect:/admin";
+        return"redirect:/adminorderlist";
+    }
+
+    @GetMapping("/adminaddbouquet")
+    public String addbouq(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+        return "adminaddbouquet";
+    }
+
+    @GetMapping("/adminchoicebouquet")
+    public String chobouq(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+        return "adminchoicebouquet";
+    }
+
+    @GetMapping("/adminorderlist")
+    public String lisordr(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
+        model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
+        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
+        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery());
+        return "adminorderlist";
+    }
+
+    @GetMapping("/adminpostcard")
+    public String postcrd(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
+        model.addAttribute("allPostcards", postcardService.listAllPostcards());
+        return "/adminpostcard";
     }
 
 
