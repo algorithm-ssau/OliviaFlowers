@@ -28,6 +28,9 @@ public class Bouquet {
     @Column(name = "price")
     private Long price; //цена
 
+    @Column(name = "type")
+    private String type;
+
     @OneToMany
     private List<Image> images = new ArrayList<>();
 
@@ -47,5 +50,17 @@ public class Bouquet {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getPrice() {
+        return price;
     }
 }
