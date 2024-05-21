@@ -110,92 +110,178 @@
             margin-bottom: 10px;
         }
 
+        /* Добавленный класс активности для выбранной категории */
+        .category-link.active {
+            text-decoration: underline; /* Подчеркиваем выбранную категорию */
+        }
+
+        .btn-custom {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
+        }
+
+        .btn-custom:hover {
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+        }
+
 
     </style>
 </head>
 
 <body class="d-flex flex-column h-100">
-<div class="wrapper flex-grow-1">
-  <#if isAdmin?? && isAdmin == true>
-  <#include "blocks/headerAdmin.ftlh">
-  <#else>
-  <#include "blocks/header.ftlh">
-</#if>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-3 sideMarginRight">
-            <h6 for="typeRecipient" class="form-label" style="margin-top: 0.5rem;">Категория:</h6>
-            <div class="sideMargin" style="padding-top: 1rem;">
-                <p><a class="custom-link" href="/lookAll" style="text-decoration: underline;">Все букеты</a></p>
-                <p><a class="custom-link" href="/authorBouquet">Авторские букеты</a></p>
-                <p><a class="custom-link" href="/boxBouquet">Композиции в коробках и корзинах</a></p>
-                <p><a class="custom-link" href="/weddingBouquet">Свадебный декор</a></p>
-                <p><a class="custom-link" href="/catalogPostcard">Открытки</a></p>
-            </div>
-            <br>
-             <form action="/filterBouquets" method="get">
-                 <h6 class="form-label">Сортировка:</h6>
-                 <select name="sort" id="typeRecipient" class="form-control">
-                     <option value="0">По умолчанию</option>
-                     <option value="1">По возрастанию цены</option>
-                     <option value="2">По убыванию цены</option>
-                 </select>
-                 <br>
-                 <div>
-                     <h6>Цена <i class="bi bi-info-circle"></i></h6>
-                     <div class="input-group mb-3">
-                         <input type="number" name="minPrice" class="form-control" min="0" max="100000000" placeholder="от min_prise">
-                         <input type="number" name="maxPrice" class="form-control" min="1" max="100000000" placeholder="до max_prise">
-                     </div>
-                     <div class="form-check sideMargin verticalMargin">
-                         <input class="form-check-input" type="checkbox" name="priceRange" id="price1" value="0-2000">
-                         <label class="form-check-label" for="price1">
-                             до 2000 ₽
-                         </label>
-                     </div>
-                     <div class="form-check sideMargin verticalMargin">
-                         <input class="form-check-input" type="checkbox" name="priceRange" id="price2" value="2000-4000">
-                         <label class="form-check-label" for="price2">
-                             2000–4000 ₽
-                         </label>
-                     </div>
-                     <div class="form-check sideMargin verticalMargin">
-                         <input class="form-check-input" type="checkbox" name="priceRange" id="price3" value="4000-999999999">
-                         <label class="form-check-label" for="price3">
-                             От 4000 ₽
-                         </label>
-                     </div>
-                     <button type="submit" class="btn btn-primary mt-3">Применить</button>
-
-                 </div>
-             </form>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5oCJ6pFYQ4IHg8DUi4zxtqDShTZ7H25QpYaetFG8L" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+j7jyWK8fNodH5t+1/s+M8fvr57Xj9sx1ztf5d1D3+6sni5BRp8FJaWwMGTOs3" crossorigin="anonymous"></script>
-        </div>
-        <div class="col-md-9">
-            <h4>Все букеты:</h4>
-            <div class="row">
-                <#list allBouquets as bouquet>
-                    <div class="col-md-4">
-                        <div class="product">
-                            <a href="/bouquet/${bouquet.id}" class="image">
-                                <img src="/images/${bouquet.images[0].id}" alt="Фото">
-                            </a>
-                            <div class="info">
-                                <a href="/bouquet/${bouquet.id}" class="card-link-name">${bouquet.name}</a>
-                                <div>${bouquet.price}</div>
-                            </div>
-                        </div>
-                    </div>
-                </#list>
-            </div>
-        </div>
+    <div class="wrapper flex-grow-1">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
     </div>
-    <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
-</div>
-<footer class="footer mt-auto">
-  <#include "blocks/footer.ftlh">
-</footer>
+
+    <div class="container">
+        <#if allBouquets??>
+            <div class="row">
+                <div class="col-md-3 sideMarginRight">
+                    <h6 for="typeRecipient" class="form-label" style="margin-top: 0.5rem;">Категория:</h6>
+                    <div class="sideMargin" style="padding-top: 1rem;">
+                        <p><a class="custom-link category-link" href="/catalog">Все букеты</a></p>
+                        <p><a class="custom-link category-link" href="/authorBouquet">Авторские букеты</a></p>
+                        <p><a class="custom-link category-link" href="/boxBouquet">Композиции в коробках и корзинах</a></p>
+                        <p><a class="custom-link category-link" href="/weddingBouquet">Свадебный декор</a></p>
+                        <p><a class="custom-link category-link" href="/catalogPostcard">Открытки</a></p>
+                    </div>
+                    <script>
+                        // Получаем текущий путь
+                        var currentPath = window.location.pathname;
+
+                        // Получаем все ссылки категорий
+                        var categoryLinks = document.querySelectorAll('.category-link');
+
+                        // Проходим по каждой ссылке
+                        categoryLinks.forEach(function(link) {
+                            // Если текущий путь совпадает с атрибутом href этой ссылки
+                            if (link.getAttribute('href') === currentPath) {
+                                // Добавляем класс активности
+                                link.classList.add('active');
+                            }
+                        });
+                    </script>
+
+                    <br>
+                     <form action="/filterBouquets" method="get">
+                         <h6 class="form-label">Сортировка:</h6>
+                         <select name="sort" id="typeRecipient" class="form-control">
+                             <option value="0">По умолчанию</option>
+                             <option value="1">По возрастанию цены</option>
+                             <option value="2">По убыванию цены</option>
+                         </select>
+
+                         <br>
+                         <div>
+                             <h6>Цена <i class="bi bi-info-circle"></i></h6>
+                             <div class="input-group mb-3">
+                                 <input type="number" name="minPrice" class="form-control" min="0" max="100000000" placeholder="от ${minPrice}">
+                                 <input type="number" name="maxPrice" class="form-control" min="1" max="100000000" placeholder="до ${maxPrice}">
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="priceRangeSmall" id="price1" value="0-2000">
+                                 <label class="form-check-label" for="price1">
+                                     до 2000 ₽
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="priceRangeAverage" id="price2" value="2000-4000">
+                                 <label class="form-check-label" for="price2">
+                                     2000–4000 ₽
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="priceRangeBig" id="price3" value="4000-999999999">
+                                 <label class="form-check-label" for="price3">
+                                     От 4000 ₽
+                                 </label>
+                             </div>
+                             <button type="submit" class="btn btn-custom mt-3">Применить</button>
+
+                         </div>
+                     </form>
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5oCJ6pFYQ4IHg8DUi4zxtqDShTZ7H25QpYaetFG8L" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+j7jyWK8fNodH5t+1/s+M8fvr57Xj9sx1ztf5d1D3+6sni5BRp8FJaWwMGTOs3" crossorigin="anonymous"></script>
+                </div>
+                <div class="col-md-9">
+                    <h4>${title}</h4>
+                    <div class="row">
+                        <#list allBouquets as bouquet>
+                            <div class="col-md-4">
+                                <div class="product">
+                                    <a href="/bouquet/${bouquet.id}" class="image">
+                                        <img src="/images/${bouquet.images[0].id}" alt="Фото">
+                                    </a>
+                                    <div class="info">
+                                        <a href="/bouquet/${bouquet.id}" class="card-link-name">${bouquet.name}</a>
+                                        <div>${bouquet.price}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+
+        <#else>
+            <div class="row">
+                <div class="col-md-3 sideMarginRight">
+                    <h6 for="typeRecipient" class="form-label" style="margin-top: 0.5rem;">Категория:</h6>
+                    <div class="sideMargin" style="padding-top: 1rem;">
+                        <p><a class="custom-link category-link" href="/catalog">Все букеты</a></p>
+                        <p><a class="custom-link category-link" href="/authorBouquet">Авторские букеты</a></p>
+                        <p><a class="custom-link category-link" href="/boxBouquet">Композиции в коробках и корзинах</a></p>
+                        <p><a class="custom-link category-link" href="/weddingBouquet">Свадебный декор</a></p>
+                        <p><a class="custom-link category-link" href="/catalogPostcard">Открытки</a></p>
+                    </div>
+                    <script>
+                        // Получаем текущий путь
+                        var currentPath = window.location.pathname;
+
+                        // Получаем все ссылки категорий
+                        var categoryLinks = document.querySelectorAll('.category-link');
+
+                        // Проходим по каждой ссылке
+                        categoryLinks.forEach(function(link) {
+                            // Если текущий путь совпадает с атрибутом href этой ссылки
+                            if (link.getAttribute('href') === currentPath) {
+                                // Добавляем класс активности
+                                link.classList.add('active');
+                            }
+                        });
+                    </script>
+
+                    <br>
+
+                </div>
+                <div class="col-md-9">
+                    <h4>${title}</h4>
+                    <div class="row">
+                        <#list allPostcards as Postcards>
+                            <div class="col-md-4">
+                                <div class="product">
+                                    <a href="/Postcards/${Postcards.id}" class="image">
+                                        <img src="/images/${Postcards.image.id}" alt="Фото">
+                                    </a>
+                                </div>
+                            </div>
+                        </#list>
+                    </div>
+                </div>
+            </div>
+        </#if>
+    </div>
+    <footer class="footer mt-auto">
+      <#include "blocks/footer.ftlh">
+    </footer>
 </body>
 </html>

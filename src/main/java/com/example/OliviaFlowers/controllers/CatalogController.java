@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 @Controller
 public class CatalogController {
@@ -35,6 +36,21 @@ public class CatalogController {
     public String catalog(Model model){
         bouquets = bouquetService.listAllBouquets();
         model.addAttribute("allBouquets", bouquets);
+        model.addAttribute("title", "Все букеты: ");
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPrice = bouquetService.listAllBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPrice.orElse(0.0));
+
+        OptionalDouble minPrice = bouquetService.listAllBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPrice.orElse(0.0));
+
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -48,6 +64,7 @@ public class CatalogController {
     @GetMapping("/catalogPostcard")
     public String catalogPostcard(Model model){
         model.addAttribute("allPostcards", postcardService.listAllPostcards());
+        model.addAttribute("title", "Все букеты: ");
 
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -56,20 +73,6 @@ public class CatalogController {
         User user = userService.getUserByEmail(username);
         if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
         else { model.addAttribute("isAdmin", false);}
-        return "catalogPostcard";
-    }
-
-    @GetMapping("/lookAll")
-    public String lookAll(Model model, @AuthenticationPrincipal User user) {
-        bouquets = bouquetService.listAllBouquets();
-        model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
-        //проверка пользователя администратор он или нет
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-        String username = authentication.getName(); // Получить имя пользователя
-        User user1 = userService.getUserByEmail(username);
-        if (user1 != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
         return "catalog";
     }
 
@@ -77,6 +80,20 @@ public class CatalogController {
     public String authorBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listAuthorBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
+        model.addAttribute("title", "Авторские букеты: ");
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPrice = bouquetService.listAuthorBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPrice.orElse(0.0));
+
+        OptionalDouble minPrice = bouquetService.listAuthorBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPrice.orElse(0.0));
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -91,6 +108,20 @@ public class CatalogController {
     public String boxBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listBoxBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
+        model.addAttribute("title", "Композиции в коробках и корзинах: ");
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPrice = bouquetService.listBoxBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPrice.orElse(0.0));
+
+        OptionalDouble minPrice = bouquetService.listBoxBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPrice.orElse(0.0));
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -105,6 +136,20 @@ public class CatalogController {
     public String weddingBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listWeddingBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
+        model.addAttribute("title", "Свадебный декор: ");
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPrice = bouquetService.listWeddingBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPrice.orElse(0.0));
+
+        OptionalDouble minPrice = bouquetService.listWeddingBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPrice.orElse(0.0));
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -115,26 +160,49 @@ public class CatalogController {
         return "catalog";
     }
 
+
     @GetMapping("/filterBouquets")
     public String filterBouquets(
             @RequestParam(required = false) int sort,
             @RequestParam(required = false) Long minPrice,
             @RequestParam(required = false) Long maxPrice,
-            @RequestParam(required = false) String priceRange,
+            @RequestParam(required = false) String priceRangeSmall,
+            @RequestParam(required = false) String priceRangeAverage,
+            @RequestParam(required = false) String priceRangeBig,
+
             Model model,
-            @AuthenticationPrincipal User user
-    ) {
-        Long  min = minPrice != null ? minPrice : 0;
-        Long  max = maxPrice != null ? maxPrice : Long.MAX_VALUE;
+            @AuthenticationPrincipal User user) {
+        Long  min = minPrice != null ? minPrice : Long.MAX_VALUE;
+        Long  max = maxPrice != null ? maxPrice : Long.MIN_VALUE;
+        Long local_min;
+        Long local_max;
 
-        if (priceRange != null && !priceRange.isEmpty()) {
-            String[] range = priceRange.split("-");
-            min = Long.parseLong(range[0]);
-            max = Long.parseLong(range[1]);
+        if (priceRangeSmall != null && !priceRangeSmall.isEmpty()) {
+            String[] range = priceRangeSmall.split("-");
+            local_min = Long.parseLong(range[0]);
+            local_max = Long.parseLong(range[1]);
+            if (local_min < min){ min = local_min;}
+            if (local_max > max){ max = local_max;}
         }
+        if (priceRangeAverage != null && !priceRangeAverage.isEmpty()) {
+            String[] range = priceRangeAverage.split("-");
+            local_min = Long.parseLong(range[0]);
+            local_max = Long.parseLong(range[1]);
+            if (local_min < min){ min = local_min;}
+            if (local_max > max){ max = local_max;}
+        }
+        if (priceRangeBig != null && !priceRangeBig.isEmpty()) {
+            String[] range = priceRangeBig.split("-");
+            local_min = Long.parseLong(range[0]);
+            local_max = Long.parseLong(range[1]);
+            if (local_min < min){ min = local_min;}
+            if (local_max > max){ max = local_max;}
+        }
+        if (min == Long.MAX_VALUE) { min = 0L;}
+        if (max == Long.MIN_VALUE) { max = Long.MAX_VALUE;}
 
-            List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
-            model.addAttribute("allBouquets", sortedBouquets);
+        List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
+        model.addAttribute("allBouquets", sortedBouquets);
 
 
 
