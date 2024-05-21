@@ -134,41 +134,42 @@
                 <p><a class="custom-link" href="/catalogPostcard">Открытки</a></p>
             </div>
             <br>
-           <form action="/filterBouquets" method="get">
-            <h6 class="form-label">Сортировка:</h6>
-            <select name="sort" id="typeRecipient" class="form-control">
-                <option value="0">По умолчанию</option>
-                <option value="1">По возрастанию цены</option>
-                <option value="2">По убыванию цены</option>
-            </select>
-            <br>
-            <div>
-                <h6>Цена <i class="bi bi-info-circle"></i></h6>
-                <div class="input-group mb-3">
-                    <input type="number" name="minPrice" class="form-control" min="0" max="100000000" placeholder="от min_prise">
-                    <input type="number" name="maxPrice" class="form-control" min="1" max="100000000" placeholder="до max_prise">
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="priceRange" id="price1" value="0-2000">
-                    <label class="form-check-label" for="price1">
-                        до 2000 ₽
-                    </label>
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="priceRange" id="price2" value="2000-4000">
-                    <label class="form-check-label" for="price2">
-                        2000–4000 ₽
-                    </label>
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="priceRange" id="price3" value="4000-999999999">
-                    <label class="form-check-label" for="price3">
-                        От 4000 ₽
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Применить</button>
-              </form>
-            </div>
+             <form action="/filterBouquets" method="get">
+                 <h6 class="form-label">Сортировка:</h6>
+                 <select name="sort" id="typeRecipient" class="form-control">
+                     <option value="0">По умолчанию</option>
+                     <option value="1">По возрастанию цены</option>
+                     <option value="2">По убыванию цены</option>
+                 </select>
+                 <br>
+                 <div>
+                     <h6>Цена <i class="bi bi-info-circle"></i></h6>
+                     <div class="input-group mb-3">
+                         <input type="number" name="minPrice" class="form-control" min="0" max="100000000" placeholder="от min_prise">
+                         <input type="number" name="maxPrice" class="form-control" min="1" max="100000000" placeholder="до max_prise">
+                     </div>
+                     <div class="form-check sideMargin verticalMargin">
+                         <input class="form-check-input" type="checkbox" name="priceRange" id="price1" value="0-2000">
+                         <label class="form-check-label" for="price1">
+                             до 2000 ₽
+                         </label>
+                     </div>
+                     <div class="form-check sideMargin verticalMargin">
+                         <input class="form-check-input" type="checkbox" name="priceRange" id="price2" value="2000-4000">
+                         <label class="form-check-label" for="price2">
+                             2000–4000 ₽
+                         </label>
+                     </div>
+                     <div class="form-check sideMargin verticalMargin">
+                         <input class="form-check-input" type="checkbox" name="priceRange" id="price3" value="4000-999999999">
+                         <label class="form-check-label" for="price3">
+                             От 4000 ₽
+                         </label>
+                     </div>
+                     <button type="submit" class="btn btn-primary mt-3">Применить</button>
+
+                 </div>
+             </form>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5oCJ6pFYQ4IHg8DUi4zxtqDShTZ7H25QpYaetFG8L" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+j7jyWK8fNodH5t+1/s+M8fvr57Xj9sx1ztf5d1D3+6sni5BRp8FJaWwMGTOs3" crossorigin="anonymous"></script>
         </div>
