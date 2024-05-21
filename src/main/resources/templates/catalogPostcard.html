@@ -71,6 +71,8 @@
         }
         .wrapper {
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .price-filter {
@@ -115,10 +117,10 @@
 
 <body class="d-flex flex-column h-100">
 <div class="wrapper flex-grow-1">
-  <#if isAdmin?? && isAdmin == true>
-  <#include "blocks/headerAdmin.ftlh">
-  <#else>
-  <#include "blocks/header.ftlh">
+    <#if isAdmin?? && isAdmin == true>
+    <#include "blocks/headerAdmin.ftlh">
+    <#else>
+    <#include "blocks/header.ftlh">
 </#if>
 
 <div class="container">
@@ -126,71 +128,32 @@
         <div class="col-md-3 sideMarginRight">
             <h6 for="typeRecipient" class="form-label" style="margin-top: 0.5rem;">Категория:</h6>
             <div class="sideMargin" style="padding-top: 1rem;">
-                <p><a class="custom-link" href="#" style="text-decoration: underline;">Все букеты</a></p>
+                <p><a class="custom-link" aria-current="page" href="/catalog">Все букеты</a></p>
                 <p><a class="custom-link" href="#">Авторские букеты</a></p>
                 <p><a class="custom-link" href="#">Композиции в коробках и корзинах</a></p>
                 <p><a class="custom-link" href="#">Свадебный декор</a></p>
-                <p><a class="custom-link" href="/catalogPostcard">Открытки</a></p>
+                <p><a class="custom-link" href="#" style="text-decoration: underline;">Открытки</a></p>
             </div>
-            <br>
-            <h6 class="form-label">Сортировка:</h6>
-            <select onchange = "sortingTypeMethod()" name = "sortingType" id = "sortingType" class = "form-control">
-                <option id = "default" value = "0">По умолчанию</option>
-                <option value = "1">По возрастанию цены</option>
-                <option value = "2">По убыванию цены</option>
-            </select>
-            <br>
-            <div>
-                <h6>Цена <i class="bi bi-info-circle"></i></h6>
-                <div class="input-group mb-3">
-                    <input type="number" class="form-control" min="0" max="100000000" placeholder="от min_prise">
-                    <input type="number" class="form-control" min="1" max="100000000" placeholder="до max_prise">
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="price" id="price1">
-                    <label class="form-check-label" for="price1">
-                        до 2000 ₽
-                    </label>
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="price" id="price2">
-                    <label class="form-check-label" for="price2">
-                        2000–4000 ₽
-                    </label>
-                </div>
-                <div class="form-check sideMargin verticalMargin">
-                    <input class="form-check-input" type="checkbox" name="price" id="price3">
-                    <label class="form-check-label" for="price3">
-                        От 4000 ₽
-                    </label>
-                </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5oCJ6pFYQ4IHg8DUi4zxtqDShTZ7H25QpYaetFG8L" crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-ho+j7jyWK8fNodH5t+1/s+M8fvr57Xj9sx1ztf5d1D3+6sni5BRp8FJaWwMGTOs3" crossorigin="anonymous"></script>
         </div>
         <div class="col-md-9">
-            <h4>Все букеты:</h4>
+            <h4>Открытки:</h4>
             <div class="row">
-                <#list allBouquets as bouquet>
-                    <div class="col-md-4">
-                        <div class="product">
-                            <a href="/bouquet/${bouquet.id}" class="image">
-                                <img src="/images/${bouquet.images[0].id}" alt="Фото">
-                            </a>
-                            <div class="info">
-                                <a href="/bouquet/${bouquet.id}" class="card-link-name">${bouquet.name}</a>
-                                <div>${bouquet.price}</div>
-                            </div>
-                        </div>
+                <#list allPostcards as postcard>
+                <div class="col-md-4">
+                    <div class="product">
+                        <a href="/postcard/${postcard.id}" class="image">
+                            <img src="/images/${postcard.image.id}" alt="Фото">
+                        </a>
                     </div>
-                </#list>
-            </div>
+                </div>
+            </#list>
         </div>
     </div>
-    <script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
+</div>
+<script src="https://unpkg.com/ionicons@4.1.2/dist/ionicons.js"></script>
 </div>
 <footer class="footer mt-auto">
-  <#include "blocks/footer.ftlh">
+    <#include "blocks/footer.ftlh">
 </footer>
 </body>
 </html>
