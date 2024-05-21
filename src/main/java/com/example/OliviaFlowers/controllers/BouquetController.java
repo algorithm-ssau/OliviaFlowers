@@ -47,33 +47,7 @@ public class BouquetController {
         model.addAttribute("allBouquets", bouquetService.listAllBouquets());
         return "admin";
     }
-    @GetMapping("/catalog")
-    public String catalog(Model model){
-        model.addAttribute("allBouquets", bouquetService.listAllBouquets());
 
-        //проверка пользователя администратор он или нет
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-        String username = authentication.getName(); // Получить имя пользователя
-        User user = userService.getUserByEmail(username);
-        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
-        return "catalog";
-    }
-
-    @GetMapping("/catalogPostcard")
-    public String catalogPostcard(Model model){
-        model.addAttribute("allPostcards", postcardService.listAllPostcards());
-
-        //проверка пользователя администратор он или нет
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-        String username = authentication.getName(); // Получить имя пользователя
-        User user = userService.getUserByEmail(username);
-        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else { model.addAttribute("isAdmin", false);}
-        return "catalogPostcard";
-    }
 
     @GetMapping("/admin")
         public String admin(Model model){

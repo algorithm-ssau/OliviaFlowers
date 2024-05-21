@@ -1,12 +1,8 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
-import com.example.OliviaFlowers.models.Order;
 import com.example.OliviaFlowers.models.User;
-import com.example.OliviaFlowers.secvices.BouquetService;
-import com.example.OliviaFlowers.secvices.FavoriteService;
-import com.example.OliviaFlowers.secvices.OrderService;
-import com.example.OliviaFlowers.secvices.UserService;
+import com.example.OliviaFlowers.secvices.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class CatalogController {
@@ -25,12 +20,43 @@ public class CatalogController {
     private final BouquetService bouquetService;
     private final UserService userService;
 
+    private final PostcardService postcardService;
+
     private List<Bouquet> bouquets;
 
     @Autowired
-    public CatalogController(BouquetService bouquetService, UserService userService) {
+    public CatalogController(BouquetService bouquetService, UserService userService, PostcardService postcardService) {
         this.bouquetService = bouquetService;
         this.userService = userService;
+        this.postcardService = postcardService;
+    }
+
+    @GetMapping("/catalog")
+    public String catalog(Model model){
+        bouquets = bouquetService.listAllBouquets();
+        model.addAttribute("allBouquets", bouquets);
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+        return "catalog";
+    }
+
+    @GetMapping("/catalogPostcard")
+    public String catalogPostcard(Model model){
+        model.addAttribute("allPostcards", postcardService.listAllPostcards());
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else { model.addAttribute("isAdmin", false);}
+        return "catalogPostcard";
     }
 
     @GetMapping("/lookAll")
