@@ -93,8 +93,8 @@ public class CatalogController {
             @AuthenticationPrincipal User user
     ) {
 
-        Long min = minPrice != null ? minPrice : 0;
-        Long max = maxPrice != null ? maxPrice : Long.MAX_VALUE;
+        Long  min = minPrice != null ? minPrice : 0;
+        Long  max = maxPrice != null ? maxPrice : Long.MAX_VALUE;
 
         if (priceRange != null && !priceRange.isEmpty()) {
             String[] range = priceRange.split("-");
