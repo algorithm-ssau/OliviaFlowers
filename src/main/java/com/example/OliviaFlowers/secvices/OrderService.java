@@ -37,11 +37,14 @@ public class OrderService {
     }
 
     public boolean saveOrder(Principal principal, Order order){
-        order.setUser(getUserByPrincipal(principal));
-        order.setActive((long)1);
+        order.setUser(getUserByPrincipal(principal));;
         orderRepository.save(order);
         return true;
+    }
 
+    public boolean saveOrder(Order order){
+        orderRepository.save(order);
+        return true;
     }
 
     public User getUserByPrincipal(Principal principal){
@@ -49,33 +52,21 @@ public class OrderService {
         return userRepository.findByEmail(principal.getName());
     }
 
-    public boolean SetInactive(Order order){
-        order.setActive((long)0);
-        return true;
-    }
-    public Order HaveActiveOrderByPrincipal(Principal principal){
-        return orderRepository.findByUserAndActive(getUserByPrincipal(principal), (long)1);
+    public Order HaveOrderInCardByPrincipal(Principal principal){
+        return orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "В корзине");
     }
 
     public Order getOrderByID(Long id){
         return orderRepository.findById(id).orElse(null);
     }
 
-    public List<Order> ListOrderActivity2(Principal principal){
-        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal),(long)2); //заказы к доставке
-    }
-
-    public List<Order> ListOrderActivity0(Principal principal){ //полностью закрытые заказы
-        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal),(long)0);
-    }
 
     public List<Order> ListAllOrdersToDeliver(){
-        return orderRepository.findAllByActive((long)2);
+        return orderRepository.findAllByStatus("Оплачен");
     }
 
-    public List<Postcard> getPostCardToDelivery(){
+    public List<Postcard> getPostCardToDelivery(List<Order> orders){
         List<Postcard> postcards = new ArrayList<>();
-        List<Order> orders = orderRepository.findAllByActive((long)2);
         orders.forEach(order -> {
             postcards.add(postcardRepository.findById(order.getTypePostcard()).orElse(null));
         });
@@ -88,14 +79,14 @@ public class OrderService {
                               String addressDelivery, LocalDateTime datePayment,
                               LocalDate dateDelivery, String timeDelivery, String phoneNumber){
         try{
-            Order order = HaveActiveOrderByPrincipal(principal);
+            Order order = HaveOrderInCardByPrincipal(principal);
             order.setTypePostcard(typePostcard);
             order.setTextPostcard(textPostcard);
             order.setAddressDelivery(addressDelivery);
             order.setDatePayment(datePayment);
             order.setDateDelivery(dateDelivery);
             order.setTimeDelivery(timeDelivery);
-            order.setActive((long)2);
+            order.setStatus("Оплачен");
             order.setPhoneNumber(phoneNumber);
             orderRepository.save(order);
         }catch (Exception e){
@@ -117,7 +108,7 @@ public class OrderService {
     @Transactional
     public void CancelOrder(Order order){
         try{
-            order.setActive((long)4); //4 активность - отменён
+            order.setStatus("Отменен"); //активность - отменён
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -130,15 +121,25 @@ public class OrderService {
     public List<Order> ListOrders() {
         return orderRepository.findAll();
     }
+    public List<Order> ListOrdersFinished(){
+        return orderRepository.findAllByStatus("Доставлен");
+    }
 
-    public List<Order> ListOrdersActive(Principal principal){
-        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal), (long)1);
+    public List<Order> ListOrdersCanceled(){
+        return orderRepository.findAllByStatus("Отменен");
+    }
+
+    public List<Order> ListOrdersActive(User user){
+        return orderRepository.findAllByUserAndStatus(user, "Оплачен");
     }
 
     public List<Order> ListOrdersInactive(Principal principal){
-        return orderRepository.findAllByUserAndActive(getUserByPrincipal(principal), (long)0);
+        return orderRepository.findAllByUserAndStatus(getUserByPrincipal(principal),  "В корзине");
     }
 
+    public List<Order> ListOrdersFinished(User user){
+        return orderRepository.findAllByUserAndStatus(user,  "Доставлен");
+    }
 
 
     public List<Order> findOrdersByUser(User user) {

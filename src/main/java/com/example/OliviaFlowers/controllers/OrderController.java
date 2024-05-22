@@ -140,11 +140,11 @@ public class OrderController {
             // Получение текущей даты плюс три месяца
             LocalDate maxDate = minDate.plus(3, ChronoUnit.MONTHS);
 
-            model.addAttribute("acBouquets", orderHasBouquetService.getbouquetsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
+            model.addAttribute("acBouquets", orderHasBouquetService.getbouquetsByOrder(orderService.HaveOrderInCardByPrincipal(principal)));
 
             model.addAttribute("inacOrders", orderService.ListOrdersInactive(principal));
-            model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal)));
-            List<Long> acAmounts = orderHasBouquetService.getAmountsByOrder(orderService.HaveActiveOrderByPrincipal(principal));
+            model.addAttribute("acAmounts", orderHasBouquetService.getAmountsByOrder(orderService.HaveOrderInCardByPrincipal(principal)));
+            List<Long> acAmounts = orderHasBouquetService.getAmountsByOrder(orderService.HaveOrderInCardByPrincipal(principal));
             Long countBouquetsInOrder = 0L;
             for(int i = 0; i < acAmounts.size(); i++){
                 countBouquetsInOrder += acAmounts.get(i);
@@ -156,7 +156,7 @@ public class OrderController {
 
             model.addAttribute("countBouquetsInOrderString", countBouquetsInOrderString);
 
-            model.addAttribute("acOrder", orderService.HaveActiveOrderByPrincipal(principal));
+            model.addAttribute("acOrder", orderService.HaveOrderInCardByPrincipal(principal));
             model.addAttribute("allPostcards", postcardService.listAllPostcards());
 
             // Получение пользователя из базы данных по его email (имени пользователя)

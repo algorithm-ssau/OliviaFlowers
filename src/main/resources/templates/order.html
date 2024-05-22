@@ -343,161 +343,159 @@
 
         </tbody>
       </table>
+    </div>
 
-    </#if>
-    <div class="vertical-line"></div>
-  </div>
+    <div class="col-md-1 vertical-line">
+    </div>
 
-  <div class="col-md-1 vertical-line">
-  </div>
+    <div class="col-md-4">
+      <#if acBouquets?size != 0>
+      <h4 class="text-start">Заказ:</h4>
+      <br>
+      <form action="/order_checkout" method="post" onsubmit="return validateForm()">
+        <hr>
 
-  <div class="col-md-4">
-    <#if acBouquets?size != 0>
-    <h4 class="text-start">Заказ:</h4>
-    <br>
-    <form action="/order_checkout" method="post" onsubmit="return validateForm()">
-      <hr>
-
-      <div class="row">
-        <div class="col-6">
-          <p>${countBouquetsInOrderString}</p>
-        </div>
-        <div class="col-6">
-          <p class="text-end">${acOrder.sumOrder} руб.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <p>Доставка</p>
-        </div>
-        <div class="col-6">
-          <p class="text-end">${acOrder.sumDelivery} руб.</p>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="row">
-        <div class="col-6">
-          <h5 class="text-start">Сумма заказа:</h5>
-        </div>
-        <div class="col-6">
-          <h5 class="text-end">${acOrder.sumOrderWithDelivery} руб.</h5>
-        </div>
-      </div>
-
-      <br><br>
-      <div class="">
         <div class="row">
+          <div class="col-6">
+            <p>${countBouquetsInOrderString}</p>
+          </div>
+          <div class="col-6">
+            <p class="text-end">${acOrder.sumOrder} руб.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <p>Доставка</p>
+          </div>
+          <div class="col-6">
+            <p class="text-end">${acOrder.sumDelivery} руб.</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-6">
+            <h5 class="text-start">Сумма заказа:</h5>
+          </div>
+          <div class="col-6">
+            <h5 class="text-end">${acOrder.sumOrderWithDelivery} руб.</h5>
+          </div>
+        </div>
+
+        <br><br>
+        <div class="">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <h6 for="typePostcard" class="form-label">Тип открытки:</h6>
+              <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
+                <option id = "noPostcard" value = "-1">Без открытки</option>
+                <option value = "0">C открыткой</option>
+              </select>
+            </div>
+
+            <div class="col-md-auto">
+              <div id="postcardCarousel" class="carousel carousel-dark slide custom-card" style="display:none">
+                <div class="carousel-inner">
+                  <#list allPostcards as postcard>
+                  <div class="carousel-item<#if postcard_index == 0> active</#if>">
+                    <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
+                    <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
+                  </div>
+                </#list>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          <div class="col">
+            <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
+              <label for="textPostcard" class="form-label">Текст открытки:</label>
+              <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
+            </div>
+          </div>
+
           <div class="col-12 mb-3">
-            <h6 for="typePostcard" class="form-label">Тип открытки:</h6>
-            <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
-              <option id = "noPostcard" value = "-1">Без открытки</option>
-              <option value = "0">C открыткой</option>
+            <h6 for="typeRecipient" class="form-label">Получатель:</h6>
+            <select onchange = "showNumberPhone()" name = "typeRecipient" id = "typeRecipient" class = "form-control">
+              <option id = "me" value = "0">Я</option>
+              <option value = "1">Другой человек</option>
             </select>
           </div>
 
-          <div class="col-md-auto">
-            <div id="postcardCarousel" class="carousel carousel-dark slide custom-card" style="display:none">
-              <div class="carousel-inner">
-                <#list allPostcards as postcard>
-                <div class="carousel-item<#if postcard_index == 0> active</#if>">
-                  <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
-                  <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
-                </div>
-              </#list>
+          <div class="col-12 mb-3">
+            <div class="form-group" id="phoneNumber" style = "display:none">
+              <h6 class="text-start">Номер телефона</h6>
+              <input class="form-control" name="phoneNumber" id="phoneNumber" value="${phoneNumber}" required>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+          </div>
+
+
+
+          <div class="col-12 mb-3">
+            <div class="form-group" id="addressDelivery">
+              <h6 class="text-start">Адрес доставки</h6>
+              <input class="form-control" name="addressDelivery" id="addressDelivery"
+                     placeholder="Улица, дом, квартира" / required>
+            </div>
+          </div>
+
+
+
+
+          <div class="col-12 mb-3">
+            <div class="form-group">
+              <h6 class="text-start">Дата доставки</h6>
+              <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeSelect()" required>
+            </div>
+          </div>
+
+          <div class="col-12 mb-3">
+            <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
+            <select name="timeDelivery" id="timeDelivery" class="form-control">
+              <option value="08:00 - 10:00">08:00 - 10:00</option>
+              <option value="10:00 - 12:00">10:00 - 12:00</option>
+              <option value="12:00 - 14:00">12:00 - 14:00</option>
+              <option value="14:00 - 16:00">14:00 - 16:00</option>
+              <option value="16:00 - 18:00">16:00 - 18:00</option>
+              <option value="18:00 - 20:00">18:00 - 20:00</option>
+              <option value="20:00 - 22:00">20:00 - 22:00</option>
+              <option value="Спросить у получателя">Спросить у получателя</option>
+            </select>
+          </div>
+
+          <div class="col-12 mb-3 ">
+            <div class="form-group" id="dateTimeDeliveryToday">
+              <h6 class="form-label" style = "display:none">Время доставки:</h6>
+              <select name="timeDeliveryToday" id="timeDeliveryToday" class="form-control">
+                <#if timeSlots?size != 0>
+                <#list timeSlots as time>
+                <option value="${time}">${time}</option>
+              </#list>
+            </#if>
+            </select>
           </div>
         </div>
-        <div class="col">
-          <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
-            <label for="textPostcard" class="form-label">Текст открытки:</label>
-            <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
-          </div>
-        </div>
-
-        <div class="col-12 mb-3">
-          <h6 for="typeRecipient" class="form-label">Получатель:</h6>
-          <select onchange = "showNumberPhone()" name = "typeRecipient" id = "typeRecipient" class = "form-control">
-            <option id = "me" value = "0">Я</option>
-            <option value = "1">Другой человек</option>
-          </select>
-        </div>
-
-        <div class="col-12 mb-3">
-          <div class="form-group" id="phoneNumber" style = "display:none">
-            <h6 class="text-start">Номер телефона</h6>
-            <input class="form-control" name="phoneNumber" id="phoneNumber" value="${phoneNumber}" required>
-          </div>
-        </div>
+    </div>
 
 
-
-        <div class="col-12 mb-3">
-          <div class="form-group" id="addressDelivery">
-            <h6 class="text-start">Адрес доставки</h6>
-            <input class="form-control" name="addressDelivery" id="addressDelivery"
-                   placeholder="Улица, дом, квартира" / required>
-          </div>
-        </div>
-
-
-
-
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <h6 class="text-start">Дата доставки</h6>
-            <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeSelect()" required>
-          </div>
-        </div>
-
-        <div class="col-12 mb-3">
-          <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
-          <select name="timeDelivery" id="timeDelivery" class="form-control">
-            <option value="08:00 - 10:00">08:00 - 10:00</option>
-            <option value="10:00 - 12:00">10:00 - 12:00</option>
-            <option value="12:00 - 14:00">12:00 - 14:00</option>
-            <option value="14:00 - 16:00">14:00 - 16:00</option>
-            <option value="16:00 - 18:00">16:00 - 18:00</option>
-            <option value="18:00 - 20:00">18:00 - 20:00</option>
-            <option value="20:00 - 22:00">20:00 - 22:00</option>
-            <option value="Спросить у получателя">Спросить у получателя</option>
-          </select>
-        </div>
-
-        <div class="col-12 mb-3 ">
-          <div class="form-group" id="dateTimeDeliveryToday">
-            <h6 class="form-label" style = "display:none">Время доставки:</h6>
-            <select name="timeDeliveryToday" id="timeDeliveryToday" class="form-control">
-              <#if timeSlots?size != 0>
-              <#list timeSlots as time>
-              <option value="${time}">${time}</option>
-            </#list>
-          </#if>
-          </select>
-        </div>
-      </div>
   </div>
 
-
-</div>
-
-<div class="d-flex justify-content-center">
-  <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
-</div>
-</form>
+  <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
+  </div>
+  </form>
 </#if>
 </div>
 </div>
 </div>
+</#if>
 </div>
 <footer class="footer mt-auto">
   <#include "blocks/footer.ftlh">

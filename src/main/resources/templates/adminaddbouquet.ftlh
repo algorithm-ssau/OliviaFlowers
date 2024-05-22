@@ -145,11 +145,13 @@
     <div class="d-flex">
         <div class="profile-container">
             <h3>Админ</h3>
-            <a href="/admin" class="btn btn-custom">Список букетов</a>
-            <a href="/adminaddbouquet" class="btn btn-custom">Добавить букет</a>
-            <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букета на главный экран</a>
-            <a href="/adminpostcard" class="btn btn-custom">Работа с карточками</a>
-            <a href="/adminorderlist" class="btn btn-custom">Заказы к доставке</a>
+            <a href="/adminorderlist" class="btn btn-custom">Активные заказы</a>
+                <a href="/adminFinishedOrderList" class="btn btn-custom">Законченные заказы</a>
+                <a href="/adminCanceledOrderList" class="btn btn-custom">Отмененные заказы</a>
+                <a href="/admin" class="btn btn-custom">Все букеты</a>
+                <a href="/adminaddbouquet" class="btn btn-custom">Добавление нового букета</a>
+                <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букетов на главный экран</a>
+                <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
         </div>
         <div class="main-content">
             <h2>Добавление букета</h2>

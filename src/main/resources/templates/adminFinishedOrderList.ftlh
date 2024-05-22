@@ -154,36 +154,108 @@
             <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
 
 
-
-
         </div>
         <div class="main-content">
-            <h2>Выбор букета для главного экрана</h2>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            <form action="/add_bouquets_to_homepage" method="post">
-                <div class="mb-3">
-                    <label for="bouquet1" class="form-label">ID букета 1:</label>
-                    <input type="text" class="form-control" id="bouquet1" name="bouquet1">
-                    <label for="description1" class="form-label">Описание букета:</label>
-                    <textarea class="form-control" id="description1" name="description1" style="height: auto"></textarea>
+            <h2>Заказы к доставке</h2>
+            <br>
+            <#if toDeliverOrders??>
+                <#assign x = 0>
+                <#list toDeliverOrders as order>
+                    <h4>Заказ №${order.id}</h4>
+                    <h4>Контактный номер: ${order.phoneNumber!}</h4>
+                    <table class = "table">
+                        <thead>
+                        <tr>
+                            <th>Адрес доставки</th>
+                            <th>Дата доставки</th>
+                            <th>Время доставки</th>
+                            <th>Карточка</th>
+                            <th>Текст карточки</th>
+                            <th>Дата оплаты</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>${order.addressDelivery}</td>
+                            <td>${order.dateDelivery.format('yyyy-MM-dd')}</td>
+                            <td>${order.timeDelivery!}</td>
+                            <td><#if toDeliverPostcards[x]??><img src="/images/${toDeliverPostcards[x].image.id}" alt="Фото" style="max-width: 60px ;max-height: 80px;"><#else>Отсутствует</#if></td>
+                            <td>${order.textPostcard!'-'}</td>
+                            <td>${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4>Букеты в заказе:</h4>
+                    <table class = "table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Состав</th>
+                            <th>Фото</th>
+                            <th>Количество</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#assign y = 0>
+                        <#list toDeliverBouquets[x] as bouquet>
+                            <tr>
+                                <td>${bouquet.id}</td>
+                                <td>${bouquet.name}</td>
+                                <!-- Вывод состава букета в несколько строк -->
+                                <td>
+                                    <#list (bouquet.composition)?split("\n") as line>
+                                        ${line}<br>
+                                    </#list>
+                                </td>
+                                <td>
+                                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                        <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
 
-                </div>
-                <div class="mb-3">
-                    <label for="bouquet2" class="form-label">ID букета 2:</label>
-                    <input type="text" class="form-control" id="bouquet2" name="bouquet2">
-                    <label for="description2" class="form-label">Описание букета:</label>
-                    <textarea class="form-control" id="description2" name="description2" style="height: auto"></textarea>
+                                    <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                        <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
 
-                </div>
-                <div class="mb-3">
-                    <label for="bouquet3" class="form-label">ID букета 3:</label>
-                    <input type="text" class="form-control" id="bouquet3" name="bouquet3">
-                    <label for="description3" class="form-label">Описание букета:</label>
-                    <textarea class="form-control" id="description3" name="description3" style="height: auto"></textarea>
+                                    <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                        <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                                    <#else>
+                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    </#if>
 
-                </div>
-                <button type="submit" class="btn btn-custom">Добавить на главный экран</button>
-            </form>
+                                </td>
+                                <td>
+                                    ${toDeliverAmounts[x][y]}
+                                </td>
+
+
+                            </tr>
+                            <#assign y++>
+
+
+                        </#list>
+                        </tbody>
+                    </table>
+
+                    <form action = "deliver_order/${order.id}" method="post">
+                        <button type="submit" class="btn btn-custom2">Отметить доставленным</button>
+                    </form>
+                    <form action = "cancel_order/${order.id}" method="post">
+                        <button type="submit" class="btn btn-custom2">Отменить заказ</button>
+                    </form>
+                    <br>
+
+                    <#assign x++>
+                </#list>
+            <#else>
+                <h4>Законченных заказов нету</h4>
+            </#if>
+
+
         </div>
     </div>
     <div class="push"></div>

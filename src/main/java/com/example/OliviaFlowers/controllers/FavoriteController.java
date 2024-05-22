@@ -3,7 +3,10 @@ package com.example.OliviaFlowers.controllers;
 import com.example.OliviaFlowers.models.Bouquet;
 import com.example.OliviaFlowers.models.User;
 import com.example.OliviaFlowers.secvices.FavoriteService;
+import com.example.OliviaFlowers.secvices.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +19,11 @@ import java.util.List;
 public class FavoriteController {
     private final FavoriteService favoriteService;
 
-    public FavoriteController(FavoriteService favoriteService) {
+    private final UserService userService;
+
+    public FavoriteController(FavoriteService favoriteService, UserService userService) {
         this.favoriteService = favoriteService;
+        this.userService = userService;
     }
 
     @GetMapping("/favorite")
@@ -25,6 +31,15 @@ public class FavoriteController {
         List<Bouquet> favoriteBouquets = favoriteService.getFavoriteBouquetsByUser(user);
         model.addAttribute("favoriteBouquets", favoriteBouquets);
         model.addAttribute("currentUser", user);
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user1 = userService.getUserByEmail(username);
+        if (user1 != null){ model.addAttribute("isAdmin", user1.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
         return "favorite";
     }
 
