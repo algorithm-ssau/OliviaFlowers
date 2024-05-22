@@ -202,7 +202,6 @@ public class OrderController {
         try{
             Bouquet bouquet = bouquetService.getBouquetByID(id);
             orderHasBouquetService.changeAmount(bouquet, principal, count);
-
         }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при изменении стоимости");
         }

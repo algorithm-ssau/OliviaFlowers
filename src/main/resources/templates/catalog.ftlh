@@ -202,7 +202,7 @@
                              <div class="form-check sideMargin verticalMargin">
                                  <input class="form-check-input" type="checkbox" name="priceRangeBig" id="price3" value="4000-999999999">
                                  <label class="form-check-label" for="price3">
-                                     От 4000 ₽
+                                     от 4000 ₽
                                  </label>
                              </div>
                              <button type="submit" class="btn btn-custom mt-3">Применить</button>
