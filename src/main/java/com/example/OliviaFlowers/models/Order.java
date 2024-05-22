@@ -55,7 +55,7 @@ public class Order {
     private Set<Order_has_bouquet> amounts;
 
     @Column
-    private Long active; //активный заказ или нет
+    private String status; //статус заказа("В корзине", "Оплачен", "Доставлен", "Отменен")
 
     @Column
     private String phoneNumber; //номер телефона получателя

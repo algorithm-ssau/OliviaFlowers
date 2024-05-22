@@ -25,6 +25,8 @@ public class CatalogController {
 
     private List<Bouquet> bouquets;
 
+    private String title;
+
     @Autowired
     public CatalogController(BouquetService bouquetService, UserService userService, PostcardService postcardService) {
         this.bouquetService = bouquetService;
@@ -36,7 +38,8 @@ public class CatalogController {
     public String catalog(Model model){
         bouquets = bouquetService.listAllBouquets();
         model.addAttribute("allBouquets", bouquets);
-        model.addAttribute("title", "Все букеты: ");
+        title = "Все букеты: ";
+        model.addAttribute("title", title);
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listAllBouquets().stream()
@@ -64,7 +67,21 @@ public class CatalogController {
     @GetMapping("/catalogPostcard")
     public String catalogPostcard(Model model){
         model.addAttribute("allPostcards", postcardService.listAllPostcards());
-        model.addAttribute("title", "Все букеты: ");
+        title = "Открытки: ";
+        model.addAttribute("title", title);
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPrice = bouquetService.listAllBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPrice.orElse(0.0));
+
+        OptionalDouble minPrice = bouquetService.listAllBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPrice.orElse(0.0));
 
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,7 +97,8 @@ public class CatalogController {
     public String authorBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listAuthorBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
-        model.addAttribute("title", "Авторские букеты: ");
+        title = "Авторские букеты: ";
+        model.addAttribute("title", title);
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listAuthorBouquets().stream()
@@ -108,7 +126,8 @@ public class CatalogController {
     public String boxBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listBoxBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
-        model.addAttribute("title", "Композиции в коробках и корзинах: ");
+        title = "Композиции в коробках и корзинах: ";
+        model.addAttribute("title", title);
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listBoxBouquets().stream()
@@ -136,7 +155,8 @@ public class CatalogController {
     public String weddingBouquet(Model model, @AuthenticationPrincipal User user) {
         bouquets = bouquetService.listWeddingBouquets();
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
-        model.addAttribute("title", "Свадебный декор: ");
+        title = "Свадебный декор: ";
+        model.addAttribute("title", title);
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listWeddingBouquets().stream()
@@ -203,6 +223,20 @@ public class CatalogController {
 
         List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
         model.addAttribute("allBouquets", sortedBouquets);
+        model.addAttribute("title", title);
+
+        // Найти максимальную цену среди всех букетов с использованием потока
+        OptionalDouble maxPriceBouquets = bouquetService.listWeddingBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .max();
+        // Добавить максимальную цену в модель
+        model.addAttribute("maxPrice", maxPriceBouquets.orElse(0.0));
+
+        OptionalDouble minPriceBouquets = bouquetService.listWeddingBouquets().stream()
+                .mapToDouble(Bouquet::getPrice)
+                .min();
+
+        model.addAttribute("minPrice", minPriceBouquets.orElse(0.0));
 
 
 

@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    List<Order> findAllByUserAndActive(User user, Long active);
-    Order findByUserAndActive(User user, Long active);
-    List<Order> findAllByActive(Long active);
+    List<Order> findAllByUserAndStatus(User user, String status);
+
+    Order findByUserAndStatus(User user, String status);
+    List<Order> findAllByStatus(String status);
 
     List<Order> findByUser(User user);
 }

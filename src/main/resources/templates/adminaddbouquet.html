@@ -26,7 +26,7 @@
         .main-content {
             padding: 20px;
             border-left: 1px solid #ccc;
-            margin-left: 220px;
+            margin-left: 100px;
             flex-grow: 1;
         }
 
@@ -68,7 +68,7 @@
         }
 
         .btn-custom {
-            width: 30%;
+            width: 80%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -130,7 +130,7 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #fff;
-            max-width: 200px;
+            max-width: 600px;
             margin: 20px;
         }
     </style>
@@ -144,10 +144,18 @@
 </#if>
 <div class="d-flex">
     <div class="profile-container">
-        <h3>я контейеер</h3>
+        <h3>Админ</h3>
+        <a href="/adminorderlist" class="btn btn-custom">Активные заказы</a>
+        <a href="/adminFinishedOrderList" class="btn btn-custom">Законченные заказы</a>
+        <a href="/adminCanceledOrderList" class="btn btn-custom">Отмененные заказы</a>
+        <a href="/admin" class="btn btn-custom">Все букеты</a>
+        <a href="/adminaddbouquet" class="btn btn-custom">Добавление нового букета</a>
+        <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букетов на главный экран</a>
+        <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
     </div>
     <div class="main-content">
         <h2>Добавление букета</h2>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <form action="/bouquet_create" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Название:</label>

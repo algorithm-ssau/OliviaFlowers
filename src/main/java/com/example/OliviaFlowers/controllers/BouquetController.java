@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 
@@ -56,7 +58,7 @@ public class BouquetController {
         model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
         model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
         model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
-        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery());
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery(orderService.ListAllOrdersToDeliver()));
 
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -141,10 +143,10 @@ public class BouquetController {
     public String finishOrder(@PathVariable Long id, RedirectAttributes redirectAttributes){
         try{
             Order order = orderService.getOrderByID(id);
-            LocalDateTime delivered = LocalDateTime.now();
-            //orderService.DeliverOrder(order, delivered);
+            order.setStatus("Доставлен");
+            orderService.saveOrder(order);
             redirectAttributes.addFlashAttribute("message", "Заказ отмечен как доставленный");
-        }catch(Exception e){
+        } catch(Exception e){
             redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");
         }
 
@@ -199,11 +201,69 @@ public class BouquetController {
         if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
         else{ model.addAttribute("isAdmin", false);}
 
-        model.addAttribute("toDeliverOrders", orderService.ListAllOrdersToDeliver());
-        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(orderService.ListAllOrdersToDeliver()));
-        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(orderService.ListAllOrdersToDeliver()));
-        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery());
+        List<Order> orders = orderService.ListAllOrdersToDeliver();
+
+        // Сортируем заказы по дате доставки
+        List<Order> sortedOrders = orders.stream()
+                .sorted((o1, o2) -> o1.getDateDelivery().compareTo(o2.getDateDelivery()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("toDeliverOrders", sortedOrders);
+        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(sortedOrders));
+        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(sortedOrders));
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery(sortedOrders));
         return "adminorderlist";
+    }
+
+    @GetMapping("/adminFinishedOrderList")
+    public String adminFinishedOrderList(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
+        List<Order> orders = orderService.ListOrdersFinished();
+
+        // Сортируем заказы по дате доставки
+        List<Order> sortedOrders = orders.stream()
+                .sorted((o1, o2) -> o2.getDateDelivery().compareTo(o1.getDateDelivery()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("toDeliverOrders", sortedOrders);
+        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(sortedOrders));
+        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(sortedOrders));
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery(sortedOrders));
+
+        return "adminFinishedOrderList";
+    }
+
+    @GetMapping("/adminCanceledOrderList")
+    public String adminCanceledOrderList(Model model){
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
+        List<Order> orders = orderService.ListOrdersCanceled();
+
+        // Сортируем заказы по дате доставки
+        List<Order> sortedOrders = orders.stream()
+                .sorted((o1, o2) -> o2.getDateDelivery().compareTo(o1.getDateDelivery()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("toDeliverOrders", sortedOrders);
+        model.addAttribute("toDeliverBouquets", orderHasBouquetService.getPendingBouquets(sortedOrders));
+        model.addAttribute("toDeliverAmounts", orderHasBouquetService.getPendingamount(sortedOrders));
+        model.addAttribute("toDeliverPostcards", orderService.getPostCardToDelivery(sortedOrders));
+
+
+        return "adminCanceledOrderList";
     }
 
     @GetMapping("/adminpostcard")

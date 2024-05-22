@@ -140,53 +140,102 @@
             </div>
 
             <div class="col-md-9">
-                <#if favoriteBouquets?size = 0>
+                <#if finishedOrders?size = 0>
                 <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
-                    <h4>Нет избранных букетов</h4>
+                    <h4>Вы еще ничего не заказывали</h4>
                 </div>
 
                 <#else>
-                <h2>Избранные букеты</h2>
-                <table class="table">
+                <h2>История заказов</h2>
+                <br>
+                <#assign x = 0>
+                <#list finishedOrders as order>
+                <h4>Заказ №${order.id}</h4>
+                <h4>Контактный номер: ${order.phoneNumber!}</h4>
+                <table class = "table">
                     <thead>
                     <tr>
-                        <th>Название</th>
-                        <th>Состав</th>
-                        <th>Цена</th>
-                        <th>Фото</th>
-                        <th>Действия</th>
+                        <th>Адрес доставки</th>
+                        <th>Дата доставки</th>
+                        <th>Время доставки</th>
+                        <th>Карточка</th>
+                        <th>Текст карточки</th>
+                        <th>Дата оплаты</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <#list favoriteBouquets as bouquet>
                     <tr>
+                        <td>${order.addressDelivery}</td>
+                        <td>${order.dateDelivery.format('yyyy-MM-dd')}</td>
+                        <td>${order.timeDelivery!}</td>
+                        <td><#if toDeliverPostcards[x]??><img src="/images/${toDeliverPostcards[x].image.id}" alt="Фото" style="max-width: 60px ;max-height: 80px;"><#else>Отсутствует</#if></td>
+                        <td>${order.textPostcard!'-'}</td>
+                        <td>${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h4>Букеты в заказе:</h4>
+                <table class = "table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Состав</th>
+                        <th>Фото</th>
+                        <th>Количество</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <#assign y = 0>
+                    <#list toDeliverBouquets[x] as bouquet>
+                    <tr>
+                        <td>${bouquet.id}</td>
                         <td>${bouquet.name}</td>
+                        <!-- Вывод состава букета в несколько строк -->
                         <td>
                             <#list (bouquet.composition)?split("\n") as line>
                             ${line}<br>
                         </#list>
                         </td>
-                        <td>${bouquet.price}</td>
                         <td>
-                            <#if bouquet.images?has_content && bouquet.images?size gt 0>
-                            <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                            <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                            <#else>
+                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
                         </#if>
-                        </td>
-                        <td>
-                            <a href="/bouquet/${bouquet.id}" class="btn btn-custom">Просмотр</a>
-                            <form action="/remove_from_favorites" method="post" style="display: inline;">
-                                <input type="hidden" name="bouquetId" value="${bouquet.id}">
-                                <input type="hidden" name="userId" value="${currentUser.id}">
-                                <button type="submit" class="btn btn-custom">Удалить из избранного</button>
-                            </form>
-                        </td>
+
+                        <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                        <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 50px; max-height: 50px;">
+                        <#else>
+                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                    </#if>
+
+                    <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                    <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
+                    <#else>
+                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                    </#if>
+
+                    </td>
+                    <td>
+                        ${toDeliverAmounts[x][y]}
+                    </td>
+
+
                     </tr>
-                    </#list>
-                    </tbody>
+                    <#assign y++>
+
+
+                </#list>
+                </tbody>
                 </table>
-            </#if>
-        </div>
+                <br>
+
+                <#assign x++>
+            </#list>
+        </#if>
     </div>
+</div>
 </div>
 </div>
 <footer class="footer">

@@ -26,7 +26,7 @@
         .main-content {
             padding: 20px;
             border-left: 1px solid #ccc;
-            margin-left: 220px;
+            margin-left: 100px;
             flex-grow: 1;
         }
 
@@ -68,7 +68,7 @@
         }
 
         .btn-custom {
-            width: 30%;
+            width: 80%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -130,7 +130,7 @@
             border: 1px solid #ccc;
             border-radius: 10px;
             background-color: #fff;
-            max-width: 200px;
+            max-width: 600px;
             margin: 20px;
         }
     </style>
@@ -144,11 +144,21 @@
 </#if>
 <div class="d-flex">
     <div class="profile-container">
-        <h3>я контейеер</h3>
+        <h3>Админ</h3>
+        <a href="/adminorderlist" class="btn btn-custom">Активные заказы</a>
+        <a href="/adminFinishedOrderList" class="btn btn-custom">Законченные заказы</a>
+        <a href="/adminCanceledOrderList" class="btn btn-custom">Отмененные заказы</a>
+        <a href="/admin" class="btn btn-custom">Все букеты</a>
+        <a href="/adminaddbouquet" class="btn btn-custom">Добавление нового букета</a>
+        <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букетов на главный экран</a>
+        <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
+
+
     </div>
     <div class="main-content">
         <h2>Заказы к доставке</h2>
         <br>
+        <#if toDeliverOrders??>
         <#assign x = 0>
         <#list toDeliverOrders as order>
         <h4>Заказ №${order.id}</h4>
@@ -232,15 +242,20 @@
         </table>
 
         <form action = "deliver_order/${order.id}" method="post">
-            <button type="submit" class="btn btn-custom">Отметить доставленным</button>
+            <button type="submit" class="btn btn-custom2">Отметить доставленным</button>
         </form>
         <form action = "cancel_order/${order.id}" method="post">
-            <button type="submit" class="btn btn-custom">Отменить заказ</button>
+            <button type="submit" class="btn btn-custom2">Отменить заказ</button>
         </form>
         <br>
 
         <#assign x++>
     </#list>
+    <#else>
+    <h4>Актуальных заказов нету</h4>
+</#if>
+
+
 </div>
 </div>
 <div class="push"></div>
