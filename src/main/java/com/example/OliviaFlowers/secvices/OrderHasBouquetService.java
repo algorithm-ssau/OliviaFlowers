@@ -147,7 +147,7 @@ public class OrderHasBouquetService {
     public void removeOrderHasBouquet(Bouquet bouquet, Principal principal){
 
         try{
-            Order ordere = orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "Оплачен");
+            Order ordere = orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "В корзине");
             Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);
             Long delta = ohb.getCount()*bouquet.getPrice();
             order_has_bouquet_Repository.deleteByBouquetAndOrder(bouquet, ordere);
@@ -168,7 +168,7 @@ public class OrderHasBouquetService {
 
     public void changeAmount(Bouquet bouquet, Principal principal, Long amount){
         try{
-            Order ordere = orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "Оплачен");
+            Order ordere = orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "В корзине");
             Long oldamount = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere).getCount();
             Long deltasum = amount*bouquet.getPrice() - oldamount*bouquet.getPrice();
             Order_has_bouquet ohb = order_has_bouquet_Repository.findByBouquetAndOrder(bouquet, ordere);

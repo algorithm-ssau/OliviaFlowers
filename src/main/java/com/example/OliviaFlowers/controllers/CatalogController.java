@@ -225,14 +225,15 @@ public class CatalogController {
         model.addAttribute("allBouquets", sortedBouquets);
         model.addAttribute("title", title);
 
+
         // Найти максимальную цену среди всех букетов с использованием потока
-        OptionalDouble maxPriceBouquets = bouquetService.listWeddingBouquets().stream()
+        OptionalDouble maxPriceBouquets = sortedBouquets.stream()
                 .mapToDouble(Bouquet::getPrice)
                 .max();
         // Добавить максимальную цену в модель
         model.addAttribute("maxPrice", maxPriceBouquets.orElse(0.0));
 
-        OptionalDouble minPriceBouquets = bouquetService.listWeddingBouquets().stream()
+        OptionalDouble minPriceBouquets = sortedBouquets.stream()
                 .mapToDouble(Bouquet::getPrice)
                 .min();
 
