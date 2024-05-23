@@ -71,6 +71,54 @@
                         }
         }
 
+        function timeaddresser(){
+            const datra = document.getElementById("dateDelivery").value;
+            const dater = new Date(datra);
+            const PBY = new Date();
+            const tdy = new Date(PBY.getFullYear(), PBY.getMonth(), PBY.getDate());
+            const PBJ = new Date(dater.getFullYear(), dater.getMonth(), dater.getDate());
+            console.log("Today's date:", tdy.getTime());
+            console.log("Input date:", PBJ.getTime());
+
+
+
+            if(tdy.getTime() == PBJ.getTime()){
+                console.log("Равенство работает");
+                var select = document.getElementById("timeDelivery");
+                var curhour = PBY.getHours();
+                console.log("Часы:", curhour);
+                for (var i = 0; i < select.length; i++){
+
+                    var timesel = select.options[i].text;
+                    var terer= parseInt(timesel.substring(0,2));
+                    if(terer <= curhour){
+                            select.options[i].style.display = 'none';
+                    }
+                    else {
+                        select.options[i].style.display = 'list-item';
+                    }
+
+                }
+                for(var i = 0; i < select.length; i++){
+                    if(select.options[i].style.display !== 'none'){
+                        console.log("wawa", select.options[i].text);
+                        select.value = select.options[i].value;
+                        break;
+                    }
+                }
+
+            }else{console.log("???")}
+
+
+
+
+
+        }
+
+
+
+
+
         function validateForm() {
             var addressDelivery = document.getElementById("addressDelivery").value;
             var dateDelivery = document.getElementById("dateDelivery").value;
@@ -438,64 +486,51 @@
 
 
 
-                                        <div class="col-12 mb-3">
-                                            <div class="form-group" id="addressDelivery">
-                                                <h6 class="text-start">Адрес доставки</h6>
-                                                <input class="form-control" name="addressDelivery" id="addressDelivery"
-                                                    placeholder="Улица, дом, квартира" / required>
-                                            </div>
-                                        </div>
-
-
-
-
-                                        <div class="col-12 mb-3">
-                                            <div class="form-group">
-                                                <h6 class="text-start">Дата доставки</h6>
-                                                    <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeSelect()" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 mb-3">
-                                           <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
-                                           <select name="timeDelivery" id="timeDelivery" class="form-control">
-                                              <option value="08:00 - 10:00">08:00 - 10:00</option>
-                                              <option value="10:00 - 12:00">10:00 - 12:00</option>
-                                              <option value="12:00 - 14:00">12:00 - 14:00</option>
-                                              <option value="14:00 - 16:00">14:00 - 16:00</option>
-                                              <option value="16:00 - 18:00">16:00 - 18:00</option>
-                                              <option value="18:00 - 20:00">18:00 - 20:00</option>
-                                              <option value="20:00 - 22:00">20:00 - 22:00</option>
-                                              <option value="Спросить у получателя">Спросить у получателя</option>
-                                           </select>
-                                        </div>
-
-                                        <div class="col-12 mb-3 ">
-                                           <div class="form-group" id="dateTimeDeliveryToday">
-                                               <h6 class="form-label" style = "display:none">Время доставки:</h6>
-                                               <select name="timeDeliveryToday" id="timeDeliveryToday" class="form-control">
-                                                   <#if timeSlots?size != 0>
-                                                      <#list timeSlots as time>
-                                                          <option value="${time}">${time}</option>
-                                                      </#list>
-                                                   </#if>
-                                               </select>
-                                           </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-group" id="addressDelivery">
+                                            <h6 class="text-start">Адрес доставки</h6>
+                                            <input class="form-control" name="addressDelivery" id="addressDelivery"
+                                                placeholder="Улица, дом, квартира" required>
                                         </div>
                                     </div>
 
 
+
+
+                                    <div class="col-12 mb-3">
+                                        <div class="form-group">
+                                            <h6 class="text-start">Дата доставки</h6>
+                                                <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeaddresser()" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mb-3">
+                                       <h6 for="dateTimeDelivery" class="form-label">Время доставки:</h6>
+                                       <select name="timeDelivery" id="timeDelivery" class="form-control">
+                                          <option value="08:00 - 10:00">08:00 - 10:00</option>
+                                          <option value="10:00 - 12:00">10:00 - 12:00</option>
+                                          <option value="12:00 - 14:00">12:00 - 14:00</option>
+                                          <option value="14:00 - 16:00">14:00 - 16:00</option>
+                                          <option value="16:00 - 18:00">16:00 - 18:00</option>
+                                          <option value="18:00 - 20:00">18:00 - 20:00</option>
+                                          <option value="20:00 - 22:00">20:00 - 22:00</option>
+                                          <option value="Спросить у получателя">Спросить у получателя</option>
+                                       </select>
+                                    </div>
+
                                 </div>
 
-                                <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
-                                </div>
-                            </form>
-                        </#if>
-                    </div>
+
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
+                            </div>
+                        </form>
+                    </#if>
                 </div>
             </div>
-        </#if>
+        </div>
     </div>
      <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
