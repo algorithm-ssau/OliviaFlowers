@@ -182,6 +182,76 @@
 
                          <br>
                          <div>
+                             <h6>Цветы в составе: <i class="bi bi-info-circle"></i></h6>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="roses" id="roses" value="розы">
+                                 <label class="form-check-label">
+                                     розы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="peonies" id="peonies" value="пионы">
+                                 <label class="form-check-label">
+                                     пионы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="ranunculus" id="ranunculus" value="ранункулюсы">
+                                 <label class="form-check-label">
+                                     ранункулюсы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="eustoma" id="eustoma" value="эустома">
+                                 <label class="form-check-label">
+                                     эустомы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="roses" id="roses" value="гортензия">
+                                 <label class="form-check-label">
+                                     гортензии
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="alstroemeria" id="alstroemeria" value="альстромерия">
+                                 <label class="form-check-label">
+                                     альстромерии
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="daisies" id="daisies" value="ромашки">
+                                 <label class="form-check-label">
+                                     ромашки
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="chrysanthemums" id="chrysanthemums" value="хризантемы">
+                                 <label class="form-check-label">
+                                     хризантемы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="gypsophila" id="gypsophila" value="гипсофила">
+                                 <label class="form-check-label">
+                                     гипсофилы
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="carnation" id="carnation" value="гвоздика">
+                                 <label class="form-check-label">
+                                     гвоздики
+                                 </label>
+                             </div>
+                             <div class="form-check sideMargin verticalMargin">
+                                 <input class="form-check-input" type="checkbox" name="tulips" id="tulips" value="тюльпаны">
+                                 <label class="form-check-label">
+                                     тюльпаны
+                                 </label>
+                             </div>
+
+                         </div>
+                         <div>
                              <h6>Цена <i class="bi bi-info-circle"></i></h6>
                              <div class="input-group mb-3">
                                  <input type="number" name="minPrice" class="form-control" min="0" max="100000000" placeholder="от ${minPrice}">
@@ -206,7 +276,6 @@
                                  </label>
                              </div>
                              <button type="submit" class="btn btn-custom mt-3">Применить</button>
-
                          </div>
                      </form>
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5oCJ6pFYQ4IHg8DUi4zxtqDShTZ7H25QpYaetFG8L" crossorigin="anonymous"></script>
