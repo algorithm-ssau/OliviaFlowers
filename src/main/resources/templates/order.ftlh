@@ -332,7 +332,6 @@
             <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
                 <h4>Ваша корзина пуста</h4>
             </div>
-
         <#else>
             <div class="container mt-5">
                 <div class="row">
@@ -527,14 +526,14 @@
                                 <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
                             </div>
                         </form>
-                    </#if>
+                        </#if>
                 </div>
             </div>
         </div>
+        </#if>
     </div>
      <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
     </footer>
 </body>
-
 </html>
