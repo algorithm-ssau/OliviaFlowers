@@ -79,12 +79,12 @@
             const PBJ = new Date(dater.getFullYear(), dater.getMonth(), dater.getDate());
             console.log("Today's date:", tdy.getTime());
             console.log("Input date:", PBJ.getTime());
-
+            var select = document.getElementById("timeDelivery");
 
 
             if(tdy.getTime() == PBJ.getTime()){
                 console.log("Равенство работает");
-                var select = document.getElementById("timeDelivery");
+
                 var curhour = PBY.getHours();
                 console.log("Часы:", curhour);
                 for (var i = 0; i < select.length; i++){
@@ -107,7 +107,13 @@
                     }
                 }
 
-            }else{console.log("???")}
+            }else{
+                for (var i = 0; i < select.length; i++){
+                    select.options[i].style.display = 'list-item';
+
+                }
+                select.value = select.options[0].value;
+            }
 
 
 
