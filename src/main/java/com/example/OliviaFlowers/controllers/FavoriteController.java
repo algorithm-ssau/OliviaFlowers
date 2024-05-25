@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -44,8 +45,22 @@ public class FavoriteController {
     }
 
     @PostMapping("/remove_from_favorites")
-    public String removeFromFavorites(@RequestParam Long bouquetId, @RequestParam Long userId) {
+    public String removeFromFavorites(@RequestParam Long bouquetId, @RequestParam Long userId, RedirectAttributes redirectAttributes) {
         favoriteService.removeFromFavorites(bouquetId, userId);
+        redirectAttributes.addFlashAttribute("message", "Успешно удалено из избранного");
         return "redirect:/favorite";
+    }
+
+    @PostMapping("/remove_from_favorites_without_user")
+    public String removeFromFavoritesWithoutUser(@RequestParam Long bouquetId, RedirectAttributes redirectAttributes) {
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+
+        favoriteService.removeFromFavorites(bouquetId, user.getId());
+        redirectAttributes.addFlashAttribute("message", "Успешно удалено из избранного");
+        return "redirect:/bouquet/" + bouquetId;
     }
 }

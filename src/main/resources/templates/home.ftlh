@@ -5,8 +5,8 @@
   <title>Olivia Flowers</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <style>
-    /* Стили для фона */
-    .container-fluid, .navbar-custom, .image-container{
+
+    .background_color_about_us{
       background-color: #f0eade;
     }
 
@@ -26,7 +26,7 @@
     .row-custom-flower {
       margin-left: 14rem;
       margin-right: 14rem;
-      margin-bottom: 2rem;
+      padding-bottom: 2rem;
     }
 
     /* Стили для границы карты */
@@ -34,24 +34,18 @@
       border: 2px solid #f0eade; /* Цвет границы */
       border-radius: 10px; /* Скругление углов */
       max-width: 250px; /* Максимальная ширина карточки */
-      margin: auto; /* Центрирование карточки */
     }
 
     .custom-card-flower_img {
       border-radius: 10px; /* Скругление углов для изображения */
-    }
-
-    /* Фон у блока "О нас" */
-    .background_color_about_us {
-      background-color: #f0eade;
-      padding-top: 2rem;          /* padding отступ внутри блока */
-      padding-bottom: 1rem;
+      width: 250px;
+      height: 250px;
     }
 
     /* Отступы карт */
     .row-custom-delivery {
-      margin-left: 22rem;
-      margin-right: 22rem;
+      margin-left: 260px;
+      margin-right: 260px;
       margin-bottom: 2rem;
     }
 
@@ -60,7 +54,9 @@
       border: 2px solid #f0eade; /* Цвет границы */
       border-radius: 10px; /* Скругление углов */
       max-width: 500px; /* Максимальная ширина карточки */
-      margin: auto; /* Центрирование карточки */
+      margin-left: 1rem;
+      margin-right: 1rem;
+
     }
 
     /* Стили для заголовка для сезонных цветов */
@@ -79,6 +75,9 @@
         color: #333;
         text-decoration: none;
     }
+    .card-link:hover {
+        text-decoration: underline; /* Подчеркивание при наведении */
+    }
 
     .p-text-center {
           text-align: center;
@@ -86,14 +85,15 @@
           margin-bottom: 4rem;
         }
 
-        /* Для футера внизу страницы: html, body, wrapper*/
-        html, body {
-            height: 100%;
-        }
-        .wrapper {
-            flex-grow: 1;
-            padding-bottom: 3rem; /* Добавление отступа снизу */
-        }
+    /* Для футера внизу страницы: html, body, wrapper*/
+    html, body {
+        height: 100%;
+    }
+    .wrapper {
+        flex-grow: 1;
+        padding-bottom: 3rem; /* Добавление отступа снизу */
+    }
+
   </style>
 </head>
 
@@ -106,128 +106,122 @@
         </#if>
 
         <div class="image-container">
-          <center><img src="../logo_mini.png" style="height: 130px;" alt="Logo"></center>
+          <center><img src="../logotip.png" style="height: 180px;" alt="Logo"></center>
         </div>
 
-        <p class="p-custom">Вам могут понравиться наши сезонные букеты</p>
+        <p class="p-custom" style="padding-top: 1rem;">Вам могут понравиться наши сезонные букеты</p>
 
         <#if homePageBouquets?has_content>
           <!-- Если есть букеты, выводим данные о сезонных цветах -->
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-          <div class="row row-cols-1 row-cols-md-3 g-1 row-custom-flower">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-            <div class="col">
-              <div class="card h-100 custom-card-flower">
-                <div id="carouselBouquet1" class="carousel slide">
+          <div class="container my-4">
+            <div class="d-flex justify-content-center row-custom-flower">
+              <div class="col mx-2">
+                <div class="card h-100 custom-card-flower">
+                  <div id="carouselBouquet1" class="carousel slide">
                     <div class="carousel-indicators">
-                        <#list bouquet1.images as image>
-                            <button type="button" data-bs-target="#carouselBouquet1" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-                        </#list>
+                      <#list bouquet1.images as image>
+                        <button type="button" data-bs-target="#carouselBouquet1" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                      </#list>
                     </div>
                     <div class="carousel-inner">
-                        <#list bouquet1.images as image>
-                            <div class="carousel-item<#if image_index == 0> active</#if>">
-                                <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
-                            </div>
-                        </#list>
+                      <#list bouquet1.images as image>
+                        <div class="carousel-item<#if image_index == 0> active</#if>">
+                          <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+                        </div>
+                      </#list>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet1" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
                     </button>
-                </div>
-
-
-                <div class="card-body">
-                <a href="/bouquet/${bouquet1.id}" class="card-link">${bouquet1.name}</a>
-
-                <p class="card-text">
-                    <#list (homePageBouquets[0].description)?split("\n") as line>
-                      ${line}<br>
-                    </#list>
-                  </p>
+                  </div>
+                  <div class="card-body">
+                    <a href="/bouquet/${bouquet1.id}" class="card-link">${bouquet1.name}</a>
+                    <p class="card-text">
+                      <#list (homePageBouquets[0].description)?split("\n") as line>
+                        ${line}<br>
+                      </#list>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="col">
-              <div class="card h-100 custom-card-flower">
-                <div id="carouselBouquet2" class="carousel slide">
+              <div class="col mx-2">
+                <div class="card h-100 custom-card-flower">
+                  <div id="carouselBouquet2" class="carousel slide">
                     <div class="carousel-indicators">
-                        <#list bouquet2.images as image>
-                            <button type="button" data-bs-target="#carouselBouquet2" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-                        </#list>
+                      <#list bouquet2.images as image>
+                        <button type="button" data-bs-target="#carouselBouquet2" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                      </#list>
                     </div>
                     <div class="carousel-inner">
-                        <#list bouquet2.images as image>
-                            <div class="carousel-item<#if image_index == 0> active</#if>">
-                                <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
-                            </div>
-                        </#list>
+                      <#list bouquet2.images as image>
+                        <div class="carousel-item<#if image_index == 0> active</#if>">
+                          <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+                        </div>
+                      </#list>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet2" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet2" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
                     </button>
-                </div>
-
-
-                <div class="card-body">
-                <a href="/bouquet/${bouquet2.id}" class="card-link">${bouquet2.name}</a>
-                  <p class="card-text">
-                  <#list (homePageBouquets[1].description)?split("\n") as line>
-                      ${line}<br>
-                    </#list>
-                  </p>
+                  </div>
+                  <div class="card-body">
+                    <a href="/bouquet/${bouquet2.id}" class="card-link">${bouquet2.name}</a>
+                    <p class="card-text">
+                      <#list (homePageBouquets[1].description)?split("\n") as line>
+                        ${line}<br>
+                      </#list>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div class="col">
-              <div class="card h-100 custom-card-flower">
-                <div id="carouselBouquet3" class="carousel slide">
+              <div class="col mx-2">
+                <div class="card h-100 custom-card-flower">
+                  <div id="carouselBouquet3" class="carousel slide">
                     <div class="carousel-indicators">
-                        <#list bouquet3.images as image>
-                            <button type="button" data-bs-target="#carouselBouquet3" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
-                        </#list>
+                      <#list bouquet3.images as image>
+                        <button type="button" data-bs-target="#carouselBouquet3" data-bs-slide-to="${image_index}"<#if image_index == 0> class="active"</#if> aria-current="true" aria-label="Slide ${image_index + 1}"></button>
+                      </#list>
                     </div>
                     <div class="carousel-inner">
-                        <#list bouquet3.images as image>
-                            <div class="carousel-item<#if image_index == 0> active</#if>">
-                                <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
-                            </div>
-                        </#list>
+                      <#list bouquet3.images as image>
+                        <div class="carousel-item<#if image_index == 0> active</#if>">
+                          <img src="/images/${image.id}" class="d-block w-100 custom-card-flower_img" alt="Фото">
+                        </div>
+                      </#list>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselBouquet3" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselBouquet3" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
                     </button>
-                </div>
-
-
-                <div class="card-body">
-                <a href="/bouquet/${bouquet3.id}" class="card-link">${bouquet3.name}</a>
-                  <p class="card-text">
-                  <#list (homePageBouquets[2].description)?split("\n") as line>
-                      ${line}<br>
-                    </#list>
-                  </p>
+                  </div>
+                  <div class="card-body">
+                    <a href="/bouquet/${bouquet3.id}" class="card-link">${bouquet3.name}</a>
+                    <p class="card-text">
+                      <#list (homePageBouquets[2].description)?split("\n") as line>
+                        ${line}<br>
+                      </#list>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         <#else>
           <!-- Если нет букетов, выводим сообщение о их отсутствии -->
           <p class="p-text-center">На данный момент у нас нет сезонных букетов.</p>
@@ -235,14 +229,14 @@
 
 
         <div class="background_color_about_us text-center">
-          <p class="p-custom">О нас<br> <br></p>
+          <p class="p-custom" style="padding-top: 4rem;">О нас</p>
           <h5>OLIVIA - это цветы, собранные с любовью.</h5>
-          <p class="p-custom-text">Цветы сопровождают нас в самые радостные моменты жизни, и мы рады проживать их вместе с вами.<br>
+          <p class="p-custom-text" style="padding-bottom: 4rem;">Цветы сопровождают нас в самые радостные моменты жизни, и мы рады проживать их вместе с вами.<br>
             Наша команда занимается разработкой авторских букетов и композиций, декором свадеб и других мероприятий.<br>
           </p>
         </div>
 
-        <p class="p-custom">Доставка</p>
+        <p class="p-custom" style="padding-bottom: 0.7rem;">Доставка</p>
 
         <div class="row row-custom-delivery">
           <div class="col-sm-6">

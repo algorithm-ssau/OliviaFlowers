@@ -56,6 +56,10 @@ public class OrderService {
         return orderRepository.findByUserAndStatus(getUserByPrincipal(principal), "В корзине");
     }
 
+    public Order HaveOrderInCardByUser(User user){
+        return orderRepository.findByUserAndStatus(user, "В корзине");
+    }
+
     public Order getOrderByID(Long id){
         return orderRepository.findById(id).orElse(null);
     }

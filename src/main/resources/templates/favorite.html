@@ -211,18 +211,18 @@
                 <h5>Избранные букеты</h5>
                 <div class="row">
                     <#list favoriteBouquets as bouquet>
-                    <div class="col-md-4" style="margin-top: 1rem; margin-right: 1rem;">
+                    <div class="col-md-4" style="margin-top: 1rem;">
                         <a href="/bouquet/${bouquet.id}" class="image">
                             <img src="/images/${bouquet.images[0].id}" alt="Фото">
                         </a>
-                        <div class="info">
+                        <div class="info" style="margin-right: 1rem;">
                             <a href="/bouquet/${bouquet.id}" class="card-link-name">${bouquet.name}</a>
                             <div>${bouquet.price}</div>
                         </div>
                         <form action="/remove_from_favorites" method="post" style="display: inline;">
                             <input type="hidden" name="bouquetId" value="${bouquet.id}">
                             <input type="hidden" name="userId" value="${currentUser.id}">
-                            <button type="submit" class="btn btn-custom">Удалить из избранного</button>
+                            <button type="submit" class="btn btn-custom" style="width: 94%;">Удалить из избранного</button>
                         </form>
                     </div>
                 </#list>

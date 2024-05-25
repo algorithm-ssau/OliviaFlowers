@@ -16,3 +16,9 @@
         </ul>
     </nav>
 </div>
+
+<style>
+    .container-fluid, .navbar-custom{
+        background-color: #f0eade;
+    }
+</style>
