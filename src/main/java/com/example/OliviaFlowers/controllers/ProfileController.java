@@ -14,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -89,10 +91,23 @@ public class ProfileController {
 
     @PostMapping("/add_to_favorites")
     @PreAuthorize("isAuthenticated()")
-    public String addToFavorites(@RequestParam Long bouquetId, @AuthenticationPrincipal User user) {
-        Bouquet bouquet = bouquetService.getBouquetByID(bouquetId);
-        favoriteService.saveFavorite(user, bouquet);
-        return "redirect:/profile";
+    public String addToFavorites(@RequestParam Long bouquetId, @AuthenticationPrincipal User user, RedirectAttributes redirectAttributes) {
+        List<Bouquet> favouriteList = favoriteService.getFavoriteBouquetsByUser(user);
+
+        boolean favBouquetExists = favouriteList.stream()
+                .anyMatch(bouquetB -> Objects.equals(bouquetB.getId(), bouquetId));
+
+        if (favBouquetExists) {
+            redirectAttributes.addFlashAttribute("message", "Букет уже в избранном");
+        } else {
+            Bouquet bouquet = bouquetService.getBouquetByID(bouquetId);
+            favoriteService.saveFavorite(user, bouquet);
+            redirectAttributes.addFlashAttribute("message", "Успешно добавлено в избранное");
+        }
+
+        // Включаем bouquetId в URL перенаправления
+        return "redirect:/bouquet/" + bouquetId;
     }
+
 
 }

@@ -83,21 +83,66 @@
             align-items: center; /* Выравниваем элементы по горизонтали */
         }
 
+        .image img{
+            height: 18rem;
+            border-radius: 7px;
+        }
+
+        .image{
+            margin-bottom: 10px;
+        }
+
+        .card-link-name {
+            font-size: 1.25rem; /* Размер шрифта */
+            color: #333;
+            text-decoration: none;
+        }
+
+        .custom-link {
+            font-size: 1.05rem; /* Размер шрифта */
+            color: #333;
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+
+        .btn-custom {
+            width: 100%;
+            margin-top: 10px;
+            background-color: #f0eade; /* Основной цвет кнопки */
+            border-color: #f0eade; /* Цвет границы кнопки */
+            color: #333; /* Цвет текста кнопки */
+        }
+
+        .btn-custom:hover {
+            color: #333; /* Цвет текста кнопки */
+            background-color: #e0d8d0; /* Цвет кнопки при наведении */
+            border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
+        }
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <#if isAdmin?? && isAdmin == true>
-    <#include "blocks/headerAdmin.ftlh">
+        <#include "blocks/headerAdmin.ftlh">
     <#else>
-    <#include "blocks/header.ftlh">
+        <#include "blocks/header.ftlh">
     </#if>
     <div class="d-flex">
         <div class="container">
             <div class="row">
                 <div class="col-md-2">
                     <img class="image" src="user.jpg" alt="Фото пользователя">
-                    <h5>${currentUser.name}</h5>
+                    <h5 style="margin-top: 1rem;">${currentUser.name}</h5>
                     <h5>${currentUser.surname}</h5>
 
                     <h6 style="margin-top: 2rem;">Личная информация</h6>
@@ -125,10 +170,27 @@
                     </div>
 
                     <h6 style="margin-top: 2rem;">Другое</h6>
-                    <div class="profile-buttons">
-                        <a href="/profile" class="btn btn-custom">Активные заказы</a>
-                        <a href="/historyOrders" class="btn btn-custom">История заказов</a>
-                        <a href="/favorite" class="btn btn-custom">Избранное</a>
+                    <div style="margin-left: 1rem;">
+                        <p class="icon-text" style="margin-top: 1rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+                            </svg>
+                            <a class="custom-link" href="/profile">Активные заказы</a>
+                        </p>
+                        <p class="icon-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                                <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
+                                <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
+                                <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
+                            </svg>
+                            <a class="custom-link" href="/historyOrders">История заказов</a>
+                        </p>
+                        <p class="icon-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                            </svg>
+                            <a class="custom-link" href="/favorite">Избранное</a>
+                        </p>
                         <form action="/logout" method="post">
                             <button type="submit" class="btn btn-custom">Выйти</button>
                         </form>
@@ -139,53 +201,34 @@
                 <div class="col-md-1 vertical-line">
                 </div>
 
-                <div class="col-md-9">
-                    <#if favoriteBouquets?size = 0>
-                        <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
-                            <h4>Нет избранных букетов</h4>
-                        </div>
+                <#if favoriteBouquets?size = 0>
+                     <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
+                         <h5>Нет избранных букетов</h5>
+                     </div>
 
-                    <#else>
-                        <h2>Избранные букеты</h2>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Название</th>
-                                    <th>Состав</th>
-                                    <th>Цена</th>
-                                    <th>Фото</th>
-                                    <th>Действия</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <#list favoriteBouquets as bouquet>
-                                <tr>
-                                    <td>${bouquet.name}</td>
-                                    <td>
-                                        <#list (bouquet.composition)?split("\n") as line>
-                                        ${line}<br>
-                                    </#list>
-                                    </td>
-                                    <td>${bouquet.price}</td>
-                                    <td>
-                                        <#if bouquet.images?has_content && bouquet.images?size gt 0>
-                                        <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                                    </#if>
-                                    </td>
-                                    <td>
-                                        <a href="/bouquet/${bouquet.id}" class="btn btn-custom">Просмотр</a>
-                                        <form action="/remove_from_favorites" method="post" style="display: inline;">
-                                            <input type="hidden" name="bouquetId" value="${bouquet.id}">
-                                            <input type="hidden" name="userId" value="${currentUser.id}">
-                                            <button type="submit" class="btn btn-custom">Удалить из избранного</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                </#list>
-                            </tbody>
-                        </table>
-                    </#if>
-                </div>
+                <#else>
+                    <div class="col-md-9">
+                        <h5>Избранные букеты</h5>
+                        <div class="row">
+                            <#list favoriteBouquets as bouquet>
+                                <div class="col-md-4" style="margin-top: 1rem;">
+                                    <a href="/bouquet/${bouquet.id}" class="image">
+                                        <img src="/images/${bouquet.images[0].id}" alt="Фото">
+                                    </a>
+                                    <div class="info" style="margin-right: 1rem;">
+                                        <a href="/bouquet/${bouquet.id}" class="card-link-name">${bouquet.name}</a>
+                                        <div>${bouquet.price}</div>
+                                    </div>
+                                    <form action="/remove_from_favorites" method="post" style="display: inline;">
+                                        <input type="hidden" name="bouquetId" value="${bouquet.id}">
+                                        <input type="hidden" name="userId" value="${currentUser.id}">
+                                        <button type="submit" class="btn btn-custom" style="width: 94%;">Удалить из избранного</button>
+                                    </form>
+                                </div>
+                            </#list>
+                        </div>
+                    </div>
+                </#if>
             </div>
         </div>
     </div>
@@ -195,4 +238,5 @@
 </div>
 </body>
 </html>
+
 

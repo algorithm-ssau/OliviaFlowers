@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
@@ -34,13 +34,16 @@ public class BouquetController {
     @Autowired
     private final UserService userService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService, UserService userService) {
+    private final FavoriteService favoriteService;
+
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService, UserService userService, FavoriteService favoriteService) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
         this.orderService = orderService;
         this.postcardService = postcardService;
 
         this.userService = userService;
+        this.favoriteService = favoriteService;
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -93,9 +96,45 @@ public class BouquetController {
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
         String username = authentication.getName(); // Получить имя пользователя
         User user = userService.getUserByEmail(username);
-        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
+        if (user != null){
+            model.addAttribute("isAdmin", user.getIsAdministrator());
+            List<Bouquet> bouquetList = orderHasBouquetService.getbouquetsByOrder(orderService.HaveOrderInCardByUser(user));
 
+            // Проверяем наличие нужного id букета в списке
+            boolean bouquetExists = false;
+            for (Bouquet bouquetB : bouquetList) {
+                if (Objects.equals(bouquetB.getId(), id)) {
+                    bouquetExists = true;
+                    break;
+                }
+            }
+            if (bouquetExists) {
+                model.addAttribute("inCard", true);
+            } else {
+                model.addAttribute("inCard", false);
+            }
+
+            List<Bouquet> favouriteList = favoriteService.getFavoriteBouquetsByUser(user);
+
+            boolean favBouquetExists = false;
+            for (Bouquet bouquetB : favouriteList) {
+                if (Objects.equals(bouquetB.getId(), id)) {
+                    favBouquetExists = true;
+                    break;
+                }
+            }
+
+            if (favBouquetExists) {
+                model.addAttribute("inFav", true);
+            } else {
+                model.addAttribute("inFav", false);
+            }
+        }
+        else{
+            model.addAttribute("isAdmin", false);
+            model.addAttribute("inCard", false);
+            model.addAttribute("inFav", false);
+        }
         return "bouquet";
     }
 
@@ -127,16 +166,36 @@ public class BouquetController {
     @PostMapping("/bouquet_addcar/{id}")
     public String addToCart(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
         try{
-            Bouquet bouquet = bouquetService.getBouquetByID(id);
-            orderHasBouquetService.createOrderHasBouquet(bouquet, principal);
-            redirectAttributes.addFlashAttribute("message", "Успешно добавлено в корзину");
+            //проверка пользователя администратор он или нет
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+            String username = authentication.getName(); // Получить имя пользователя
+            User user = userService.getUserByEmail(username);
+            if (user != null){
+                List<Bouquet> bouquetList = orderHasBouquetService.getbouquetsByOrder(orderService.HaveOrderInCardByUser(user));
+
+                // Проверяем наличие нужного id букета в списке
+                boolean bouquetExists = false;
+                for (Bouquet bouquetB : bouquetList) {
+                    if (Objects.equals(bouquetB.getId(), id)) {
+                        bouquetExists = true;
+                        break;
+                    }
+                }
+
+                if (bouquetExists) {
+                    redirectAttributes.addFlashAttribute("message", "Букет уже в корзине");
+                } else {
+                    Bouquet bouquet = bouquetService.getBouquetByID(id);
+                    orderHasBouquetService.createOrderHasBouquet(bouquet, principal);
+                    redirectAttributes.addFlashAttribute("message", "Успешно добавлено в корзину");
+                }
+            }
+
         }catch (Exception e){
             redirectAttributes.addFlashAttribute("error", "Ошибка при добавлении в корзину");
         }
-
-
         return "redirect:/bouquet/{id}";
-
     }
 
     @PostMapping("deliver_order/{id}")
