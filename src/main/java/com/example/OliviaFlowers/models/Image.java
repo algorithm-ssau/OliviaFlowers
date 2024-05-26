@@ -34,6 +34,9 @@ public class Image {
     @Lob
     private byte[] bytes;
 
+/*    @Column(name = "photo", columnDefinition = "BYTEA")
+    private byte[] bytes;*/
+
     @ManyToOne
     private Bouquet bouquet;
 }

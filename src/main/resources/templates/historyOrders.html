@@ -124,10 +124,18 @@
             margin: auto;
         }
 
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+        }
+
     </style>
 </head>
-<body>
-<div class="wrapper">
+<body class="d-flex flex-column h-100">
+<div class="wrapper flex-grow-1">
     <#if isAdmin?? && isAdmin == true>
     <#include "blocks/headerAdmin.ftlh">
     <#else>
@@ -294,15 +302,15 @@
     </div>
     <div class="horizontal-line"></div> <!-- Горизонтальная линия -->
     <script>
-                                function showOrder(orderId) {
-                                    var orderItemsDiv = document.getElementById("orderItemsDiv_" + orderId);
-                                    if (orderItemsDiv.style.display === "none") {
-                                        orderItemsDiv.style.display = "block";
-                                    } else {
-                                        orderItemsDiv.style.display = "none";
+                                    function showOrder(orderId) {
+                                        var orderItemsDiv = document.getElementById("orderItemsDiv_" + orderId);
+                                        if (orderItemsDiv.style.display === "none") {
+                                            orderItemsDiv.style.display = "block";
+                                        } else {
+                                            orderItemsDiv.style.display = "none";
+                                        }
                                     }
-                                }
-                            </script>
+                                </script>
 
 </#list>
 </#if>
@@ -310,9 +318,9 @@
 </div>
 </div>
 <#assign x++>
-
 </div>
-<footer class="footer">
+</div>
+<footer class="footer mt-auto">
     <#include "blocks/footer.ftlh">
 </footer>
 </body>

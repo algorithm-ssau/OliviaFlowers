@@ -44,19 +44,17 @@
 
     /* Отступы карт */
     .row-custom-delivery {
-      margin-left: 260px;
-      margin-right: 260px;
-      margin-bottom: 2rem;
+      margin-bottom: 4rem;
+
     }
 
     /* Стили для границы карты */
     .custom-card-delivery {
       border: 2px solid #f0eade; /* Цвет границы */
       border-radius: 10px; /* Скругление углов */
-      max-width: 500px; /* Максимальная ширина карточки */
-      margin-left: 1rem;
-      margin-right: 1rem;
-
+      max-width: 400px; /* Максимальная ширина карточки */
+      margin-left: 10px;
+      margin-right: 10px;
     }
 
     /* Стили для заголовка для сезонных цветов */
@@ -91,14 +89,13 @@
     }
     .wrapper {
         flex-grow: 1;
-        padding-bottom: 3rem; /* Добавление отступа снизу */
     }
 
   </style>
 </head>
 
-<body class="d-flex flex-column h-100">
-    <div class="wrapper flex-grow-1">
+<body>
+    <div>
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -236,26 +233,27 @@
           </p>
         </div>
 
-        <p class="p-custom" style="padding-bottom: 0.7rem;">Доставка</p>
 
-        <div class="row row-custom-delivery">
-          <div class="col-sm-6">
-            <div class="card h-100 custom-card-delivery">
-              <div class="card-body">
-                <h5 class="card-title">Доставка по городу</h5>
-                <p class="card-text">Курьером по городу 300₽</p>
-              </div>
+
+        <div class="row row-custom-delivery d-flex justify-content-center" style="max-width: 100%">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 custom-card-delivery">
+                    <div class="card-body">
+                        <h5 class="card-title">Доставка по городу</h5>
+                        <p class="card-text">Курьером по городу 300₽</p>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="card h-100 custom-card-delivery">
-              <div class="card-body">
-                <h5 class="card-title">Бесплатная доставка</h5>
-                <p class="card-text">При заказе от 3000₽</p>
-              </div>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 custom-card-delivery">
+                    <div class="card-body">
+                        <h5 class="card-title">Бесплатная доставка</h5>
+                        <p class="card-text">При заказе от 3000₽</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
+
     </div>
     <footer class="footer mt-auto">
        <#include "blocks/footer.ftlh">

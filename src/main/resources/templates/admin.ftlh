@@ -146,10 +146,18 @@
         .custom-link:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
     </style>
 </head>
-<body>
-    <div class="wrapper">
+<body class="d-flex flex-column h-100">
+    <div class="wrapper flex-grow-1">
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -162,7 +170,7 @@
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
                         <div style="margin-left: 2rem; padding-top: 0.5rem;">
                             <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
-                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Доставленные заказы</a></p>
                             <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
                         </div>
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
@@ -202,67 +210,74 @@
                     </div>
 
                     <div class="col-md-9">
-                        <h5 style="margin-top: 10px; margin-bottom: 2rem;">Все букеты</h5>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Название</th>
-                                <th>Состав</th>
-                                <th>Цена</th>
-                                <th>Фото</th>
-                                <th>Действия</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <#list allBouquets as bouquet>
+                        <#if allBouquets?size = 0>
+                            <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
+                                <h5>Нет букетов в базе</h5>
+                            </div>
+
+                        <#else>
+                            <h5 style="margin-top: 10px; margin-bottom: 2rem;">Все букеты</h5>
+                            <table class="table">
+                                <thead>
                                 <tr>
-                                    <td>${bouquet.id}</td>
-                                    <td>${bouquet.name}</td>
-                                    <!-- Вывод состава букета в несколько строк -->
-                                    <td>
-                                        <#list (bouquet.composition)?split("\n") as line>
-                                            ${line}<br>
-                                        </#list>
-                                    </td>
-                                    <td>${bouquet.price}</td>
-                                    <td>
-                                        <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                            <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                                        <#else>
-                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                        </#if>
-
-                                        <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                                            <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                                        <#else>
-                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                        </#if>
-
-                                        <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-                                            <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                                        <#else>
-                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                        </#if>
-
-                                    </td>
-                                    <td>
-                                        <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
-                                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                                        <form action="/bouquet_delete/${bouquet.id}" method="post">
-                                            <button type="submit" class="btn btn-custom2">Удалить</button>
-                                        </form>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Название</th>
+                                    <th>Состав</th>
+                                    <th>Цена</th>
+                                    <th>Фото</th>
+                                    <th>Действия</th>
                                 </tr>
-                            </#list>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <#list allBouquets as bouquet>
+                                    <tr>
+                                        <td>${bouquet.id}</td>
+                                        <td>${bouquet.name}</td>
+                                        <!-- Вывод состава букета в несколько строк -->
+                                        <td>
+                                            <#list (bouquet.composition)?split("\n") as line>
+                                                ${line}<br>
+                                            </#list>
+                                        </td>
+                                        <td>${bouquet.price}</td>
+                                        <td>
+                                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                                <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                            <#else>
+                                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                            </#if>
+
+                                            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+                                            <#else>
+                                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                            </#if>
+
+                                            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                                <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                            <#else>
+                                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                            </#if>
+
+                                        </td>
+                                        <td>
+                                            <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
+                                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                                            <form action="/bouquet_delete/${bouquet.id}" method="post">
+                                                <button type="submit" class="btn btn-custom2">Удалить</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </#if>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="footer">
+    <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
     </footer>
 </body>

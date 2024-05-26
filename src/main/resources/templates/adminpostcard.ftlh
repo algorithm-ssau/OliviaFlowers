@@ -147,10 +147,18 @@
         .custom-link:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+/* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
     </style>
 </head>
-<body>
-    <div class="wrapper">
+<body class="d-flex flex-column h-100">
+    <div class="wrapper flex-grow-1">
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -163,7 +171,7 @@
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
                         <div style="margin-left: 2rem; padding-top: 0.5rem;">
                             <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
-                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Доставленные заказы</a></p>
                             <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
                         </div>
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
@@ -213,41 +221,48 @@
                             </div>
                             <button type="submit" class="btn btn-custom">Добавить открытку</button>
                         </form>
-                        <h6 style="margin-top: 3rem;">Все открытки:</h6>
-                        <table class="table" style="width:300px">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Фото</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <#list allPostcards as postcard>
+                        <#if allPostcards?size = 0>
+                            <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 70%;">
+                                <h5>Нет открыток в базе</h5>
+                            </div>
+
+                        <#else>
+                            <h6 style="margin-top: 3rem;">Все открытки:</h6>
+                            <table class="table" style="width:300px">
+                                <thead>
                                 <tr>
-                                    <td>${postcard.id}</td>
-                                    <td>
-                                        <#if postcard.image?has_content>
-                                            <img src="/images/${postcard.image.id}" alt="Фото" style="max-width: 100px;">
-                                        <#else>
-                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                        </#if>
-                                    </td>
-                                    <td>
-                                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                                        <form action="/postcard_delete/${postcard.id}" method="post">
-                                            <button type="submit" class="btn btn-custom">Удалить</button>
-                                        </form>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Фото</th>
                                 </tr>
-                            </#list>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                <#list allPostcards as postcard>
+                                    <tr>
+                                        <td>${postcard.id}</td>
+                                        <td>
+                                            <#if postcard.image?has_content>
+                                                <img src="/images/${postcard.image.id}" alt="Фото" style="max-width: 100px;">
+                                            <#else>
+                                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                            </#if>
+                                        </td>
+                                        <td>
+                                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                                            <form action="/postcard_delete/${postcard.id}" method="post">
+                                                <button type="submit" class="btn btn-custom">Удалить</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+                        </#if>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="footer">
+    <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
     </footer>
 </body>

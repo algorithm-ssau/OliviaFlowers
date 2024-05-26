@@ -147,10 +147,19 @@
         .custom-link:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
     </style>
 </head>
-<body>
-    <div class="wrapper">
+<body class="d-flex flex-column h-100">
+    <div class="wrapper flex-grow-1">
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -163,7 +172,7 @@
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
                         <div style="margin-left: 2rem; padding-top: 0.5rem;">
                             <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
-                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Доставленные заказы</a></p>
                             <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
                         </div>
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
@@ -245,7 +254,7 @@
             </div>
         </div>
     </div>
-    <footer class="footer">
+    <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
     </footer>
 </body>
