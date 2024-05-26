@@ -138,7 +138,6 @@
         .category-link.active {
             text-decoration: underline; /* Подчеркиваем выбранную категорию */
         }
-
         .custom-link {
             font-size: 1.05rem; /* Размер шрифта */
             color: #333;
@@ -203,107 +202,31 @@
                     </div>
 
                     <div class="col-md-9">
-                        <#if toDeliverOrders?size = 0>
-                            <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
-                                <h5>Вы еще ничего не заказывали</h5>
-                            </div>
-
-                        <#else>
-                            <h5 style="margin-top: 10px; margin-bottom: 2rem;">Заказы к доставке</h5>
-                            <#assign x = 0>
-                            <#list toDeliverOrders as order>
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="d-flex align-items-baseline">
-                                                <h5>Заказ №${order.id}. Доставка: ${order.dateDelivery.format('dd.MM.yyyy')},  ${order.timeDelivery!},  ${order.addressDelivery}</h5>
-                                            </div>
-                                        </div>
-                                        <div class="row"  style="margin-top: 1rem;">
-                                            <div class="col-7">
-                                                <h6>Товары в заказе:</h6>
-                                                <#assign y = 0>
-                                                <#list toDeliverBouquets[x] as bouquet>
-                                                    <div class="row" style="width: 36rem;">
-                                                        <div class="col-md-3" style="margin-bottom: 1rem;">
-                                                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                                                <img src="/images/${bouquet.images[0].id}" alt="Фото" class="image" style="max-width: 6rem; max-height: 6rem;" class="me-2">
-                                                            <#else>
-                                                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                                            </#if>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <a href="/bouquet/${bouquet.id}" class="custom-link me-auto">${bouquet.name}</a>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            ${toDeliverAmounts[x][y]} шт
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            ${bouquet.price} ₽
-                                                        </div>
-                                                    </div>
-                                                </#list>
-                                                <#assign y++>
-                                                <#if toDeliverPostcards[x]??>
-                                                    <div class="row" style="width: 36rem;">
-                                                        <div class="col-md-3" style="margin-bottom: 1rem;">
-                                                            <img src="/images/${toDeliverPostcards[x].image.id}" class="image" alt="Фото" style="max-width: 6rem;" class="me-2">
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            ${order.textPostcard!'Открытка без текста'}
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            1 шт
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            0 ₽
-                                                        </div>
-                                                    </div>
-                                                <#else>
-                                                    Без открытки
-                                                </#if>
-                                            </div>
-
-                                            <div class="col-md-1 vertical-line">
-                                            </div>
-
-                                            <div class="col-4">
-                                                <h6>Доставка по адресу:</h6>
-                                                <p>${order.addressDelivery}</p>
-                                                <h6>Дата доставки:</h6>
-                                                <p>${order.dateDelivery.format('dd.MM.yyyy')}</p>
-                                                <h6>Время доставки:</h6>
-                                                <p>${order.timeDelivery!}</p>
-                                                <h6>Id покупателя:</h6>
-                                                <p>${order.user.id}</p>
-                                                <h6>Контактный номер:</h6>
-                                                <p>${order.phoneNumber!}</p>
-                                                <h6>Стоимость доставки:</h6>
-                                                <p>${order.sumDelivery} ₽</p>
-                                                <h6>Сумма заказа:</h6>
-                                                <p>${order.sumOrder} ₽</p>
-                                                <h6>Дата оплаты:</h6>
-                                                <p>${order.datePayment.format('dd.MM.yyyy HH:mm')}</p>
-                                            </div>
-                                            <#assign x++>
-                                        </div>
-                                        <div class="row" style="padding-top:1rem; padding-bottom:1rem;">
-                                            <div class="col-md-6">
-                                                <form action = "deliver_order/${order.id}" method="post">
-                                                    <button type="submit" class="btn btn-custom2">Доставлен</button>
-                                                </form>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <form action = "cancel_order/${order.id}" method="post">
-                                                    <button type="submit" class="btn btn-custom2">Отменить</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="horizontal-line"></div> <!-- Горизонтальная линия -->
-                                    </div>
-                                </div>
+                        <h5 style="margin-top: 10px; margin-bottom: 2rem;">Все пользователи</h5>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Фамилия</th>
+                                <th>Номер телефона</th>
+                                <th>Эл. почта</th>
+                                <th>Дата рождения</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list allUsers as user>
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.name}</td>
+                                    <td>${user.surname}</td>
+                                    <td>${user.phoneNumber}</td>
+                                    <td>${user.email}</td>
+                                    <td>${user.dateOfBirthday.format('dd.MM.yyyy')}</td>
+                                </tr>
                             </#list>
-                        </#if>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

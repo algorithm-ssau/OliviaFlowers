@@ -29,10 +29,6 @@
             margin-left: 100px;
             flex-grow: 1;
         }
-
-        .container-fluid, .navbar-custom, .image-container{
-            background-color: #f0eade;
-        }
         .border{
             border: 2px solid #f0eade; /* Цвет границы */
             border-radius: 10px; /* Скругление углов */
@@ -68,7 +64,7 @@
         }
 
         .btn-custom {
-            width: 80%;
+            width: 100%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -82,7 +78,7 @@
         }
 
         .btn-custom2 {
-            width: 50%;
+            width: 94%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -95,16 +91,6 @@
             border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
         }
 
-        .custom-link {
-            width: 87%;
-            margin-left: 5rem;
-            margin-bottom: .75rem; /* Отступ снизу */
-            font-size: 1.25rem; /* Размер шрифта */
-            font-weight: 500; /* Жирность шрифта */
-            color: #333;
-            text-decoration: none;
-        }
-
         /* Для футера внизу страницы: html, body, wrapper*/
         html, body {
             height: 100%;
@@ -113,108 +99,171 @@
             flex-grow: 1;
             padding-bottom: 3rem; /* Добавление отступа снизу */
         }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #f0eade;
-            text-align: center;
-            line-height: 50px;
-        }
         .profile-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 40px;
-            border: 1px solid #ccc;
             border-radius: 10px;
-            background-color: #fff;
             max-width: 600px;
             margin: 20px;
+        }
+        .vertical-line {
+            position: relative;
+        }
+
+        .vertical-line::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            border-left: 2px solid #f0eade; /* Цвет и стиль линии */
+        }
+
+        .horizontal-line {
+            position: relative;
+            height: 2px; /* Высота линии */
+            width: 100%; /* Ширина линии */
+            background-color: #f0eade; /* Цвет линии */
+            margin: 1rem 0; /* Отступы сверху и снизу линии */
+        }
+
+        .container{
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Добавленный класс активности для выбранной категории */
+        .category-link.active {
+            text-decoration: underline; /* Подчеркиваем выбранную категорию */
+        }
+        .custom-link {
+            font-size: 1.05rem; /* Размер шрифта */
+            color: #333;
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
         }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <#if isAdmin?? && isAdmin == true>
-        <#include "blocks/headerAdmin.ftlh">
-    <#else>
-        <#include "blocks/header.ftlh">
-    </#if>
-    <div class="d-flex">
-        <div class="profile-container">
-            <h3>Админ</h3>
-            <a href="/adminorderlist" class="btn btn-custom">Активные заказы</a>
-            <a href="/adminFinishedOrderList" class="btn btn-custom">Законченные заказы</a>
-            <a href="/adminCanceledOrderList" class="btn btn-custom">Отмененные заказы</a>
-            <a href="/admin" class="btn btn-custom">Все букеты</a>
-            <a href="/adminaddbouquet" class="btn btn-custom">Добавление нового букета</a>
-            <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букетов на главный экран</a>
-            <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
-        </div>
-        <div class="main-content">
-            <h2>Вывод букетов</h2>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Название</th>
-                    <th>Состав</th>
-                    <th>Цена</th>
-                    <th>Фото</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list allBouquets as bouquet>
-                    <tr>
-                        <td>${bouquet.id}</td>
-                        <td>${bouquet.name}</td>
-                        <!-- Вывод состава букета в несколько строк -->
-                        <td>
-                            <#list (bouquet.composition)?split("\n") as line>
-                                ${line}<br>
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
+        <div class="d-flex">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
+                        <div style="margin-left: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/admin" class="custom-link category-link">Все букеты</a></p>
+                            <p><a href="/adminaddbouquet" class="custom-link category-link">Добавление нового букета</a></p>
+                            <p><a href="/adminchoicebouquet" class="custom-link category-link">Выбор букетов на главный экран</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Открытки:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminpostcard" class="custom-link category-link">Открытки</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Пользователи:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminAllUsers" class="custom-link category-link">Пользователи</a></p>
+                        </div>
+                    </div>
+                    <script>
+                        // Получаем текущий путь
+                        var currentPath = window.location.pathname;
+
+                        // Получаем все ссылки категорий
+                        var categoryLinks = document.querySelectorAll('.category-link');
+
+                        // Проходим по каждой ссылке
+                        categoryLinks.forEach(function(link) {
+                            // Если текущий путь совпадает с атрибутом href этой ссылки
+                            if (link.getAttribute('href') === currentPath) {
+                                // Добавляем класс активности
+                                link.classList.add('active');
+                            }
+                        });
+                    </script>
+
+
+                    <div class="col-md-1 vertical-line">
+                    </div>
+
+                    <div class="col-md-9">
+                        <h5 style="margin-top: 10px; margin-bottom: 2rem;">Все букеты</h5>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Состав</th>
+                                <th>Цена</th>
+                                <th>Фото</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list allBouquets as bouquet>
+                                <tr>
+                                    <td>${bouquet.id}</td>
+                                    <td>${bouquet.name}</td>
+                                    <!-- Вывод состава букета в несколько строк -->
+                                    <td>
+                                        <#list (bouquet.composition)?split("\n") as line>
+                                            ${line}<br>
+                                        </#list>
+                                    </td>
+                                    <td>${bouquet.price}</td>
+                                    <td>
+                                        <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                            <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                        <#else>
+                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                        </#if>
+
+                                        <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
+                                            <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
+                                        <#else>
+                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                        </#if>
+
+                                        <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
+                                            <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
+                                        <#else>
+                                            <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                        </#if>
+
+                                    </td>
+                                    <td>
+                                        <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
+                                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+                                        <form action="/bouquet_delete/${bouquet.id}" method="post">
+                                            <button type="submit" class="btn btn-custom2">Удалить</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             </#list>
-                        </td>
-                        <td>${bouquet.price}</td>
-                        <td>
-                            <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                            <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                                <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                            <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-                                <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 100px; max-height: 100px;">
-                            <#else>
-                                <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                            </#if>
-
-                        </td>
-                        <td>
-                            <a href="/bouquet/${bouquet.id}" class="btn btn-custom2">Просмотр</a>
-                            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                            <form action="/bouquet_delete/${bouquet.id}" method="post">
-                                <button type="submit" class="btn btn-custom2">Удалить</button>
-                            </form>
-                        </td>
-                    </tr>
-                </#list>
-                </tbody>
-            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="push"></div>
-    <footer class="footer mt-auto">
+    <footer class="footer">
         <#include "blocks/footer.ftlh">
-        <br>
     </footer>
-</div>
 </body>
+</html>

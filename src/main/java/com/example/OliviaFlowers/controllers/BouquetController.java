@@ -1,8 +1,10 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.Bouquet;
+import com.example.OliviaFlowers.models.HomePage;
 import com.example.OliviaFlowers.models.Order;
 import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.repositories.HomePageRepository;
 import com.example.OliviaFlowers.secvices.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,7 +38,9 @@ public class BouquetController {
 
     private final FavoriteService favoriteService;
 
-    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService, UserService userService, FavoriteService favoriteService) {
+    private final HomePageRepository homePageRepository;
+
+    public BouquetController(BouquetService bouquetService, OrderHasBouquetService orderHasBouquetService, OrderService orderService, PostcardService postcardService, UserService userService, FavoriteService favoriteService, HomePageRepository homePageRepository) {
         this.bouquetService = bouquetService;
         this.orderHasBouquetService = orderHasBouquetService;
         this.orderService = orderService;
@@ -44,6 +48,7 @@ public class BouquetController {
 
         this.userService = userService;
         this.favoriteService = favoriteService;
+        this.homePageRepository = homePageRepository;
     }
 
     @GetMapping("/find_bouquet_by_name")
@@ -240,6 +245,37 @@ public class BouquetController {
 
     @GetMapping("/adminchoicebouquet")
     public String chobouq(Model model){
+        // Получить все записи о букетах на главной странице из базы данных
+        List<HomePage> homePageBouquets = homePageRepository.findAll();
+
+        if (homePageBouquets.size() == 3) {
+
+            Bouquet bouquet1 = homePageBouquets.get(0).getBouquet();
+            Bouquet bouquet2 = homePageBouquets.get(1).getBouquet();
+            Bouquet bouquet3 = homePageBouquets.get(2).getBouquet();
+
+            model.addAttribute("bouquet1", bouquet1.getId());
+            model.addAttribute("bouquet2", bouquet2.getId());
+            model.addAttribute("bouquet3", bouquet3.getId());
+
+            String description1 = homePageBouquets.get(0).getDescription();
+            String description2 = homePageBouquets.get(1).getDescription();
+            String description3 = homePageBouquets.get(2).getDescription();
+
+            model.addAttribute("description1", description1);
+            model.addAttribute("description2", description2);
+            model.addAttribute("description3", description3);
+        }
+        else{
+            model.addAttribute("bouquet1", "");
+            model.addAttribute("bouquet2", "");
+            model.addAttribute("bouquet3", "");
+            model.addAttribute("description1", "");
+            model.addAttribute("description2", "");
+            model.addAttribute("description3", "");
+        }
+
+
         //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
@@ -337,6 +373,21 @@ public class BouquetController {
 
         model.addAttribute("allPostcards", postcardService.listAllPostcards());
         return "/adminpostcard";
+    }
+
+    @GetMapping("/adminAllUsers")
+    public String adminAllUsers(Model model){
+        model.addAttribute("allUsers", userService.listAllUsers());
+
+        //проверка пользователя администратор он или нет
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+        String username = authentication.getName(); // Получить имя пользователя
+        User user = userService.getUserByEmail(username);
+        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+        else{ model.addAttribute("isAdmin", false);}
+
+        return "adminAllUsers";
     }
 
 
