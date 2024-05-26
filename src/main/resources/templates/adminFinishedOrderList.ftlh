@@ -29,10 +29,6 @@
             margin-left: 100px;
             flex-grow: 1;
         }
-
-        .container-fluid, .navbar-custom, .image-container{
-            background-color: #f0eade;
-        }
         .border{
             border: 2px solid #f0eade; /* Цвет границы */
             border-radius: 10px; /* Скругление углов */
@@ -68,7 +64,7 @@
         }
 
         .btn-custom {
-            width: 80%;
+            width: 100%;
             margin-top: 10px;
             background-color: #f0eade; /* Основной цвет кнопки */
             border-color: #f0eade; /* Цвет границы кнопки */
@@ -95,16 +91,6 @@
             border-color: #e0d8d0; /* Цвет границы кнопки при наведении */
         }
 
-        .custom-link {
-            width: 87%;
-            margin-left: 5rem;
-            margin-bottom: .75rem; /* Отступ снизу */
-            font-size: 1.25rem; /* Размер шрифта */
-            font-weight: 500; /* Жирность шрифта */
-            color: #333;
-            text-decoration: none;
-        }
-
         /* Для футера внизу страницы: html, body, wrapper*/
         html, body {
             height: 100%;
@@ -113,155 +99,226 @@
             flex-grow: 1;
             padding-bottom: 3rem; /* Добавление отступа снизу */
         }
-        .footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #f0eade;
-            text-align: center;
-            line-height: 50px;
-        }
         .profile-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 40px;
-            border: 1px solid #ccc;
             border-radius: 10px;
-            background-color: #fff;
             max-width: 600px;
             margin: 20px;
+        }
+        .vertical-line {
+            position: relative;
+        }
+
+        .vertical-line::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            border-left: 2px solid #f0eade; /* Цвет и стиль линии */
+        }
+
+        .horizontal-line {
+            position: relative;
+            height: 2px; /* Высота линии */
+            width: 100%; /* Ширина линии */
+            background-color: #f0eade; /* Цвет линии */
+            margin: 1rem 0; /* Отступы сверху и снизу линии */
+        }
+
+        .container{
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Добавленный класс активности для выбранной категории */
+        .category-link.active {
+            text-decoration: underline; /* Подчеркиваем выбранную категорию */
+        }
+
+        .custom-link {
+            font-size: 1.05rem; /* Размер шрифта */
+            color: #333;
+            text-decoration: none;
+        }
+        .custom-link:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
         }
     </style>
 </head>
 <body>
-<div class="wrapper">
-    <#if isAdmin?? && isAdmin == true>
-        <#include "blocks/headerAdmin.ftlh">
-    <#else>
-        <#include "blocks/header.ftlh">
-    </#if>
-    <div class="d-flex">
-        <div class="profile-container">
-            <h3>Админ</h3>
-            <a href="/adminorderlist" class="btn btn-custom">Активные заказы</a>
-            <a href="/adminFinishedOrderList" class="btn btn-custom">Законченные заказы</a>
-            <a href="/adminCanceledOrderList" class="btn btn-custom">Отмененные заказы</a>
-            <a href="/admin" class="btn btn-custom">Все букеты</a>
-            <a href="/adminaddbouquet" class="btn btn-custom">Добавление нового букета</a>
-            <a href="/adminchoicebouquet" class="btn btn-custom">Выбор букетов на главный экран</a>
-            <a href="/adminpostcard" class="btn btn-custom">Открытки</a>
+    <div class="wrapper">
+        <#if isAdmin?? && isAdmin == true>
+            <#include "blocks/headerAdmin.ftlh">
+        <#else>
+            <#include "blocks/header.ftlh">
+        </#if>
+        <div class="d-flex">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
+                        <div style="margin-left: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/admin" class="custom-link category-link">Все букеты</a></p>
+                            <p><a href="/adminaddbouquet" class="custom-link category-link">Добавление нового букета</a></p>
+                            <p><a href="/adminchoicebouquet" class="custom-link category-link">Выбор букетов на главный экран</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Открытки:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminpostcard" class="custom-link category-link">Открытки</a></p>
+                        </div>
+                        <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Пользователи:</h6>
+                        <div style="margin-left: 2rem; margin-right: 2rem; padding-top: 0.5rem;">
+                            <p><a href="/adminAllUsers" class="custom-link category-link">Пользователи</a></p>
+                        </div>
+                    </div>
+                    <script>
+                        // Получаем текущий путь
+                        var currentPath = window.location.pathname;
+
+                        // Получаем все ссылки категорий
+                        var categoryLinks = document.querySelectorAll('.category-link');
+
+                        // Проходим по каждой ссылке
+                        categoryLinks.forEach(function(link) {
+                            // Если текущий путь совпадает с атрибутом href этой ссылки
+                            if (link.getAttribute('href') === currentPath) {
+                                // Добавляем класс активности
+                                link.classList.add('active');
+                            }
+                        });
+                    </script>
 
 
-        </div>
-        <div class="main-content">
-            <h2>Заказы к доставке</h2>
-            <br>
-            <#if toDeliverOrders??>
-                <#assign x = 0>
-                <#list toDeliverOrders as order>
-                    <h4>Заказ №${order.id}</h4>
-                    <h4>Контактный номер: ${order.phoneNumber!}</h4>
-                    <table class = "table">
-                        <thead>
-                        <tr>
-                            <th>Адрес доставки</th>
-                            <th>Дата доставки</th>
-                            <th>Время доставки</th>
-                            <th>Карточка</th>
-                            <th>Текст карточки</th>
-                            <th>Дата оплаты</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>${order.addressDelivery}</td>
-                            <td>${order.dateDelivery.format('yyyy-MM-dd')}</td>
-                            <td>${order.timeDelivery!}</td>
-                            <td><#if toDeliverPostcards[x]??><img src="/images/${toDeliverPostcards[x].image.id}" alt="Фото" style="max-width: 60px ;max-height: 80px;"><#else>Отсутствует</#if></td>
-                            <td>${order.textPostcard!'-'}</td>
-                            <td>${order.datePayment.format('yyyy-MM-dd HH:mm:ss')}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <h4>Букеты в заказе:</h4>
-                    <table class = "table">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Название</th>
-                            <th>Состав</th>
-                            <th>Фото</th>
-                            <th>Количество</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <#assign y = 0>
-                        <#list toDeliverBouquets[x] as bouquet>
-                            <tr>
-                                <td>${bouquet.id}</td>
-                                <td>${bouquet.name}</td>
-                                <!-- Вывод состава букета в несколько строк -->
-                                <td>
-                                    <#list (bouquet.composition)?split("\n") as line>
-                                        ${line}<br>
+                    <div class="col-md-1 vertical-line">
+                    </div>
+
+                    <div class="col-md-9">
+                        <#if toDeliverOrders?size = 0>
+                            <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
+                                <h5>Нет доставленных заказов</h5>
+                            </div>
+
+                        <#else>
+                            <h5 style="margin-top: 10px; margin-bottom: 2rem;">Доставленные букеты</h5>
+                            <#assign x = 0>
+                            <#list toDeliverOrders as order>
+                                <div class="row">
+                                    <div class="col d-flex align-items-center justify-content-between">
+                                        <h5>Заказ №${order.id} от ${order.datePayment.format('dd.MM.yyyy hh:mm')}</h5>
+                                        <div class="d-flex align-items-center">
+                                            <p class="mb-0 me-2">оплачено</p>
+                                            <h5 class="mb-0">${order.sumOrder} ₽</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div style="margin-top: 2rem;">
+                                    <div class="d-flex">
+                                        <div class="flex-fill">
+                                            <h6>Доставка по адресу:</h6>
+                                            <p>${order.addressDelivery}</p>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <h6>Дата доставки:</h6>
+                                            <p>${order.dateDelivery.format('dd.MM.yyyy')}</p>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <h6>Время доставки:</h6>
+                                            <p>${order.timeDelivery!}</p>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <h6>Стоимость доставки:</h6>
+                                            <p>${order.sumDelivery} ₽</p>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <h6>Id покупателя:</h6>
+                                            <p>${order.user.id}</p>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <h6>Контактный номер:</h6>
+                                            <p>${order.phoneNumber!}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <button id="toggleButton_${order.id}" class="btn btn-custom" style="max-width: 200px;  margin-bottom: 1rem;" onclick="showOrder(${order.id})">Товары в заказе</button>
+
+                                <div id="orderItemsDiv_${order.id}" style="display:none;" >
+                                    <br>
+                                    <#assign y = 0>
+                                    <#list toDeliverBouquets[x] as bouquet>
+                                        <div class="row" style="width: 36rem;">
+                                            <div class="col-md-3" style="margin-bottom: 1rem;">
+                                                <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
+                                                    <img src="/images/${bouquet.images[0].id}" alt="Фото" class="image" style="max-width: 6rem; max-height: 6rem;" class="me-2">
+                                                <#else>
+                                                    <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                                </#if>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a href="/bouquet/${bouquet.id}" class="custom-link me-auto">${bouquet.name}</a>
+                                            </div>
+                                            <div class="col-md-3">
+                                                ${toDeliverAmounts[x][y]} шт
+                                            </div>
+                                            <div class="col-md-3">
+                                                ${bouquet.price} ₽
+                                            </div>
+                                        </div>
                                     </#list>
-                                </td>
-                                <td>
-                                    <#if bouquet.images[0]?has_content && bouquet.images[0]?size gt 1>
-                                        <img src="/images/${bouquet.images[0].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
-                                    <#else>
-                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
+                                    <#assign y++>
+
+                                    <#if toDeliverPostcards[x]??>
+                                        <div class="row" style="width: 36rem;">
+                                            <div class="col-md-3" style="margin-bottom: 1rem;">
+                                                <img src="/images/${toDeliverPostcards[x].image.id}" class="image"alt="Фото" style="max-width: 6rem;" class="me-2">
+                                            </div>
+                                            <div class="col-md-3">
+                                                ${order.textPostcard!'Открытка без текста'}
+                                            </div>
+                                            <div class="col-md-3">
+                                                1 шт
+                                            </div>
+                                            <div class="col-md-3">
+                                                0 ₽
+                                            </div>
+                                        </div>
                                     </#if>
-
-                                    <#if bouquet.images[1]?has_content && bouquet.images[1]?size gt 1>
-                                        <img src="/images/${bouquet.images[1].id}" alt="Фото"  style="max-width: 50px; max-height: 50px;">
-                                    <#else>
-                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                    </#if>
-
-                                    <#if bouquet.images[2]?has_content && bouquet.images[2]?size gt 1>
-                                        <img src="/images/${bouquet.images[2].id}" alt="Фото" style="max-width: 50px; max-height: 50px;">
-                                    <#else>
-                                        <!-- Здесь можно вывести какое-то сообщение или заглушку для изображения отсутствует -->
-                                    </#if>
-
-                                </td>
-                                <td>
-                                    ${toDeliverAmounts[x][y]}
-                                </td>
-
-
-                            </tr>
-                            <#assign y++>
-
-
-                        </#list>
-                        </tbody>
-                    </table>
-
-                    <form action = "deliver_order/${order.id}" method="post">
-                        <button type="submit" class="btn btn-custom2">Отметить доставленным</button>
-                    </form>
-                    <form action = "cancel_order/${order.id}" method="post">
-                        <button type="submit" class="btn btn-custom2">Отменить заказ</button>
-                    </form>
-                    <br>
-
-                    <#assign x++>
-                </#list>
-            <#else>
-                <h4>Законченных заказов нету</h4>
-            </#if>
-
-
+                                    <#assign x++>
+                                </div>
+                                <div class="horizontal-line"></div> <!-- Горизонтальная линия -->
+                                <script>
+                                    function showOrder(orderId) {
+                                        var orderItemsDiv = document.getElementById("orderItemsDiv_" + orderId);
+                                        if (orderItemsDiv.style.display === "none") {
+                                            orderItemsDiv.style.display = "block";
+                                        } else {
+                                            orderItemsDiv.style.display = "none";
+                                        }
+                                    }
+                                </script>
+                            </#list>
+                        </#if>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="push"></div>
-    <footer class="footer mt-auto">
+    <footer class="footer">
         <#include "blocks/footer.ftlh">
-        <br>
     </footer>
-</div>
 </body>
+</html>

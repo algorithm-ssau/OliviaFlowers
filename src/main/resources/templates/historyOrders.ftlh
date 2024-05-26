@@ -162,7 +162,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
                                 <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                             </svg>
-                            ${currentUser.dateOfBirthday}
+                            ${currentUser.dateOfBirthday.format('dd.MM.yyyy')}
                         </p>
                     </div>
 
@@ -211,7 +211,7 @@
                         <#list finishedOrders as order>
                             <div class="row">
                                 <div class="col d-flex align-items-center justify-content-between">
-                                    <h5>Заказ №${order.id} от ${order.datePayment.format('yyyy-MM-dd')}</h5>
+                                    <h5>Заказ №${order.id} от ${order.datePayment.format('dd.MM.yyyy')}</h5>
                                     <div class="d-flex align-items-center">
                                         <p class="mb-0 me-2">оплачено</p>
                                         <h5 class="mb-0">${order.sumOrder} ₽</h5>
@@ -229,7 +229,7 @@
                                     </div>
                                     <div class="flex-fill">
                                         <h6>Дата доставки:</h6>
-                                        <p>${order.dateDelivery.format('yyyy-MM-dd')}</p>
+                                        <p>${order.dateDelivery.format('dd.MM.yyyy')}</p>
                                     </div>
                                     <div class="flex-fill">
                                         <h6>Время доставки:</h6>
