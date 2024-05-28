@@ -164,6 +164,13 @@
     <#else>
     <#include "blocks/header.ftlh">
 </#if>
+
+<#if message??>
+<script>
+                showMessage("${message}");
+            </script>
+</#if>
+
 <div class="d-flex">
     <div class="container">
         <div class="row">

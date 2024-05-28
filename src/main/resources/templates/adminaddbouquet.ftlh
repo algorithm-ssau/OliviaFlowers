@@ -165,6 +165,13 @@
         <#else>
             <#include "blocks/header.ftlh">
         </#if>
+
+        <#if message??>
+            <script>
+                showMessage("${message}");
+            </script>
+        </#if>
+
         <div class="d-flex">
             <div class="container">
                 <div class="row">
@@ -242,9 +249,9 @@
                             <div class="mb-3">
                                 <h6 for="type" class="form-label">Тип букета:</h6>
                                 <select name="type" id="type" class="form-control">
-                                    <option value="Cвадебный">Cвадебный</option>
                                     <option value="Авторский">Авторский</option>
                                     <option value="В коробке">В коробке</option>
+                                    <option value="Cвадебный">Cвадебный</option>
                                 </select>
                             </div>
                             <button type="submit" class="btn btn-custom">Добавить</button>

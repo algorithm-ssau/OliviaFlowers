@@ -4,6 +4,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
     <link rel="icon" href="icon_logo.png" type="image/x-icon">
     <title>Заказы</title>
     <script>
@@ -45,31 +46,6 @@
             } else {
                 document.getElementById("addressDelivery").style.display = "block"
             }
-        }
-
-
-        function timeSelect() {
-            const timeDelivery = document.getElementById("timeDelivery");
-            const timeDeliveryToday = document.getElementById("timeDeliveryToday");
-
-
-            const q = new Date();
-                        const today = new Date(q.getFullYear(), q.getMonth(), q.getDate());
-                        const dateDelivery = document.getElementById("dateDelivery").value;
-                        const inpDate = new Date(dateDelivery);
-
-                        console.log("Today's date:", today); // Для отладки
-                        console.log("Input date:", inpDate); // Для отладки
-
-                        if (inpDate === today) {
-                            timeDelivery.style.display = "none";
-                            timeDeliveryToday.style.display = "block";
-
-                        } else {
-                            timeDelivery.style.display = "block";
-                            timeDeliveryToday.style.display = "none";
-
-                        }
         }
 
         function timeaddresser(){
@@ -115,6 +91,12 @@
                 }
                 select.value = select.options[0].value;
             }
+            // Обновление текстового поля с датой
+
+            const parts = datra.split('-');
+            const formattedDate = parts[2] + '.' + parts[1] + '.' + parts[0];
+
+            document.getElementById("dateDisplay").value = formattedDate;
         }
 
 
@@ -255,19 +237,7 @@
         }
 
 
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            position: absolute;
-        }
 
-        input::-webkit-datetime-edit {
-            position: relative;
-            left: 15px;
-        }
-
-        input::-webkit-datetime-edit-fields-wrapper {
-            position: relative;
-            left: 15px;
-        }
 
         /* Для футера внизу страницы: html, body, wrapper*/
         html, body {
@@ -310,6 +280,16 @@
             justify-content: center; /* Выравниваем элементы по вертикали */
             align-items: center; /* Выравниваем элементы по горизонтали */
         }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+        }
+
+
+        input::-webkit-datetime-edit-fields-wrapper {
+            display:none;
+        }
+
 
     </style>
 </head>
@@ -432,41 +412,42 @@
                                 <br><br>
                                 <div class="">
                                     <div class="row">
-                                        <div class="col-12 mb-3">
-                                            <h6 for="typePostcard" class="form-label">Тип открытки:</h6>
-                                            <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
-                                                <option id = "noPostcard" value = "-1">Без открытки</option>
-                                                <option value = "0">C открыткой</option>
-                                            </select>
-                                        </div>
+                                        <#if allPostcards?? && allPostcards?size != 0>
+                                            <div class="col-12 mb-3">
+                                                <h6 for="typePostcard" class="form-label">Тип открытки:</h6>
+                                                <select onchange = "showPostcardText()" name = "typePostcard" id = "typePostcard" class = "form-control">
+                                                    <option id = "noPostcard" value = "-1">Без открытки</option>
+                                                    <option value = "0">C открыткой</option>
+                                                </select>
+                                            </div>
 
-                                        <div class="col-md-auto">
-                                            <div id="postcardCarousel" class="carousel carousel-dark slide custom-card" style="display:none">
-                                                <div class="carousel-inner">
-                                                    <#list allPostcards as postcard>
-                                                        <div class="carousel-item<#if postcard_index == 0> active</#if>">
-                                                            <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
-                                                            <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
-                                                        </div>
-                                                    </#list>
+                                            <div class="col-md-auto">
+                                                <div id="postcardCarousel" class="carousel carousel-dark slide custom-card" style="display:none">
+                                                    <div class="carousel-inner">
+                                                        <#list allPostcards as postcard>
+                                                            <div class="carousel-item<#if postcard_index == 0> active</#if>">
+                                                                <img src="/images/${postcard.image.id}" data-postcard-id="${postcard.id}" class="d-block w-100 custom-card" alt="Фото открытки">
+                                                                <input type="hidden" id="postcardId" name="dataPostcardId" value="${postcard.id}">
+                                                            </div>
+                                                        </#list>
+                                                    </div>
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
                                                 </div>
-                                                <button class="carousel-control-prev" type="button" data-bs-target="#postcardCarousel" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button" data-bs-target="#postcardCarousel" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
                                             </div>
-                                        </div>
-                                        <div class="col">
-                                            <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
-                                               <label for="textPostcard" class="form-label">Текст открытки:</label>
-                                               <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
+                                            <div class="col">
+                                                <div id = "textPostcardContainer" class ="mb-3" style = "display:none">
+                                                   <label for="textPostcard" class="form-label">Текст открытки:</label>
+                                                   <textarea class="form-control" id="textPostcard" name="textPostcard" rows="5"></textarea>
+                                                </div>
                                             </div>
-                                        </div>
-
+                                        </#if>
                                         <div class="col-12 mb-3">
                                             <h6 for="typeRecipient" class="form-label">Получатель:</h6>
                                             <select onchange = "showNumberPhone()" name = "typeRecipient" id = "typeRecipient" class = "form-control">
@@ -504,7 +485,10 @@
                                     <div class="col-12 mb-3">
                                         <div class="form-group">
                                             <h6 class="text-start">Дата доставки</h6>
-                                                <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeaddresser()" required>
+                                                <div style="display:flex;">
+                                                    <input type="date" class="form-control" style="width:48px" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeaddresser()" required>
+                                                    <input type="text" class="form-control" id="dateDisplay" readonly style="margin-left:4px">
+                                                </div>
                                         </div>
                                     </div>
 
