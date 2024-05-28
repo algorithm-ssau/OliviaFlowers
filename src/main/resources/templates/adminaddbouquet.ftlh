@@ -214,7 +214,7 @@
                     <div class="col-md-9">
                         <h5 style="margin-top: 10px; margin-bottom: 2rem;">Добавление букета</h5>
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                        <form action="/bouquet_create" method="post" onsubmit="return validateForm() enctype="multipart/form-data">
+                        <form action="/bouquet_create" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Название:</label>
                                 <input type="text" id="required1" class="form-control" id="name" name="name" required>
