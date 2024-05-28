@@ -147,10 +147,19 @@
         .custom-link:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+
+        /* Для футера внизу страницы: html, body, wrapper*/
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            flex-grow: 1;
+            padding-bottom: 3rem; /* Добавление отступа снизу */
+        }
     </style>
 </head>
-<body>
-    <div class="wrapper">
+<body class="d-flex flex-column h-100">
+    <div class="wrapper flex-grow-1">
         <#if isAdmin?? && isAdmin == true>
             <#include "blocks/headerAdmin.ftlh">
         <#else>
@@ -163,7 +172,7 @@
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 1rem;">Заказы:</h6>
                         <div style="margin-left: 2rem; padding-top: 0.5rem;">
                             <p><a href="/adminorderlist" class="custom-link category-link">Активные заказы</a></p>
-                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Законченные заказы</a></p>
+                            <p><a href="/adminFinishedOrderList" class="custom-link category-link">Доставленные заказы</a></p>
                             <p><a href="/adminCanceledOrderList" class="custom-link category-link">Отмененные заказы</a></p>
                         </div>
                         <h6 for="typeRecipient" class="form-label" style="margin-top: 2rem;">Букеты:</h6>
@@ -205,14 +214,14 @@
                     <div class="col-md-9">
                         <h5 style="margin-top: 10px; margin-bottom: 2rem;">Добавление букета</h5>
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                        <form action="/bouquet_create" method="post" enctype="multipart/form-data">
+                        <form action="/bouquet_create" method="post" onsubmit="return validateForm() enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Название:</label>
-                                <input type="text" class="form-control" id="name" name="name">
+                                <input type="text" id="required1" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="mb-3">
                                 <label for="file1" class="form-label">Первое фото:</label>
-                                <input type="file" class="form-control" id="file1" name="file1">
+                                <input type="file" id="required2" class="form-control" id="file1" name="file1" required>
                             </div>
                             <div class="mb-3">
                                 <label for="file2" class="form-label">Второе фото:</label>
@@ -224,11 +233,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="composition" class="form-label">Состав:</label>
-                                <textarea class="form-control" id="composition" name="composition" rows="4"></textarea>
+                                <textarea class="form-control" id="composition" name="composition" rows="4" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="price" class="form-label">Цена:</label>
-                                <input type="number" class="form-control" id="price" name="price">
+                                <input type="number" id="required3" class="form-control" id="price" name="price" required>
                             </div>
                             <div class="mb-3">
                                 <h6 for="type" class="form-label">Тип букета:</h6>
@@ -240,12 +249,25 @@
                             </div>
                             <button type="submit" class="btn btn-custom">Добавить</button>
                         </form>
+                        <script>
+                            function validateForm() {
+                                var required1 = document.getElementById("required1").value;
+                                var required2 = document.getElementById("required2").value;
+                                var required3 = document.getElementById("required3").value;
+                                var composition = document.getElementById("composition").value;
+
+                                if (required1 === "" || required1 === "" || required1 === "" || composition === "") {
+                                    alert("Пожалуйста, заполните все обязательные поля.");
+                                    return false;
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="footer">
+    <footer class="footer mt-auto">
         <#include "blocks/footer.ftlh">
     </footer>
 </body>

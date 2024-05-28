@@ -13,7 +13,7 @@
         }
 
         .product{
-            margin-top: 2rem;
+            margin-top: 20px;
             max-width: 18rem; /* Максимальная ширина карточки */
         }
 
@@ -66,12 +66,25 @@
             text-decoration: none;
         }
 
-        /* Для футера внизу страницы: html, body, wrapper*/
+        /* Для футера внизу страницы: html, body, wrapper */
         html, body {
             height: 100%;
+            margin: 0;
+            padding: 0;
         }
-        .wrapper {
-            flex-grow: 1;
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        .footer {
+            flex-shrink: 0;
         }
 
         .price-filter {
@@ -133,8 +146,8 @@
     </style>
 </head>
 
-<body class="d-flex flex-column h-100">
-<div class="wrapper flex-grow-1">
+<body>
+<div class="content">
   <#if isAdmin?? && isAdmin == true>
   <#include "blocks/headerAdmin.ftlh">
   <#else>

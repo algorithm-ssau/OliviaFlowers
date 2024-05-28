@@ -23,10 +23,11 @@
 
         function showNumberPhone() {
             if (document.getElementById("me").selected) {
-                document.getElementById("phoneNumber").style.display = "none"
-
+                document.getElementById("phoneNumberContainer").style.display = "none"
+                document.getElementById("phoneNumber").value = "${phoneNumber}"
             } else {
-                document.getElementById("phoneNumber").style.display = "block"
+                document.getElementById("phoneNumberContainer").style.display = "block"
+                document.getElementById("phoneNumber").value = ""
             }
         }
 
@@ -70,6 +71,52 @@
 
                         }
         }
+
+        function timeaddresser(){
+            const datra = document.getElementById("dateDelivery").value;
+            const dater = new Date(datra);
+            const PBY = new Date();
+            const tdy = new Date(PBY.getFullYear(), PBY.getMonth(), PBY.getDate());
+            const PBJ = new Date(dater.getFullYear(), dater.getMonth(), dater.getDate());
+            console.log("Today's date:", tdy.getTime());
+            console.log("Input date:", PBJ.getTime());
+            var select = document.getElementById("timeDelivery");
+
+
+            if(tdy.getTime() == PBJ.getTime()){
+                console.log("Равенство работает");
+
+                var curhour = PBY.getHours();
+                console.log("Часы:", curhour);
+                for (var i = 0; i < select.length; i++){
+
+                    var timesel = select.options[i].text;
+                    var terer= parseInt(timesel.substring(0,2));
+                    if(terer <= curhour){
+                            select.options[i].style.display = 'none';
+                    }
+                    else {
+                        select.options[i].style.display = 'list-item';
+                    }
+
+                }
+                for(var i = 0; i < select.length; i++){
+                    if(select.options[i].style.display !== 'none'){
+                        console.log("wawa", select.options[i].text);
+                        select.value = select.options[i].value;
+                        break;
+                    }
+                }
+
+            }else{
+                for (var i = 0; i < select.length; i++){
+                    select.options[i].style.display = 'list-item';
+
+                }
+                select.value = select.options[0].value;
+            }
+        }
+
 
         function validateForm() {
             var addressDelivery = document.getElementById("addressDelivery").value;
@@ -284,7 +331,6 @@
 <div id="emptyCartMessage" class="d-flex flex-column justify-content-center align-items-center" style="height: 94%;">
   <h4>Ваша корзина пуста</h4>
 </div>
-
 <#else>
 <div class="container mt-5">
   <div class="row">
@@ -428,21 +474,27 @@
               <option value = "1">Другой человек</option>
             </select>
           </div>
+          <!--для правильного формата номера телефона-->
+          <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6-beta.29/dist/inputmask.min.js"></script>
 
           <div class="col-12 mb-3">
-            <div class="form-group" id="phoneNumber" style = "display:none">
+            <div class="form-group" id="phoneNumberContainer" style = "display:none">
               <h6 class="text-start">Номер телефона</h6>
-              <input class="form-control" name="phoneNumber" id="phoneNumber" value="${phoneNumber}" required>
+              <input class="form-control" name="phoneNumber" id="phoneNumber" value = "${phoneNumber}" required>
             </div>
           </div>
-
-
+          <script>
+                                            $(document).ready(function(){
+                                                Inputmask({"mask": "8 (999) 999-99-99"}).mask("#phoneNumber");
+                                            });
+                                        </script>
 
           <div class="col-12 mb-3">
             <div class="form-group" id="addressDelivery">
               <h6 class="text-start">Адрес доставки</h6>
               <input class="form-control" name="addressDelivery" id="addressDelivery"
-                     placeholder="Улица, дом, квартира" / required>
+                     placeholder="Улица, дом, квартира" required>
             </div>
           </div>
 
@@ -452,7 +504,7 @@
           <div class="col-12 mb-3">
             <div class="form-group">
               <h6 class="text-start">Дата доставки</h6>
-              <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeSelect()" required>
+              <input type="date" class="form-control" id="dateDelivery" name="dateDelivery" min="${minDate}" max="${maxDate}" onchange="timeaddresser()" required>
             </div>
           </div>
 
@@ -470,28 +522,16 @@
             </select>
           </div>
 
-          <div class="col-12 mb-3 ">
-            <div class="form-group" id="dateTimeDeliveryToday">
-              <h6 class="form-label" style = "display:none">Время доставки:</h6>
-              <select name="timeDeliveryToday" id="timeDeliveryToday" class="form-control">
-                <#if timeSlots?size != 0>
-                <#list timeSlots as time>
-                <option value="${time}">${time}</option>
-              </#list>
-            </#if>
-            </select>
-          </div>
         </div>
+
+
     </div>
 
-
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
-  </div>
-  </form>
-</#if>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-custom-order">Оформить заказ</button>
+    </div>
+    </form>
+  </#if>
 </div>
 </div>
 </div>
@@ -501,5 +541,4 @@
   <#include "blocks/footer.ftlh">
 </footer>
 </body>
-
 </html>
