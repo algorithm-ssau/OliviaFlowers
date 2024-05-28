@@ -63,7 +63,9 @@
         </#if>
 
         <h4 class="mt-4 text-center">Регистрация</h4>
-        <div class="container">
+         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+         <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6-beta.29/dist/inputmask.min.js"></script>
+         <div class="container">
             <div class="form-container">
                 <form action="/registration" method="post">
                     <div class="form-group">
@@ -82,6 +84,11 @@
                         <label for="phoneNumber">Номер телефона:</label>
                         <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
                     </div>
+                    <script>
+                        $(document).ready(function(){
+                            Inputmask({"mask": "8 (999) 999-99-99"}).mask("#phoneNumber");
+                        });
+                    </script>
                     <div class="form-group">
                         <label for="password">Пароль:</label>
                         <input type="password" class="form-control" id="password" name="password" required>

@@ -23,10 +23,11 @@
 
         function showNumberPhone() {
             if (document.getElementById("me").selected) {
-                document.getElementById("phoneNumber").style.display = "none"
-
+                document.getElementById("phoneNumberContainer").style.display = "none"
+                document.getElementById("phoneNumber").value = "${phoneNumber}"
             } else {
-                document.getElementById("phoneNumber").style.display = "block"
+                document.getElementById("phoneNumberContainer").style.display = "block"
+                document.getElementById("phoneNumber").value = ""
             }
         }
 
@@ -114,15 +115,7 @@
                 }
                 select.value = select.options[0].value;
             }
-
-
-
-
-
         }
-
-
-
 
 
         function validateForm() {
@@ -481,15 +474,21 @@
                                                 <option value = "1">Другой человек</option>
                                             </select>
                                         </div>
+                                        <!--для правильного формата номера телефона-->
+                                        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+                                        <script src="https://cdn.jsdelivr.net/npm/inputmask@5.0.6-beta.29/dist/inputmask.min.js"></script>
 
                                         <div class="col-12 mb-3">
-                                            <div class="form-group" id="phoneNumber" style = "display:none">
+                                            <div class="form-group" id="phoneNumberContainer" style = "display:none">
                                                 <h6 class="text-start">Номер телефона</h6>
-                                                <input class="form-control" name="phoneNumber" id="phoneNumber" value="${phoneNumber}" required>
+                                                <input class="form-control" name="phoneNumber" id="phoneNumber" value = "${phoneNumber}" required>
                                             </div>
                                         </div>
-
-
+                                        <script>
+                                            $(document).ready(function(){
+                                                Inputmask({"mask": "8 (999) 999-99-99"}).mask("#phoneNumber");
+                                            });
+                                        </script>
 
                                     <div class="col-12 mb-3">
                                         <div class="form-group" id="addressDelivery">
