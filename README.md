@@ -1,10 +1,13 @@
-# 🌷OliviaFlowers
+
+# 💐OliviaFlowers💐
 Сайт-каталог, ориентированный на продажу цветов.
 
 ## 🛠️ Мы использовали
 - Java Spring
-- MySQL
-- HTML/CSS
+- MySQL/PostgreSQL
+- HTML
+- CSS
+- Bootstrap
 
 ## 🔥 Установка и запуск
 
@@ -15,6 +18,30 @@
 
 http://localhost:8080/
 ## &#11088; Участники проекта
+
+
+
+<table>
+  <tr>
+    <td>
+      <a href="https://github.com/Lumer1337" class="developer">🌹Плешаков Илья🌹</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/Polina24zinoveva" class="developer">🌷Зиновьева Полина🌷</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/AntonSTT" class="developer">🌺Старков Антон🌺</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://github.com/GrishkoVi" class="developer">🌸Гришкова Виктория🌸</a>
+    </td>
+  </tr>
 
 <style>
   table {
@@ -30,26 +57,3 @@ http://localhost:8080/
     font-weight: bold;
   }
 </style>
-
-<table>
-  <tr>
-    <td>
-      <a href="https://github.com/Lumer1337" class="developer">💐Плешаков Илья💐</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://github.com/Polina24zinoveva" class="developer">🌷Зиновьева Полина🌷</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://github.com/AntonSTT" class="developer">🌹Старков Антон🌹</a>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <a href="https://github.com/GrishkoVi" class="developer">🌸Гришкова Виктория🌸</a>
-    </td>
-  </tr>
-
