@@ -41,6 +41,15 @@ public class HomePageController {
     public String home(Model model){
 
         try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.isAuthenticated()) {
+                // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
+                String username = authentication.getName(); // Получить имя пользователя
+                User user = userService.getUserByEmail(username);
+                model.addAttribute("isAdmin", user.getIsAdministrator());
+            }
+
+
             // Получить все записи о букетах на главной странице из базы данных
             List<HomePage> homePageBouquets = homePageRepository.findAll();
 
@@ -56,13 +65,7 @@ public class HomePageController {
                 model.addAttribute("bouquet2", bouquet2);
                 model.addAttribute("bouquet3", bouquet3);
 
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                if (authentication != null && authentication.isAuthenticated()) {
-                    // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-                    String username = authentication.getName(); // Получить имя пользователя
-                    User user = userService.getUserByEmail(username);
-                    model.addAttribute("isAdmin", user.getIsAdministrator());
-                }
+
             } else {
                 // Логика для обработки случая, когда список пустой
             }

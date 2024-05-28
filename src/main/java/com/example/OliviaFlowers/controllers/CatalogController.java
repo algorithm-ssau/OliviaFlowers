@@ -27,6 +27,8 @@ public class CatalogController {
 
     private String title;
 
+    private int selectedSort = 0;
+
     @Autowired
     public CatalogController(BouquetService bouquetService, UserService userService, PostcardService postcardService) {
         this.bouquetService = bouquetService;
@@ -40,6 +42,8 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets);
         title = "Все букеты: ";
         model.addAttribute("title", title);
+        model.addAttribute("selectedSort", selectedSort);
+
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listAllBouquets().stream()
@@ -69,6 +73,8 @@ public class CatalogController {
         model.addAttribute("allPostcards", postcardService.listAllPostcards());
         title = "Открытки: ";
         model.addAttribute("title", title);
+        model.addAttribute("selectedSort", selectedSort);
+
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listAllBouquets().stream()
@@ -99,6 +105,8 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         title = "Авторские букеты: ";
         model.addAttribute("title", title);
+        model.addAttribute("selectedSort", selectedSort);
+
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listAuthorBouquets().stream()
@@ -128,6 +136,8 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         title = "Композиции в коробках и корзинах: ";
         model.addAttribute("title", title);
+        model.addAttribute("selectedSort", selectedSort);
+
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listBoxBouquets().stream()
@@ -157,6 +167,8 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets); // Получаем заказы пользователя
         title = "Свадебный декор: ";
         model.addAttribute("title", title);
+        model.addAttribute("selectedSort", selectedSort);
+
 
         // Найти максимальную цену среди всех букетов с использованием потока
         OptionalDouble maxPrice = bouquetService.listWeddingBouquets().stream()
@@ -224,6 +236,9 @@ public class CatalogController {
         List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
         model.addAttribute("allBouquets", sortedBouquets);
         model.addAttribute("title", title);
+        selectedSort = sort;
+        model.addAttribute("selectedSort", selectedSort);
+
 
 
         // Найти максимальную цену среди всех букетов с использованием потока

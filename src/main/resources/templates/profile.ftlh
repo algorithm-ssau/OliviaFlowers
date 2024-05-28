@@ -57,9 +57,11 @@
             align-items: center;
         }
 
+
         .icon-text svg {
             margin-right: 8px; /* Отступ между иконкой и текстом */
         }
+
 
         .vertical-line {
             position: relative;
@@ -131,6 +133,11 @@
            flex-grow: 1;
        }
 
+       /* Добавленный класс активности для выбранной категории */
+       .category-link.active {
+           text-decoration: underline; /* Подчеркиваем выбранную категорию */
+       }
+
     </style>
 </head>
 <body class="d-flex flex-column h-100">
@@ -150,7 +157,7 @@
 
                         <h6 style="margin-top: 2rem;">Личная информация</h6>
 
-                        <div style="margin-left: 1rem;">
+                        <div style="margin-left: 1rem; word-break: break-all;">
 
                             <p class="icon-text" style="margin-top: 1rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
@@ -178,7 +185,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
                                     <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5zm1.294 7.456A2 2 0 0 1 4.732 11h5.536a2 2 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456M12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
                                 </svg>
-                                <a class="custom-link" href="/profile">Активные заказы</a>
+                                <a class="custom-link category-link" href="/profile">Активные заказы</a>
                             </p>
                             <p class="icon-text">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
@@ -186,21 +193,35 @@
                                     <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
                                     <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
                                 </svg>
-                                <a class="custom-link" href="/historyOrders">История заказов</a>
+                                <a class="custom-link category-link" href="/historyOrders">История заказов</a>
                             </p>
                             <p class="icon-text">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                                     <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
                                 </svg>
-                                <a class="custom-link" href="/favorite">Избранное</a>
+                                <a class="custom-link category-link" href="/favorite">Избранное</a>
                             </p>
                             <form action="/logout" method="post">
                                 <button type="submit" class="btn btn-custom">Выйти</button>
                             </form>
                         </div>
+                        <script>
+                            // Получаем текущий путь
+                            var currentPath = window.location.pathname;
+
+                            // Получаем все ссылки категорий
+                            var categoryLinks = document.querySelectorAll('.category-link');
+
+                            // Проходим по каждой ссылке
+                            categoryLinks.forEach(function(link) {
+                                // Если текущий путь совпадает с атрибутом href этой ссылки
+                                if (link.getAttribute('href') === currentPath) {
+                                    // Добавляем класс активности
+                                    link.classList.add('active');
+                                }
+                            });
+                        </script>
                     </div>
-
-
                     <div class="col-md-1 vertical-line">
                     </div>
 
