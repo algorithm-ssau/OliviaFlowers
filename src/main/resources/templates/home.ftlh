@@ -103,7 +103,7 @@
         </#if>
 
         <div class="image-container">
-          <center><img src="../logotip.png" style="height: 180px;" alt="Logo"></center>
+          <center><img src="../logotip2.png" style="height: 180px;" alt="Logo"></center>
         </div>
 
         <p class="p-custom" style="padding-top: 1rem;">Вам могут понравиться наши сезонные букеты</p>
