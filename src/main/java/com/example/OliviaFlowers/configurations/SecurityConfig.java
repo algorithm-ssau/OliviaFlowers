@@ -30,7 +30,7 @@ public class SecurityConfig{
                                 "inst.png", "vk.png", "/bouquet/**", "/images/**", "requestMatchers",
                                  "/bouquet_delete/**", "/add_bouquets_to_homepage", "/find_bouquet_by_name",
                                 "icon_logo.png", "/catalogPostcard", "/lookAll", "/authorBouquet", "/boxBouquet",
-                                "/weddingBouquet", "/filterBouquets")
+                                "/weddingBouquet", "/filterBouquets", "/activate/*")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
