@@ -8,9 +8,14 @@
         Администратор
     </title>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         function showMessage(message) {
-            alert(message);
+            Swal.fire({
+              text: message,
+              icon: "success",
+              confirmButtonColor: '#e0d8d0'
+            });
         }
     </script>
 

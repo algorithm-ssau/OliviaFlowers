@@ -139,6 +139,16 @@
        }
 
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function showMessage(message) {
+            Swal.fire({
+              text: message,
+              icon: "success",
+              confirmButtonColor: '#e0d8d0'
+            });
+        }
+    </script>
 </head>
 <body class="d-flex flex-column h-100">
     <div class="wrapper flex-grow-1">
@@ -146,6 +156,11 @@
             <#include "blocks/headerAdmin.ftlh">
         <#else>
             <#include "blocks/header.ftlh">
+        </#if>
+        <#if message??>
+            <script>
+                showMessage("${message}");
+            </script>
         </#if>
         <div class="d-flex">
             <div class="container">

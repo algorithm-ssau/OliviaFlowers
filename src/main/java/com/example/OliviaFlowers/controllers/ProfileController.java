@@ -98,7 +98,7 @@ public class ProfileController {
                 .anyMatch(bouquetB -> Objects.equals(bouquetB.getId(), bouquetId));
 
         if (favBouquetExists) {
-            redirectAttributes.addFlashAttribute("message", "Букет уже в избранном");
+            redirectAttributes.addFlashAttribute("warning", "Букет уже в избранном");
         } else {
             Bouquet bouquet = bouquetService.getBouquetByID(bouquetId);
             favoriteService.saveFavorite(user, bouquet);
