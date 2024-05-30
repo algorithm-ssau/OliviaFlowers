@@ -43,16 +43,17 @@ public class UserController {
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
-        model.addAttribute("message", isActivated ? "Пользователь активирован" : "Код не найден");
+        model.addAttribute("message", isActivated ? "Ваш аккаунт активирован" : "Код не найден");
         return "login";
     }
 
     @PostMapping("/registration")
-    public String createUser(UserWithoutLink userWithoutLink) {
+    public String createUser(UserWithoutLink userWithoutLink, Model model) {
+        model.addAttribute("message", "На вашу электронную почту отправлен код для активации аккаунта");
+
         if (!userService.createUser(userWithoutLink)) {
-            return "redirect:/registration?error";
+            return "redirect:/login?error";
         }
-        model.addAttribute("message", "Сейчас вам на электронную почту придет код для активации");
 
         return "redirect:/login";
     }
