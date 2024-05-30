@@ -26,11 +26,11 @@ public class SecurityConfig{
                 .cors().disable()
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home", "/catalog/**", "/registration", "logotip2.png",
+                        .requestMatchers("/", "/home", "/catalog/**", "/registration", "logotip.png",
                                 "inst.png", "vk.png", "/bouquet/**", "/images/**", "requestMatchers",
                                  "/bouquet_delete/**", "/add_bouquets_to_homepage", "/find_bouquet_by_name",
                                 "icon_logo.png", "/catalogPostcard", "/lookAll", "/authorBouquet", "/boxBouquet",
-                                "/weddingBouquet", "/filterBouquets", "/login.jpg", "/registration.jpg")
+                                "/weddingBouquet", "/filterBouquets", "/login.jpg", "/registration.jpg", "/activate/*")
                         .permitAll()
                         .anyRequest().authenticated()
                 )

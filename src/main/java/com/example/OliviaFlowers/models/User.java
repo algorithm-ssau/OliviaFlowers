@@ -26,6 +26,8 @@ public class User implements UserDetails {
     private String password;
     @Column (name = "email", unique = true)
     private String email;
+    @Column (name = "activationCode")
+    private String activationCode;
     @Column (name = "phoneNumber", unique = true)
     private String phoneNumber;
     @Column (name = "name")
@@ -63,7 +65,17 @@ public class User implements UserDetails {
     }
 
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 
     // Security
     @Override
@@ -79,6 +91,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getUsername1(){
+        return name;
     }
 
     @Override
