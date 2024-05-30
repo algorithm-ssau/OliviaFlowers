@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
@@ -201,6 +202,17 @@ public class CatalogController {
             @RequestParam(required = false) String priceRangeSmall,
             @RequestParam(required = false) String priceRangeAverage,
             @RequestParam(required = false) String priceRangeBig,
+            @RequestParam(required = false) String roses,
+            @RequestParam(required = false) String peonies,
+            @RequestParam(required = false) String ranunculus,
+            @RequestParam(required = false) String eustoma,
+            @RequestParam(required = false) String hortensia,
+            @RequestParam(required = false) String alstroemeria,
+            @RequestParam(required = false) String daisies,
+            @RequestParam(required = false) String chrysanthemums,
+            @RequestParam(required = false) String gypsophila,
+            @RequestParam(required = false) String carnation,
+            @RequestParam(required = false) String tulips,
 
             Model model,
             @AuthenticationPrincipal User user) {
@@ -208,6 +220,7 @@ public class CatalogController {
         Long  max = maxPrice != null ? maxPrice : Long.MIN_VALUE;
         Long local_min;
         Long local_max;
+        List<String> flowerstosearch = new ArrayList<String>();
 
         if (priceRangeSmall != null && !priceRangeSmall.isEmpty()) {
             String[] range = priceRangeSmall.split("-");
@@ -233,7 +246,20 @@ public class CatalogController {
         if (min == Long.MAX_VALUE) { min = 0L;}
         if (max == Long.MIN_VALUE) { max = Long.MAX_VALUE;}
 
-        List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, bouquets);
+        if (roses != null) flowerstosearch.add(roses);
+        if (peonies != null) flowerstosearch.add(peonies);
+        if (ranunculus != null) flowerstosearch.add(ranunculus);
+        if (eustoma != null) flowerstosearch.add(eustoma);
+        if (hortensia != null) flowerstosearch.add(hortensia);
+        if (alstroemeria != null) flowerstosearch.add(alstroemeria);
+        if (daisies != null) flowerstosearch.add(daisies);
+        if (chrysanthemums != null) flowerstosearch.add(chrysanthemums);
+        if (gypsophila != null) flowerstosearch.add(gypsophila);
+        if (carnation != null) flowerstosearch.add(carnation);
+        if (tulips != null) flowerstosearch.add(tulips);
+
+
+        List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
         model.addAttribute("allBouquets", sortedBouquets);
         model.addAttribute("title", title);
         selectedSort = sort;
@@ -268,6 +294,10 @@ public class CatalogController {
 
         return "catalog";
     }
+
+
+
+
 
 
 }
