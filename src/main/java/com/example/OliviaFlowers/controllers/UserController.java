@@ -1,6 +1,7 @@
 package com.example.OliviaFlowers.controllers;
 
 import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.models.UserWithoutLink;
 import com.example.OliviaFlowers.secvices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,45 +25,33 @@ public class UserController {
 
     @GetMapping("/login")
     public String login(Model model) {
-        //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-        String username = authentication.getName(); // Получить имя пользователя
+        String username = authentication.getName();
         User user = userService.getUserByEmail(username);
-        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
-
+        model.addAttribute("isAdmin", user != null && user.getIsAdministrator());
         return "login";
     }
 
     @GetMapping("/registration")
     public String registration(Model model){
-        //проверка пользователя администратор он или нет
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
-        String username = authentication.getName(); // Получить имя пользователя
+        String username = authentication.getName();
         User user = userService.getUserByEmail(username);
-        if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
-        else{ model.addAttribute("isAdmin", false);}
-
+        model.addAttribute("isAdmin", user != null && user.getIsAdministrator());
         return "registration";
     }
     @GetMapping("/activate/{code}")
-    public String activate(Model model, @PathVariable String code)
-    {
+    public String activate(Model model, @PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
-        if (isActivated){
-            model.addAttribute("message", "Пользователь активирован");
-        }
-        else{
-            model.addAttribute("message", "Код не найден");
-        }
+        model.addAttribute("message", isActivated ? "Пользователь активирован" : "Код не найден");
         return "login";
     }
 
     @PostMapping("/registration")
-    public String createUser(User user, Model model) {
-        userService.createUser(user);
+    public String createUser(UserWithoutLink userWithoutLink) {
+        if (!userService.createUser(userWithoutLink)) {
+            return "redirect:/registration?error";
+        }
         model.addAttribute("message", "Сейчас вам на электронную почту придет код для активации");
 
         return "redirect:/login";

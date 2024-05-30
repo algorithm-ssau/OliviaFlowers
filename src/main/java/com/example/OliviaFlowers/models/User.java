@@ -64,6 +64,13 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public void setDateOfBirthday(LocalDate dateOfBirthday) {
+        this.dateOfBirthday = dateOfBirthday;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     public void setEmail(String email) {
         this.email = email;
