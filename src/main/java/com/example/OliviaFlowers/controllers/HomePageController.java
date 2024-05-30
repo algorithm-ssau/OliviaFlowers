@@ -46,7 +46,8 @@ public class HomePageController {
                 // Пользователь аутентифицирован, можно получить его имя пользователя или другой идентификатор
                 String username = authentication.getName(); // Получить имя пользователя
                 User user = userService.getUserByEmail(username);
-                model.addAttribute("isAdmin", user.getIsAdministrator());
+                if (user != null){ model.addAttribute("isAdmin", user.getIsAdministrator());}
+                else{ model.addAttribute("isAdmin", false);}
             }
 
 
@@ -108,13 +109,13 @@ public class HomePageController {
             homePage3.setBouquet(bouquet3);
             homePage3.setDescription(description3);
             homePageRepository.save(homePage3);
-
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("message", "Успешно добавлено на главный экран");
 
         } else {
             redirectAttributes.addFlashAttribute("error", "Вы заполнили не все данные. Операция отклонена.");
-            return "redirect:/admin";
         }
+        return "redirect:/adminchoicebouquet";
+
 
     }
 }

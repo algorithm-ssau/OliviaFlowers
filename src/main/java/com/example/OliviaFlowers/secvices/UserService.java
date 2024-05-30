@@ -37,8 +37,8 @@ public class UserService {
         userRepository.save(user);
         if(!StringUtils.isEmpty(user.getEmail()))
         {
-            String message = String.format("Здравствуйте, %s! \n" +
-                            "Добро пожаловать в OliviaFlowers. Пожалуйста, поситите данную ссылку для активации вашего аккаунта:http://localhost:8080/activate/%s",
+            String message = String.format("Здравствуйте, %s! \n\n" +
+                            "Добро пожаловать в OliviaFlowers. \n\nПожалуйста, поситите данную ссылку для активации вашего аккаунта: \nhttp://localhost:8080/activate/%s",
                     user.getUsername1(),
                     user.getActivationCode());
 

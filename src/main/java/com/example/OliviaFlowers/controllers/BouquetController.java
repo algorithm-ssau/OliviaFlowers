@@ -189,7 +189,7 @@ public class BouquetController {
                 }
 
                 if (bouquetExists) {
-                    redirectAttributes.addFlashAttribute("message", "Букет уже в корзине");
+                    redirectAttributes.addFlashAttribute("warning", "Букет уже в корзине");
                 } else {
                     Bouquet bouquet = bouquetService.getBouquetByID(id);
                     orderHasBouquetService.createOrderHasBouquet(bouquet, principal);
@@ -209,7 +209,7 @@ public class BouquetController {
             Order order = orderService.getOrderByID(id);
             order.setStatus("Доставлен");
             orderService.saveOrder(order);
-            redirectAttributes.addFlashAttribute("message", "Заказ отмечен как доставленный");
+            redirectAttributes.addFlashAttribute("message", "Заказ доставлен");
         } catch(Exception e){
             redirectAttributes.addFlashAttribute("message", "Ошибка при доставке заказа");
         }

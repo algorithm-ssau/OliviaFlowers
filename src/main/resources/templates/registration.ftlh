@@ -56,6 +56,11 @@
 
 
     </style>
+    <script>
+            function showMessage(message) {
+                alert(message);
+            }
+        </script>
 </head>
 <body class="d-flex flex-column h-100">
     <div class="wrapper flex-grow-1 d-flex flex-column align-items-center">
@@ -63,6 +68,11 @@
             <#include "blocks/headerAdmin.ftlh">
         <#else>
             <#include "blocks/header.ftlh">
+        </#if>
+        <#if message??>
+            <script>
+                showMessage("${message}");
+            </script>
         </#if>
         <div class="row row-custom">
 

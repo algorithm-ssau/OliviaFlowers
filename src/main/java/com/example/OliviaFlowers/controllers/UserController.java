@@ -61,8 +61,10 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String createUser(User user) {
+    public String createUser(User user, Model model) {
         userService.createUser(user);
+        model.addAttribute("message", "Сейчас вам на электронную почту придет код для активации");
+
         return "redirect:/login";
     }
 
