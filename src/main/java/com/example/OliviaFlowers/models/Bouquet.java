@@ -44,6 +44,9 @@ public class Bouquet {
     @OneToMany(mappedBy = "bouquet")
     private Set<Order_has_bouquet> amounts;
 
+    @Transient
+    public String[] flowers; //@transient по идее не свяжет с БД
+
     public Long getId() {
         return id;
     }

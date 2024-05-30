@@ -149,6 +149,8 @@ public class BouquetController {
                                               RedirectAttributes redirectAttributes) throws IOException {
         try {
             bouquetService.saveBouquet(bouquet, file1, file2, file3);
+
+
             redirectAttributes.addFlashAttribute("message", "Букет успешно сохранен");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при сохранении букета");

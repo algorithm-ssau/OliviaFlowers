@@ -14,8 +14,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -94,6 +96,8 @@ public class BouquetService {
 
 
 
+
+
     private Image toImageEntity(MultipartFile file) throws IOException {
         Image image = new Image();
         image.setName(file.getName());
@@ -141,10 +145,12 @@ public class BouquetService {
     }
 
 
-    public List<Bouquet> filterBouquets(Integer sort, Long minPrice, Long maxPrice, List<Bouquet> a) {
+    public List<Bouquet> filterBouquets(Integer sort, Long minPrice, Long maxPrice, List<String> searchableu, List<Bouquet> a) {
+        String[] searchables = searchableu.toArray(new String[0]);
         List<Bouquet> bouquets = a;
+        fillALLFlowers(bouquets);
         bouquets = bouquets.stream()
-                .filter(b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice)
+                .filter(((Predicate<Bouquet>) b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice).and(b ->  Arrays.stream(b.flowers).anyMatch(element -> Arrays.stream(searchables).anyMatch(array2Element -> element.equals(array2Element)))))
                 .collect(Collectors.toList());
         if (sort != null) {
             if(sort == 0)
@@ -158,5 +164,44 @@ public class BouquetService {
             }
         }
         return bouquets;
+    }
+
+    public List<Bouquet> filterByFlower(Integer sort, List<Bouquet> a, String[] searchables){
+        List<Bouquet> result = a;
+        fillALLFlowers(result);
+
+        result = result.stream()
+                .filter(b ->  Arrays.stream(b.flowers).anyMatch(element -> Arrays.stream(searchables).anyMatch(array2Element -> element.equals(array2Element))))
+                .collect(Collectors.toList());
+
+        if (sort != null) {
+            if(sort == 0)
+            {
+                return result;
+            }
+            if (sort == 1) {
+                result.sort(Comparator.comparingLong(Bouquet::getPrice));
+            } else if (sort == 2) {
+                result.sort(Comparator.comparingLong(Bouquet::getPrice).reversed());
+            }
+        }
+        return result;
+
+    }
+
+    public void fillFlowers(Bouquet bouquet){
+        String description = bouquet.getComposition();
+        String[] parts = description.split("\\R");
+        for (int i = 0; i < parts.length; i++){
+            String[] tempflow = parts[i].split("-", 2);
+            parts[i] = tempflow[0].trim();
+        }
+        bouquet.flowers = parts;
+    }
+
+    public void fillALLFlowers(List<Bouquet> a){
+        for(Bouquet bouquet : a){
+            fillFlowers(bouquet);
+        }
     }
 }
