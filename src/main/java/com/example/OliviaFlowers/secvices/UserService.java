@@ -1,7 +1,9 @@
 package com.example.OliviaFlowers.secvices;
 
 import com.example.OliviaFlowers.models.User;
+import com.example.OliviaFlowers.models.UserWithoutLink;
 import com.example.OliviaFlowers.repositories.UserRepository;
+import com.example.OliviaFlowers.repositories.UserWithoutLinkRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,30 +22,34 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     private MailSender mailSender;
+    @Autowired
+    private final UserWithoutLinkRepository userWithoutLinkRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserWithoutLinkRepository userWithoutLinkRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userWithoutLinkRepository = userWithoutLinkRepository;
     }
 
-    public boolean createUser(User user){
-        String email = user.getEmail();
-        if (userRepository.findByEmail(email) != null) return false;
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setIsAdministrator(false);
-        user.setActivationCode(UUID.randomUUID().toString());
+    public boolean createUser(UserWithoutLink userWithoutLink){
+        String email = userWithoutLink.getEmail();
+        if (userRepository.findByEmail(email) != null || userWithoutLinkRepository.findByEmail(email) != null) {
+            return false;
+        }
 
-        userRepository.save(user);
-        if(!StringUtils.isEmpty(user.getEmail()))
-        {
+        userWithoutLink.setPassword(passwordEncoder.encode(userWithoutLink.getPassword()));
+        userWithoutLink.setActivationCode(UUID.randomUUID().toString());
+
+        userWithoutLinkRepository.save(userWithoutLink);
+
+        if(!StringUtils.isEmpty(userWithoutLink.getEmail())) {
             String message = String.format("Здравствуйте, %s! \n" +
-                            "Добро пожаловать в OliviaFlowers. Пожалуйста, поситите данную ссылку для активации вашего аккаунта:http://localhost:8080/activate/%s",
-                    user.getUsername1(),
-                    user.getActivationCode());
+                            "Добро пожаловать в OliviaFlowers. Пожалуйста, поситите данную ссылку для активации вашего аккаунта: http://localhost:8080/activate/%s",
+                    userWithoutLink.getName(),
+                    userWithoutLink.getActivationCode());
 
-
-            mailSender.send(user.getEmail(), "Activation code", message);
+            mailSender.send(userWithoutLink.getEmail(), "Activation code", message);
         }
         return true;
     }
@@ -66,12 +72,24 @@ public class UserService {
 
 
     public boolean activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
-        if (user == null){
+        UserWithoutLink userWithoutLink = userWithoutLinkRepository.findByActivationCode(code);
+        if (userWithoutLink == null) {
             return false;
         }
+
+        User user = new User();
+        user.setEmail(userWithoutLink.getEmail());
+        user.setPassword(userWithoutLink.getPassword());
+        user.setPhoneNumber(userWithoutLink.getPhoneNumber());
+        user.setName(userWithoutLink.getName());
+        user.setSurname(userWithoutLink.getSurname());
+        user.setDateOfBirthday(userWithoutLink.getDateOfBirthday());
+        user.setIsAdministrator(false);
         user.setActivationCode(null);
+
         userRepository.save(user);
+        userWithoutLinkRepository.delete(userWithoutLink);
+
         return true;
     }
 }
