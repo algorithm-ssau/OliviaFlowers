@@ -39,6 +39,10 @@ public class CatalogController {
     private String carnation = null;
     private String tulips = null;
 
+    private String priceRangeSmall = null;
+    private String priceRangeAverage = null;
+    private String priceRangeBig = null;
+
     private int selectedSort = 0;
 
     @Autowired
@@ -54,19 +58,9 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets);
         title = "Все букеты: ";
         model.addAttribute("title", title);
-        model.addAttribute("selectedSort", selectedSort);
+        model.addAttribute("selectedSort", 0);
 
-        model.addAttribute("roses", roses);
-        model.addAttribute("peonies", peonies);
-        model.addAttribute("ranunculus", ranunculus);
-        model.addAttribute("eustoma", eustoma);
-        model.addAttribute("hortensia", hortensia);
-        model.addAttribute("alstroemeria", alstroemeria);
-        model.addAttribute("daisies", daisies);
-        model.addAttribute("chrysanthemums", chrysanthemums);
-        model.addAttribute("gypsophila", gypsophila);
-        model.addAttribute("carnation", carnation);
-        model.addAttribute("tulips", tulips);
+
 
 
         // Найти максимальную цену среди всех букетов с использованием потока
@@ -327,8 +321,31 @@ public class CatalogController {
 
 
 
-        List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
-        model.addAttribute("allBouquets", sortedBouquets);
+        if (priceRangeSmall != null) {
+            this.priceRangeSmall = priceRangeSmall;
+        } else {this.priceRangeSmall = null;}
+
+        if (priceRangeAverage != null) {
+            this.priceRangeAverage = priceRangeAverage;
+        } else {this.priceRangeAverage = null;}
+
+        if (priceRangeBig != null) {
+            this.priceRangeBig = priceRangeBig;
+        } else {this.priceRangeBig = null;}
+
+        List<Bouquet> sortedBouquets;
+        if(priceRangeSmall != null && priceRangeBig != null){
+            List<Bouquet> sortedBouquets1 = bouquetService.filterBouquets(sort, 0L, 2000L, flowerstosearch, bouquets);
+            List<Bouquet> sortedBouquets2 = bouquetService.filterBouquets(sort, 4000L, Long.MAX_VALUE, flowerstosearch, bouquets);
+            sortedBouquets = new ArrayList<>(sortedBouquets1);
+            sortedBouquets.addAll(sortedBouquets2);
+            model.addAttribute("allBouquets", sortedBouquets);
+        }
+        else{
+            sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
+            model.addAttribute("allBouquets", sortedBouquets);
+        }
+
         model.addAttribute("title", title);
 
         model.addAttribute("roses", roses);
@@ -342,6 +359,10 @@ public class CatalogController {
         model.addAttribute("gypsophila", gypsophila);
         model.addAttribute("carnation", carnation);
         model.addAttribute("tulips", tulips);
+
+        model.addAttribute("priceRangeSmall", priceRangeSmall);
+        model.addAttribute("priceRangeAverage", priceRangeAverage);
+        model.addAttribute("priceRangeBig", priceRangeBig);
 
         selectedSort = sort;
         model.addAttribute("selectedSort", selectedSort);
