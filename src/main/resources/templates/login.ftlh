@@ -226,7 +226,8 @@
     </#if>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form action="/registration" method="post">
+            <form action="/registration" method="post" showMessage('На ваш email направлено письмо для активации аккаунта');">
+
                 <h4>Регистрация</h4>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Имя" required>
                 <input type="text" class="form-control" id="surname" name="surname" placeholder="Фамилия" required>
@@ -283,6 +284,7 @@
         });
     </script>
 </body>
+
 <footer class="footer mt-auto">
     <#include "blocks/footer.ftlh">
 </footer>

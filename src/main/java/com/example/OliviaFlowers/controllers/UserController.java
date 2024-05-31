@@ -18,6 +18,8 @@ public class UserController {
     @Autowired
     private final UserService userService;
 
+    private String message = null;
+
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -29,6 +31,9 @@ public class UserController {
         String username = authentication.getName();
         User user = userService.getUserByEmail(username);
         model.addAttribute("isAdmin", user != null && user.getIsAdministrator());
+        if (message != null) model.addAttribute("message", message);
+        message = null;
+
         return "login";
     }
 
@@ -49,8 +54,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String createUser(UserWithoutLink userWithoutLink, Model model) {
-        model.addAttribute("message", "На вашу электронную почту отправлен код для активации аккаунта");
-
+        message = "На вашу электронную почту отправлен код для активации аккаунта";
         if (!userService.createUser(userWithoutLink)) {
             return "redirect:/login?error";
         }
