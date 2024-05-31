@@ -326,6 +326,7 @@ public class CatalogController {
 
 
 
+
         List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
         model.addAttribute("allBouquets", sortedBouquets);
         model.addAttribute("title", title);
