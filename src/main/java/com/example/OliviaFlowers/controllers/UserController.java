@@ -66,6 +66,9 @@ public class UserController {
     }
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
+        LocalDate maxDate = LocalDate.now();
+        model.addAttribute("maxDate", maxDate);
+
         boolean isActivated = userService.activateUser(code);
         model.addAttribute("message", isActivated ? "Ваш аккаунт активирован" : "Код не найден");
         return "login";
