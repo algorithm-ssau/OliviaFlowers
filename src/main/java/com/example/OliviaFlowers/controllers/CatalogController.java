@@ -27,6 +27,21 @@ public class CatalogController {
     private List<Bouquet> bouquets;
 
     private String title;
+    private String roses = null;
+    private String peonies = null;
+    private String ranunculus = null;
+    private String eustoma = null;
+    private String hortensia = null;
+    private String alstroemeria = null;
+    private String daisies = null;
+    private String chrysanthemums = null;
+    private String gypsophila = null;
+    private String carnation = null;
+    private String tulips = null;
+
+    private String priceRangeSmall = null;
+    private String priceRangeAverage = null;
+    private String priceRangeBig = null;
 
     private int selectedSort = 0;
 
@@ -43,7 +58,9 @@ public class CatalogController {
         model.addAttribute("allBouquets", bouquets);
         title = "Все букеты: ";
         model.addAttribute("title", title);
-        model.addAttribute("selectedSort", selectedSort);
+        model.addAttribute("selectedSort", 0);
+
+
 
 
         // Найти максимальную цену среди всех букетов с использованием потока
@@ -246,22 +263,107 @@ public class CatalogController {
         if (min == Long.MAX_VALUE) { min = 0L;}
         if (max == Long.MIN_VALUE) { max = Long.MAX_VALUE;}
 
-        if (roses != null) flowerstosearch.add(roses);
-        if (peonies != null) flowerstosearch.add(peonies);
-        if (ranunculus != null) flowerstosearch.add(ranunculus);
-        if (eustoma != null) flowerstosearch.add(eustoma);
-        if (hortensia != null) flowerstosearch.add(hortensia);
-        if (alstroemeria != null) flowerstosearch.add(alstroemeria);
-        if (daisies != null) flowerstosearch.add(daisies);
-        if (chrysanthemums != null) flowerstosearch.add(chrysanthemums);
-        if (gypsophila != null) flowerstosearch.add(gypsophila);
-        if (carnation != null) flowerstosearch.add(carnation);
-        if (tulips != null) flowerstosearch.add(tulips);
+        if (roses != null) {
+            flowerstosearch.add(roses);
+            this.roses = roses;
+        } else {this.roses = null;}
+
+        if (peonies != null) {
+            flowerstosearch.add(peonies);
+            this.peonies = peonies;
+        } else {this.peonies = null;}
+
+        if (ranunculus != null) {
+            flowerstosearch.add(ranunculus);
+            this.ranunculus = ranunculus;
+        } else {this.ranunculus = null;}
+
+        if (eustoma != null) {
+            flowerstosearch.add(eustoma);
+            this.eustoma = eustoma;
+        } else {this.eustoma = null;}
+
+        if (hortensia != null) {
+            flowerstosearch.add(hortensia);
+            this.hortensia = hortensia;
+        } else {this.hortensia = null;}
+
+        if (alstroemeria != null) {
+            flowerstosearch.add(alstroemeria);
+            this.alstroemeria = alstroemeria;
+        } else {this.alstroemeria = null;}
+
+        if (daisies != null) {
+            flowerstosearch.add(daisies);
+            this.daisies = daisies;
+        } else {this.daisies = null;}
+
+        if (chrysanthemums != null) {
+            flowerstosearch.add(chrysanthemums);
+            this.chrysanthemums = chrysanthemums;
+        } else {this.chrysanthemums = null;}
+
+        if (gypsophila != null) {
+            flowerstosearch.add(gypsophila);
+            this.gypsophila = gypsophila;
+        } else {this.gypsophila = null;}
+
+        if (carnation != null) {
+            flowerstosearch.add(carnation);
+            this.carnation = carnation;
+        } else {this.carnation = null;}
+
+        if (tulips != null) {
+            flowerstosearch.add(tulips);
+            this.tulips = tulips;
+        } else {this.tulips = null;}
 
 
-        List<Bouquet> sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
-        model.addAttribute("allBouquets", sortedBouquets);
+
+
+        if (priceRangeSmall != null) {
+            this.priceRangeSmall = priceRangeSmall;
+        } else {this.priceRangeSmall = null;}
+
+        if (priceRangeAverage != null) {
+            this.priceRangeAverage = priceRangeAverage;
+        } else {this.priceRangeAverage = null;}
+
+        if (priceRangeBig != null) {
+            this.priceRangeBig = priceRangeBig;
+        } else {this.priceRangeBig = null;}
+
+        List<Bouquet> sortedBouquets;
+        if(priceRangeSmall != null && priceRangeBig != null){
+            List<Bouquet> sortedBouquets1 = bouquetService.filterBouquets(sort, 0L, 2000L, flowerstosearch, bouquets);
+            List<Bouquet> sortedBouquets2 = bouquetService.filterBouquets(sort, 4000L, Long.MAX_VALUE, flowerstosearch, bouquets);
+            sortedBouquets = new ArrayList<>(sortedBouquets1);
+            sortedBouquets.addAll(sortedBouquets2);
+            model.addAttribute("allBouquets", sortedBouquets);
+        }
+        else{
+            sortedBouquets = bouquetService.filterBouquets(sort, min, max, flowerstosearch, bouquets);
+            model.addAttribute("allBouquets", sortedBouquets);
+        }
+
         model.addAttribute("title", title);
+
+        model.addAttribute("roses", roses);
+        model.addAttribute("peonies", peonies);
+        model.addAttribute("ranunculus", ranunculus);
+        model.addAttribute("eustoma", eustoma);
+        model.addAttribute("hortensia", hortensia);
+        model.addAttribute("alstroemeria", alstroemeria);
+        model.addAttribute("daisies", daisies);
+        model.addAttribute("chrysanthemums", chrysanthemums);
+        model.addAttribute("gypsophila", gypsophila);
+        model.addAttribute("carnation", carnation);
+        model.addAttribute("tulips", tulips);
+
+        model.addAttribute("priceRangeSmall", priceRangeSmall);
+        model.addAttribute("priceRangeAverage", priceRangeAverage);
+        model.addAttribute("priceRangeBig", priceRangeBig);
+
         selectedSort = sort;
         model.addAttribute("selectedSort", selectedSort);
 

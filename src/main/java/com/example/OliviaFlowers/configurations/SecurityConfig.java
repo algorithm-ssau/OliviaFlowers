@@ -41,6 +41,8 @@ public class SecurityConfig{
 
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/profile")
+                        .failureUrl("/login_not_success")
                         .successHandler(new CustomAuthenticationSuccessHandler())
                         .permitAll()
                 )
