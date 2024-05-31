@@ -147,67 +147,48 @@ public class BouquetService {
 
     public List<Bouquet> filterBouquets(Integer sort, Long minPrice, Long maxPrice, List<String> searchableu, List<Bouquet> a) {
         List<Bouquet> bouquets = a;
-        if (searchableu.size() == 0){
+
+        // Заполнение всех букетов цветами
+        fillALLFlowers(bouquets);
+
+        // Фильтрация по ценовому диапазону и выбранным цветам
+        if (!searchableu.isEmpty()) {
+            String[] searchables = searchableu.toArray(new String[0]);
+            bouquets = bouquets.stream()
+                    .filter(b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice)
+                    .filter(b -> Arrays.stream(searchables).allMatch(element -> Arrays.asList(b.flowers).contains(element)))
+                    .collect(Collectors.toList());
+        } else {
             bouquets = bouquets.stream()
                     .filter(b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice)
                     .collect(Collectors.toList());
         }
-        else{
-            String[] searchables = searchableu.toArray(new String[0]);
-            fillALLFlowers(bouquets);
-            bouquets = bouquets.stream()
-                    .filter(((Predicate<Bouquet>) b -> b.getPrice() >= minPrice && b.getPrice() <= maxPrice).and(b ->  Arrays.stream(b.flowers).anyMatch(element -> Arrays.stream(searchables).anyMatch(array2Element -> element.equals(array2Element)))))
-                    .collect(Collectors.toList());
-        }
+
+        // Сортировка по цене, если задано
         if (sort != null) {
-            if(sort == 0)
-            {
-                return bouquets;
-            }
             if (sort == 1) {
                 bouquets.sort(Comparator.comparingLong(Bouquet::getPrice));
             } else if (sort == 2) {
                 bouquets.sort(Comparator.comparingLong(Bouquet::getPrice).reversed());
             }
         }
+
         return bouquets;
     }
 
-    public List<Bouquet> filterByFlower(Integer sort, List<Bouquet> a, String[] searchables){
-        List<Bouquet> result = a;
-        fillALLFlowers(result);
 
-        result = result.stream()
-                .filter(b ->  Arrays.stream(b.flowers).anyMatch(element -> Arrays.stream(searchables).anyMatch(array2Element -> element.equals(array2Element))))
-                .collect(Collectors.toList());
-
-        if (sort != null) {
-            if(sort == 0)
-            {
-                return result;
-            }
-            if (sort == 1) {
-                result.sort(Comparator.comparingLong(Bouquet::getPrice));
-            } else if (sort == 2) {
-                result.sort(Comparator.comparingLong(Bouquet::getPrice).reversed());
-            }
-        }
-        return result;
-
-    }
-
-    public void fillFlowers(Bouquet bouquet){
+    public void fillFlowers(Bouquet bouquet) {
         String description = bouquet.getComposition();
         String[] parts = description.split("\\R");
-        for (int i = 0; i < parts.length; i++){
+        for (int i = 0; i < parts.length; i++) {
             String[] tempflow = parts[i].split("-", 2);
             parts[i] = tempflow[0].trim();
         }
         bouquet.flowers = parts;
     }
 
-    public void fillALLFlowers(List<Bouquet> a){
-        for(Bouquet bouquet : a){
+    public void fillALLFlowers(List<Bouquet> a) {
+        for (Bouquet bouquet : a) {
             fillFlowers(bouquet);
         }
     }
