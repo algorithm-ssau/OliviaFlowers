@@ -258,67 +258,111 @@
                              <div>
                                  <h6>Цветы в составе: <i class="bi bi-info-circle"></i></h6>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="roses" id="roses" value="Роза">
+                                     <#if roses??>
+                                         <input checked class="form-check-input" type="checkbox" name="roses" id="roses" value="Роза">
+                                     <#else>
+                                         <input class="form-check-input" type="checkbox" name="roses" id="roses" value="Роза">
+                                     </#if>
                                      <label class="form-check-label">
                                          розы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="peonies" id="peonies" value="Пион">
+                                     <#if peonies??>
+                                        <input checked class="form-check-input" type="checkbox" name="peonies" id="peonies" value="Пион">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="peonies" id="peonies" value="Пион">
+                                     </#if>
                                      <label class="form-check-label">
                                          пионы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="ranunculus" id="ranunculus" value="Ранункулюс">
+                                     <#if ranunculus??>
+                                        <input checked class="form-check-input" type="checkbox" name="ranunculus" id="ranunculus" value="Ранункулюс">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="ranunculus" id="ranunculus" value="Ранункулюс">
+                                     </#if>
                                      <label class="form-check-label">
                                          ранункулюсы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="eustoma" id="eustoma" value="Эустома">
+                                     <#if eustoma??>
+                                        <input checked class="form-check-input" type="checkbox" name="eustoma" id="eustoma" value="Эустома">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="eustoma" id="eustoma" value="Эустома">
+                                     </#if>
                                      <label class="form-check-label">
                                          эустомы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="hortensia" id="hortensia" value="Гортензия">
+                                     <#if hortensia??>
+                                        <input checked class="form-check-input" type="checkbox" name="hortensia" id="hortensia" value="Гортензия">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="hortensia" id="hortensia" value="Гортензия">
+                                     </#if>
                                      <label class="form-check-label">
                                          гортензии
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="alstroemeria" id="alstroemeria" value="Альстромерия">
+                                     <#if alstroemeria??>
+                                        <input checked class="form-check-input" type="checkbox" name="alstroemeria" id="alstroemeria" value="Альстромерия">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="alstroemeria" id="alstroemeria" value="Альстромерия">
+                                     </#if>
                                      <label class="form-check-label">
                                          альстромерии
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="daisies" id="daisies" value="Ромашка">
+                                     <#if daisies??>
+                                        <input checked class="form-check-input" type="checkbox" name="daisies" id="daisies" value="Ромашка">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="daisies" id="daisies" value="Ромашка">
+                                     </#if>
                                      <label class="form-check-label">
                                          ромашки
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="chrysanthemums" id="chrysanthemums" value="Хризантема">
+                                     <#if chrysanthemums??>
+                                        <input checked class="form-check-input" type="checkbox" name="chrysanthemums" id="chrysanthemums" value="Хризантема">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="chrysanthemums" id="chrysanthemums" value="Хризантема">
+                                     </#if>
                                      <label class="form-check-label">
                                          хризантемы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="gypsophila" id="gypsophila" value="Гипсофила">
+                                     <#if gypsophila??>
+                                        <input checked class="form-check-input" type="checkbox" name="gypsophila" id="gypsophila" value="Гипсофила">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="gypsophila" id="gypsophila" value="Гипсофила">
+                                     </#if>
                                      <label class="form-check-label">
                                          гипсофилы
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="carnation" id="carnation" value="Гвоздика">
+                                     <#if carnation??>
+                                        <input checked class="form-check-input" type="checkbox" name="carnation" id="carnation" value="Гвоздика">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="carnation" id="carnation" value="Гвоздика">
+                                     </#if>
                                      <label class="form-check-label">
                                          гвоздики
                                      </label>
                                  </div>
                                  <div class="form-check sideMargin verticalMargin">
-                                     <input class="form-check-input" type="checkbox" name="tulips" id="tulips" value="Тюльпан">
+                                     <#if tulips??>
+                                        <input checked class="form-check-input" type="checkbox" name="tulips" id="tulips" value="Тюльпан">
+                                     <#else>
+                                        <input class="form-check-input" type="checkbox" name="tulips" id="tulips" value="Тюльпан">
+                                     </#if>
                                      <label class="form-check-label">
                                          тюльпаны
                                      </label>
