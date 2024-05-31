@@ -212,6 +212,20 @@
           confirmButtonColor: '#e0d8d0'
         });
     }
+    function showWarning(warning) {
+        Swal.fire({
+          text: warning,
+          icon: "warning",
+          confirmButtonColor: '#e0d8d0'
+        });
+    }
+    function showError(error) {
+        Swal.fire({
+          text: error,
+          icon: "error",
+          confirmButtonColor: '#e0d8d0'
+        });
+    }
 </script>
 <body>
     <#if isAdmin?? && isAdmin == true>
@@ -224,9 +238,19 @@
             showMessage("${message}");
         </script>
     </#if>
+    <#if warning??>
+        <script>
+            showWarning("${warning}");
+        </script>
+    </#if>
+    <#if error??>
+        <script>
+            showError("${error}");
+        </script>
+    </#if>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form action="/registration" method="post" showMessage('На ваш email направлено письмо для активации аккаунта');">
+            <form action="/registration" method="post">
 
                 <h4>Регистрация</h4>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Имя" required>
@@ -242,7 +266,7 @@
                     });
                 </script>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
-                <input type="date" class="form-control" id="dateOfBirthday" name="dateOfBirthday" placeholder="Дата рождения" required>
+                <input type="date" class="form-control" id="dateOfBirthday" name="dateOfBirthday" max="${maxDate}" placeholder="Дата рождения" required>
 
                 <button>Зарегистрироваться</button>
             </form>
