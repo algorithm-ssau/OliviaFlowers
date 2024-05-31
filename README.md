@@ -33,28 +33,28 @@ Ctrl+Shift+F10
 
 <table>
     <tr>
-        <td align="center" valign="top" style="font-size: 16px; padding: 30px;">
+        <td align="center" valign="top" style="font-size: 20px;">
             <a href="https://github.com/Lumer1337" style="text-decoration: none; color: inherit;">
                 <sub><b>🌹Плешаков Илья🌹</b></sub>
             </a><br/>
         </td>
     </tr>
     <tr>
-        <td align="center" valign="top" style="font-size: 16px;padding: 30px;">
+        <td align="center" valign="top" style="font-size: 20px;">
             <a href="https://github.com/Polina24zinoveva" style="text-decoration: none; color: inherit;">
                 <sub><b>🌷Зиновьева Полина🌷</b></sub>
             </a><br/>
         </td>
     </tr>
     <tr>
-        <td align="center" valign="top" style="font-size: 16px;padding: 30px;">
+        <td align="center" valign="top" style="font-size: 20px;">
             <a href="https://github.com/AntonSTT" style="text-decoration: none; color: inherit;">
                 <sub><b>🌺Старков Антон🌺</b></sub>
             </a><br/>
         </td>
     </tr>
     <tr>
-        <td align="center" valign="top" style="font-size: 16px;padding: 30px;">
+        <td align="center" valign="top" style="font-size: 20px;">
             <a href="https://github.com/GrishkoVi" style="text-decoration: none; color: inherit;">
                 <sub><b>🌸Гришкова Виктория🌸</b></sub>
             </a><br/>
