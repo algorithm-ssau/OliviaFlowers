@@ -45,8 +45,10 @@ public class UserService {
 
         if(!StringUtils.isEmpty(userWithoutLink.getEmail())) {
             String message = String.format("Здравствуйте, %s! \n\n" +
-                            "Добро пожаловать в OliviaFlowers. \n\nПожалуйста, поситите данную ссылку для активации вашего аккаунта: \nhttp://localhost:8080/activate/%s",
+                            "Добро пожаловать в OliviaFlowers. \n\nПожалуйста, поситите данную ссылку для активации вашего аккаунта: \nhttp://localhost:8080/activate/%s" +
+                            "\n\nИли по этой ссылке: http://176.109.100.154:8080/activate/%s",
                     userWithoutLink.getName(),
+                    userWithoutLink.getActivationCode(),
                     userWithoutLink.getActivationCode());
 
             mailSender.send(userWithoutLink.getEmail(), "Activation code", message);
